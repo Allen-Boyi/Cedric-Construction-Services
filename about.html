@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — Cedric Construction Services</title>
+ 
+  <!--
+    THEME INIT — MUST be first, before any stylesheet.
+    about.html was MISSING this entirely — that's why dark mode
+    caused a white flash every time you navigated to this page.
+  -->
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+ 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+ 
+  <!-- Dark mode overrides for ALL page sections -->
+  <link rel="stylesheet" href="/assets/css/dark-mode.css">
+  <link rel="stylesheet" href="/assets/css/mobile-fixes.css">
+ 
+  <style>
+    #header-placeholder,
+    #footer-placeholder {
+      display: block;
+      width: 100%;
+    }
+  </style>
+ 
+  <script src="/assets/js/hero-engine.js" defer></script>
+  <script src="/assets/js/component.js" defer></script>
+</head>
+<body>
+    <div id="header-placeholder"style="position:sticky;top:0;z-index:1000;"></div>
+     <!--
+    ┌─────────────────────────────────────────────────────────────┐
+    │  STEP 2 — Add the injection target div                      │
+    │                                                             │
+    │  This empty div is the "socket" the engine writes into.     │
+    │  It must sit ABOVE your page content so the hero renders    │
+    │  at the very top of the page, directly under the header.    │
+    │                                                             │
+    │  Rules:                                                     │
+    │   • The id must exactly match the first argument you pass   │
+    │     to loadHero() in Step 4 below.                          │
+    │   • Do NOT put anything inside this div — the engine        │
+    │     will overwrite it completely with hero-template.html.   │
+    └─────────────────────────────────────────────────────────────┘
+    -->
+    <div id="hero-placeholder"></div>
+    <!-- ================================================================
+  CEDRIC CONSTRUCTION — ABOUT PAGE SECTIONS
+  Paste this entire block between your #hero-placeholder div
+  and your footer. Nothing else needed.
+================================================================ -->
+
+<style>
+  /* ── Shared tokens ───────────────────────────────────────────── */
+  :root {
+    --ab-gold:         #C9A84C;
+    --ab-gold-light:   #E8C96A;
+    --ab-orange:       #e85d04;
+    --ab-dark:         #0d1b2e;
+    --ab-slate:        #1e2d3d;
+    --ab-text:         #1a1a2e;
+    --ab-muted:        #5a6a7a;
+    --ab-bg:           #f8f7f4;
+    --ab-bg-alt:       #f0ede8;
+    --ab-card:         #ffffff;
+    --ab-border:       rgba(13,27,46,0.08);
+    --ab-shadow:       0 4px 24px rgba(13,27,46,0.09);
+    --ab-shadow-hover: 0 14px 40px rgba(13,27,46,0.16);
+    --ab-radius:       14px;
+    --ab-font-display: 'Poppins', sans-serif;
+    --ab-font-body:    'DM Sans', sans-serif;
+  }
+
+  /* ── Reset scoped to our sections ───────────────────────────── */
+  .ab-section *, .ab-section *::before, .ab-section *::after {
+    box-sizing: border-box; margin: 0; padding: 0;
+  }
+
+  .ab-section {
+    font-family: var(--ab-font-body);
+    color: var(--ab-text);
+    width: 100%;
+  }
+
+  .ab-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem, 5vw, 3rem);
+  }
+
+  /* ── Shared: eyebrow label ───────────────────────────────────── */
+  .ab-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ab-orange);
+    margin-bottom: 0.9rem;
+  }
+  .ab-eyebrow::before {
+    content: '';
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--ab-orange);
+    flex-shrink: 0;
+  }
+
+  /* ── Shared: section heading with gold underline ─────────────── */
+  .ab-heading {
+    font-family: var(--ab-font-display);
+    font-size: clamp(1.9rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ab-dark);
+    position: relative;
+    padding-bottom: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  .ab-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 52px; height: 3px;
+    background: linear-gradient(90deg, var(--ab-gold), var(--ab-gold-light));
+    border-radius: 2px;
+  }
+  .ab-heading--center { text-align: center; }
+  .ab-heading--center::after { left: 50%; transform: translateX(-50%); }
+
+  /* ── Shared: body copy ───────────────────────────────────────── */
+  .ab-prose p {
+    font-size: clamp(0.93rem, 1.4vw, 1.02rem);
+    line-height: 1.85;
+    color: var(--ab-muted);
+    margin-bottom: 1.3rem;
+  }
+  .ab-prose p:last-child { margin-bottom: 0; }
+
+  /* ── Shared: hover-lift card ─────────────────────────────────── */
+  .ab-card {
+    background: var(--ab-card);
+    border-radius: var(--ab-radius);
+    box-shadow: var(--ab-shadow);
+    border: 1px solid var(--ab-border);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .ab-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--ab-shadow-hover);
+  }
+
+  /* ── Shared: icon badge ──────────────────────────────────────── */
+  .ab-icon-badge {
+    width: 60px; height: 60px;
+    border-radius: 12px;
+    background: rgba(232,93,4,0.1);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-bottom: 1.4rem;
+  }
+  .ab-icon-badge svg {
+    width: 28px; height: 28px;
+    stroke: var(--ab-orange); fill: none;
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  /* ── Shared: inline text link ────────────────────────────────── */
+  .ab-link {
+    color: var(--ab-orange);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1.5px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .ab-link:hover { border-color: var(--ab-orange); color: var(--ab-dark); }
+
+  /* ── Shared: scroll reveal ───────────────────────────────────── */
+  .ab-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .ab-reveal.is-visible { opacity: 1; transform: translateY(0); }
+  .ab-d1 { transition-delay: 0.08s; }
+  .ab-d2 { transition-delay: 0.18s; }
+  .ab-d3 { transition-delay: 0.28s; }
+  .ab-d4 { transition-delay: 0.38s; }
+
+  /* ══════════════════════════════════════════════════════════════
+     1. COMPANY PROFILE
+  ══════════════════════════════════════════════════════════════ */
+  .ab-profile {
+    background: var(--ab-bg);
+    padding: clamp(4rem, 8vw, 7rem) 0;
+  }
+
+  .ab-profile__inner {
+    max-width: 820px;
+  }
+
+  .ab-profile__highlight {
+    background: linear-gradient(135deg, var(--ab-dark) 0%, var(--ab-slate) 100%);
+    border-radius: var(--ab-radius);
+    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 2.8rem);
+    margin-top: 2rem;
+    border-left: 4px solid var(--ab-gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .ab-profile__highlight::before {
+    content: '\201C';
+    position: absolute;
+    top: -0.6rem; right: 1.5rem;
+    font-size: 8rem;
+    font-family: Georgia, serif;
+    color: rgba(201,168,76,0.12);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .ab-profile__highlight p {
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    line-height: 1.8;
+    color: rgba(255,255,255,0.85);
+    position: relative; z-index: 1;
+  }
+
+  .ab-profile__local {
+    margin-top: 1.8rem;
+    padding: 1.5rem 1.8rem;
+    border-radius: var(--ab-radius);
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.25);
+  }
+  .ab-profile__local p {
+    font-size: 0.93rem;
+    line-height: 1.8;
+    color: var(--ab-muted);
+    margin: 0;
+  }
+  .ab-profile__local-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ab-gold);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     2. MISSION & VISION
+  ══════════════════════════════════════════════════════════════ */
+  .ab-mv {
+    background: var(--ab-bg-alt);
+    padding: clamp(4rem, 8vw, 7rem) 0;
+  }
+
+  .ab-mv__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  @media (max-width: 700px) { .ab-mv__grid { grid-template-columns: 1fr; } }
+
+  .ab-mv__card {
+    padding: clamp(1.8rem, 3vw, 2.5rem);
+  }
+
+  .ab-mv__card h3 {
+    font-family: var(--ab-font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ab-dark);
+    margin-bottom: 1rem;
+  }
+
+  .ab-mv__card p {
+    font-size: 0.97rem;
+    line-height: 1.8;
+    color: var(--ab-muted);
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     3. FULL-CIRCLE SERVICES
+  ══════════════════════════════════════════════════════════════ */
+  .ab-fullcircle {
+    background: var(--ab-bg);
+    padding: clamp(4rem, 8vw, 7rem) 0;
+  }
+
+  .ab-fullcircle__header {
+    max-width: 680px;
+    margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+    text-align: center;
+  }
+
+  .ab-service-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    list-style: none;
+  }
+  @media (max-width: 700px) { .ab-service-list { grid-template-columns: 1fr; } }
+
+  .ab-service-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.1rem;
+    padding: 1.5rem 1.6rem;
+    border-radius: var(--ab-radius);
+    background: var(--ab-card);
+    border: 1px solid var(--ab-border);
+    box-shadow: var(--ab-shadow);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .ab-service-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--ab-shadow-hover);
+    border-color: rgba(232,93,4,0.25);
+  }
+
+  .ab-service-item__emoji {
+    font-size: 1.8rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .ab-service-item__title {
+    font-family: var(--ab-font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ab-dark);
+    margin-bottom: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .ab-service-item__title svg {
+    width: 13px; height: 13px;
+    stroke: var(--ab-orange); fill: none;
+    stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .ab-service-item:hover .ab-service-item__title svg {
+    opacity: 1; transform: translateX(0);
+  }
+
+  .ab-service-item__desc {
+    font-size: 0.87rem;
+    line-height: 1.65;
+    color: var(--ab-muted);
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     4. VALUES
+  ══════════════════════════════════════════════════════════════ */
+  .ab-values {
+    background: var(--ab-bg-alt);
+    padding: clamp(4rem, 8vw, 7rem) 0;
+  }
+
+  .ab-values__header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .ab-values__intro {
+    font-size: 0.97rem;
+    line-height: 1.75;
+    color: var(--ab-muted);
+  }
+
+  .ab-values__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  @media (max-width: 900px) { .ab-values__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px)  { .ab-values__grid { grid-template-columns: 1fr; } }
+
+  .ab-value-card {
+    padding: 2rem 1.8rem;
+    text-align: center;
+  }
+
+  .ab-value-card .ab-icon-badge {
+    margin: 0 auto 1.3rem;
+  }
+
+  .ab-value-card h3 {
+    font-family: var(--ab-font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ab-dark);
+    margin-bottom: 0.7rem;
+  }
+
+  .ab-value-card p {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--ab-muted);
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     5. WHY CHOOSE US (dark banner)
+  ══════════════════════════════════════════════════════════════ */
+  .ab-why {
+    background: var(--ab-dark);
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* subtle diagonal texture */
+  .ab-why::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.018) 40px,
+        rgba(255,255,255,0.018) 41px
+      );
+    pointer-events: none;
+  }
+
+  /* gold line at top */
+  .ab-why::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--ab-gold), var(--ab-gold-light), transparent);
+  }
+
+  .ab-why__header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+    position: relative;
+  }
+
+  .ab-why__eyebrow {
+    color: var(--ab-gold);
+  }
+  .ab-why__eyebrow::before { background: var(--ab-gold); }
+
+  .ab-why__title {
+    font-family: var(--ab-font-display);
+    font-size: clamp(1.9rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .ab-why__title::after { display: none; }
+
+  .ab-why__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    position: relative;
+  }
+  @media (max-width: 900px) { .ab-why__grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; } }
+
+  .ab-why-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: var(--ab-radius);
+    padding: 2rem 1.8rem;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+  }
+  .ab-why-card:hover {
+    background: rgba(255,255,255,0.09);
+    border-color: rgba(201,168,76,0.35);
+    transform: translateY(-5px);
+  }
+
+  .ab-why-card__num {
+    font-family: var(--ab-font-display);
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--ab-gold);
+    opacity: 0.4;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .ab-why-card h3 {
+    font-family: var(--ab-font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.7rem;
+  }
+
+  .ab-why-card p {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.6);
+  }
+</style>
+
+
+<!-- ════════════════════════════════════════════════════
+  1. COMPANY PROFILE
+════════════════════════════════════════════════════ -->
+<section class="ab-section ab-profile">
+  <div class="ab-container">
+    <div class="ab-profile__inner">
+
+      <div class="ab-reveal">
+        <h2 class="ab-heading">Company Profile</h2>
+      </div>
+
+      <div class="ab-prose ab-reveal ab-d1">
+        <p>
+          Cedric Construction Services is a trusted construction and interior finishing company
+          providing expert tiling, fixtures, fittings, and renovation services across Cape Town
+          and surrounding areas. We specialize in delivering durable, modern, and high-quality
+          finishes tailored to each client's unique style and needs.
+        </p>
+        <p>
+          With years of hands-on experience and many completed projects, we have built a reputation
+          for transforming homes and commercial spaces with precision and professionalism. Our team
+          of skilled craftsmen takes pride in every project, ensuring attention to detail and
+          superior workmanship.
+        </p>
+        <p>
+          Based in Wallacedene, Kraaifontein, we serve clients throughout Cape Town, bringing our
+          expertise in tiling, fixtures installation, custom fittings, and complete renovation
+          solutions to residential and commercial properties alike.
+        </p>
+      </div>
+
+      <!-- Bridge paragraph -->
+      <div class="ab-profile__highlight ab-reveal ab-d2">
+        <p>
+          What sets Cedric Construction Services apart is our comprehensive approach to property
+          transformation. We understand that a renovation is more than just a series of tasks —
+          it's the realization of a vision. By integrating core structural work with fine interior
+          finishing, we eliminate the need for multiple contractors, providing our clients with a
+          streamlined, stress-free experience from the first brick to the final coat of paint.
+        </p>
+      </div>
+
+      <!-- Local authority statement -->
+      <div class="ab-profile__local ab-reveal ab-d3">
+        <span class="ab-profile__local-label">Proudly Local — Cape Town</span>
+        <p>
+          As a locally owned business, we understand the specific architectural styles and
+          environmental challenges of the Western Cape. From the coastal moisture considerations
+          in our <a href="painting.html" class="ab-link">painting</a> and
+          <a href="roofing.html" class="ab-link">roofing</a> techniques to the modern tiling
+          trends in Cape Town's suburbs, our work is built to withstand the local climate while
+          enhancing your property's value.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+  2. MISSION & VISION
+════════════════════════════════════════════════════ -->
+<section class="ab-section ab-mv">
+  <div class="ab-container">
+    <div class="ab-mv__grid">
+
+      <!-- Mission -->
+      <div class="ab-card ab-mv__card ab-reveal ab-d1">
+        <div class="ab-icon-badge">
+          <!-- Target icon -->
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
+        <h3>Our Mission</h3>
+        <p>
+          To deliver exceptional construction and interior finishing services that exceed client
+          expectations through quality craftsmanship, innovative solutions, and unwavering
+          commitment to excellence. We aim to transform spaces while building lasting
+          relationships with our clients.
+        </p>
+      </div>
+
+      <!-- Vision -->
+      <div class="ab-card ab-mv__card ab-reveal ab-d2">
+        <div class="ab-icon-badge">
+          <!-- Eye icon -->
+          <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3>Our Vision</h3>
+        <p>
+          To become the leading construction and renovation company in Cape Town, known for our
+          exceptional quality, reliability, and customer satisfaction. We envision a future where
+          every home and commercial space reflects the perfect blend of functionality, aesthetics,
+          and durability.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+  3. FULL-CIRCLE SERVICES
+════════════════════════════════════════════════════ -->
+<section class="ab-section ab-fullcircle">
+  <div class="ab-container">
+
+    <div class="ab-fullcircle__header ab-reveal">
+      <span class="ab-eyebrow">Why Choose Us</span>
+      <h2 class="ab-heading ab-heading--center">The Full-Circle Solution</h2>
+      <p style="font-size:0.97rem;line-height:1.75;color:var(--ab-muted);">
+        We offer an end-to-end suite of services designed to cover every inch of your property.
+        Whether you are starting a new project or revitalizing an existing one, our expertise spans:
+      </p>
+    </div>
+
+    <ul class="ab-service-list">
+
+      <li class="ab-reveal ab-d1">
+        <a href="tiling.html" class="ab-service-item">
+          <span class="ab-service-item__emoji">🧱</span>
+          <div>
+            <div class="ab-service-item__title">
+              Tiling &amp; Flooring
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+            <p class="ab-service-item__desc">
+              Precision installation of ceramics, porcelain, and natural stone for floors and walls
+              that demand a premium look.
+            </p>
+          </div>
+        </a>
+      </li>
+
+      <li class="ab-reveal ab-d2">
+        <a href="building.html" class="ab-service-item">
+          <span class="ab-service-item__emoji">🏗️</span>
+          <div>
+            <div class="ab-service-item__title">
+              Building &amp; Renovation
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+            <p class="ab-service-item__desc">
+              Structural expertise for residential extensions, wall removals, and complete layout
+              reconfigurations.
+            </p>
+          </div>
+        </a>
+      </li>
+
+      <li class="ab-reveal ab-d3">
+        <a href="roofing.html" class="ab-service-item">
+          <span class="ab-service-item__emoji">🏠</span>
+          <div>
+            <div class="ab-service-item__title">
+              Roofing
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+            <p class="ab-service-item__desc">
+              Protecting your investment from the Cape elements with expert roof installations,
+              leak repairs, and maintenance.
+            </p>
+          </div>
+        </a>
+      </li>
+
+      <li class="ab-reveal ab-d4">
+        <a href="painting.html" class="ab-service-item">
+          <span class="ab-service-item__emoji">🎨</span>
+          <div>
+            <div class="ab-service-item__title">
+              Painting
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+            <p class="ab-service-item__desc">
+              Professional interior and exterior painting services that provide the perfect
+              aesthetic finish and long-lasting protection.
+            </p>
+          </div>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+  4. VALUES
+════════════════════════════════════════════════════ -->
+<section class="ab-section ab-values">
+  <div class="ab-container">
+
+    <div class="ab-values__header ab-reveal">
+      <span class="ab-eyebrow">Our Values</span>
+      <h2 class="ab-heading ab-heading--center">What Drives Us Forward</h2>
+      <p class="ab-values__intro">
+        Our core values guide every decision we make and every project we undertake.
+      </p>
+    </div>
+
+    <div class="ab-values__grid">
+
+      <!-- Quality -->
+      <div class="ab-card ab-value-card ab-reveal ab-d1">
+        <div class="ab-icon-badge">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <h3>Quality</h3>
+        <p>We never compromise on the standard of our work. Every tile, every coat, every joint is executed with precision and care.</p>
+      </div>
+
+      <!-- Integrity -->
+      <div class="ab-card ab-value-card ab-reveal ab-d2">
+        <div class="ab-icon-badge">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Integrity</h3>
+        <p>We operate with complete transparency. Honest pricing, honest timelines, and honest communication at every stage.</p>
+      </div>
+
+      <!-- Customer First -->
+      <div class="ab-card ab-value-card ab-reveal ab-d3">
+        <div class="ab-icon-badge">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Customer First</h3>
+        <p>Your satisfaction is our priority. We work closely with you to bring your vision to life — always within budget and on schedule.</p>
+      </div>
+
+      <!-- Excellence -->
+      <div class="ab-card ab-value-card ab-reveal ab-d1">
+        <div class="ab-icon-badge">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+        </div>
+        <h3>Excellence</h3>
+        <p>We push beyond the ordinary. From material selection to finishing touches, excellence is the standard we hold ourselves to daily.</p>
+      </div>
+
+      <!-- Safety First -->
+      <div class="ab-card ab-value-card ab-reveal ab-d2">
+        <div class="ab-icon-badge">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <h3>Safety First</h3>
+        <p>We maintain rigorous safety standards on every site, protecting our team, your property, and your family throughout the construction process.</p>
+      </div>
+
+      <!-- Site Cleanliness -->
+      <div class="ab-card ab-value-card ab-reveal ab-d3">
+        <div class="ab-icon-badge">
+          <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </div>
+        <h3>Site Cleanliness</h3>
+        <p>We believe a professional job is a clean job. We treat your home with respect, ensuring minimal disruption and a tidy workspace every day.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+  5. WHY CHOOSE US — dark banner
+════════════════════════════════════════════════════ -->
+<section class="ab-section ab-why">
+  <div class="ab-container">
+
+    <div class="ab-why__header ab-reveal">
+      <span class="ab-eyebrow ab-why__eyebrow">Why Choose Us</span>
+      <h2 class="ab-heading ab-why__title">Experience the Cedric Difference</h2>
+    </div>
+
+    <div class="ab-why__grid">
+
+      <div class="ab-why-card ab-reveal ab-d1">
+        <div class="ab-why-card__num">01</div>
+        <h3>Expert Craftsmen</h3>
+        <p>Our team of skilled professionals brings years of experience and expertise to every project — from the foundation to the finest finish.</p>
+      </div>
+
+      <div class="ab-why-card ab-reveal ab-d2">
+        <div class="ab-why-card__num">02</div>
+        <h3>Quality Materials</h3>
+        <p>We use only the highest quality materials to ensure lasting durability and beauty. Great workmanship starts with great supplies.</p>
+      </div>
+
+      <div class="ab-why-card ab-reveal ab-d3">
+        <div class="ab-why-card__num">03</div>
+        <h3>One Team, Full Solution</h3>
+        <p>No need to juggle multiple contractors. We handle everything — structural, finishing, painting, and tiling — under one roof.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+  Scroll reveal observer (no external library needed)
+════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  var els = document.querySelectorAll('.ab-reveal');
+  if (!els.length || !window.IntersectionObserver) {
+    /* Fallback: show everything immediately on old browsers */
+    els.forEach(function (el) { el.classList.add('is-visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(function (el) { io.observe(el); });
+}());
+</script>
+
+<!-- footer content -->
+<style>
+  .cc-footer{background:#0d1b2e;color:#c8d8eb;font-family:'Segoe UI',Arial,sans-serif;padding:64px 0 0;margin-top:0;}
+  .cc-footer-inner{max-width:1200px;margin:0 auto;padding:0 24px;}
+
+  /* Grid */
+  .cc-footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.1fr 1.3fr;gap:48px 32px;}
+  @media(max-width:1024px){
+    .cc-footer-grid{grid-template-columns:1fr 1fr 1fr;gap:40px 24px;}
+    .cc-footer-brand{grid-column:1 / -1;}
+  }
+  @media(max-width:640px){
+    .cc-footer-grid{grid-template-columns:1fr 1fr;gap:32px 20px;}
+    .cc-footer-brand{grid-column:1 / -1;}
+    .cc-footer-hours{grid-column:1 / -1;}
+  }
+  @media(max-width:420px){
+    .cc-footer-grid{grid-template-columns:1fr;}
+  }
+
+  /* Brand */
+  .cc-footer-logo{font-size:20px;font-weight:700;color:#fff;margin:0 0 14px;letter-spacing:-0.3px;line-height:1.2;}
+  .cc-footer-logo span{color:#e85d04;}
+  .cc-footer-tagline{font-size:13.5px;color:#8ba7c2;line-height:1.65;margin:0 0 22px;max-width:300px;}
+
+  /* Social icons */
+  .cc-social-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .cc-social-icon{display:flex;align-items:center;justify-content:center;width:38px;height:38px;background:#e85d04;border-radius:7px;text-decoration:none;transition:background .2s,transform .15s;flex-shrink:0;}
+  .cc-social-icon:hover{background:#ff7a2a;transform:translateY(-2px);}
+  .cc-social-icon svg{width:18px;height:18px;fill:#fff;display:block;}
+
+  /* Column headings */
+  .cc-footer-col h4{font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.09em;margin:0 0 6px;padding-bottom:10px;border-bottom:2px solid #e85d04;display:inline-block;}
+
+  /* Column links */
+  .cc-footer-col ul{list-style:none;padding:0;margin:14px 0 0;}
+  .cc-footer-col ul li{margin-bottom:10px;font-size:13.5px;color:#8ba7c2;line-height:1.5;}
+  .cc-footer-col ul li a{color:#8ba7c2;text-decoration:none;transition:color .18s;}
+  .cc-footer-col ul li a:hover{color:#e85d04;}
+
+  /* Contact items */
+  .cc-contact-item{display:flex !important;align-items:flex-start;gap:9px;}
+  .cc-contact-item svg{width:14px;height:14px;fill:#e85d04;flex-shrink:0;margin-top:2px;}
+
+  /* Business hours */
+  .cc-hours-table{margin-top:14px;width:100%;}
+  .cc-hours-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;}
+  .cc-hours-row:last-child{border-bottom:none;}
+  .cc-hours-row:first-child{border-top:1px solid rgba(255,255,255,.05);}
+  .cc-hours-day{color:#c8d8eb;font-weight:400;min-width:90px;}
+  .cc-hours-time{color:#e85d04;font-weight:600;font-size:12.5px;text-align:right;}
+
+  /* Bottom bar */
+  .cc-footer-bottom{margin-top:52px;border-top:1px solid rgba(255,255,255,.08);padding:20px 0;}
+  .cc-footer-bottom-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+  .cc-footer-bottom p{font-size:12.5px;color:#556f88;margin:0;}
+  .cc-footer-legal{display:flex;gap:20px;}
+  .cc-footer-legal a{font-size:12.5px;color:#556f88;text-decoration:none;transition:color .18s;}
+  .cc-footer-legal a:hover{color:#e85d04;}
+</style>
+
+<footer class="cc-footer">
+  <div class="cc-footer-inner">
+    <div class="cc-footer-grid">
+
+      <!-- ── Brand ────────────────────────────────────────── -->
+      <div class="cc-footer-brand cc-footer-col">
+        <h3 class="cc-footer-logo">Cedric <span>Construction</span></h3>
+        <p class="cc-footer-tagline">Your trusted construction partner in Cape Town. We deliver quality building services with professionalism, skill, and lasting dedication to every project.</p>
+
+        <div class="cc-social-row">
+          <!-- Facebook -->
+          <a class="cc-social-icon" href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C17.56 21.45 22 17.19 22 12z"/></svg>
+          </a>
+          <!-- Twitter / X -->
+          <a class="cc-social-icon" href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L2.25 2.25h6.928l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <!-- LinkedIn -->
+          <a class="cc-social-icon" href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+          </a>
+          <!-- Instagram -->
+          <a class="cc-social-icon" href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.8v8.4C4 18.39 5.61 20 7.8 20h8.4a3.6 3.6 0 0 0 3.6-3.6V7.8C20 5.61 18.39 4 16.2 4H7.8m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+          </a>
+          <!-- WhatsApp -->
+          <a class="cc-social-icon" href="https://wa.me/27849614552" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- ── Services ──────────────────────────────────────── -->
+      <div class="cc-footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="tiling.html">Tiling &amp; Flooring</a></li>
+          <li><a href="roofing.html">Roofing</a></li>
+          <li><a href="painting.html#pp-block-article">Painting</a></li>
+          <li><a href="building.html">General Building</a></li>
+          <li><a href="painting.html#pp-services">Plastering</a></li>
+          <li><a href="building.html#gb-block-2">Renovations</a></li>
+        </ul>
+      </div>
+
+      <!-- ── Company ───────────────────────────────────────── -->
+      <div class="cc-footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="projects.html">Our Projects</a></li>
+          <li><a href="testimonials.html">Testimonials</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html#contact-form">Get a Quote</a></li>
+        </ul>
+      </div>
+
+      <!-- ── Contact ───────────────────────────────────────── -->
+      <div class="cc-footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li class="cc-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>Wallacedene, Kraaifontein<br>Cape Town, South Africa</span>
+          </li>
+          <li class="cc-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <a href="tel:+27849614552">+27 84 961 4552</a>
+          </li>
+          <li class="cc-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <a href="mailto:cedricconstructionservices@gmail.com" style="word-break:break-all;">cedricconstructionservices@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ── Business Hours ────────────────────────────────── -->
+      <div class="cc-footer-col cc-footer-hours">
+        <h4>Business Hours</h4>
+        <div class="cc-hours-table">
+          <div class="cc-hours-row"><span class="cc-hours-day">Monday</span>   <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Tuesday</span>  <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Wednesday</span><span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Thursday</span> <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Friday</span>   <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Saturday</span> <span class="cc-hours-time">08:00 – 14:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Sunday</span>   <span class="cc-hours-time">08:00 – 13:00</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="cc-footer-bottom">
+    <div class="cc-footer-bottom-inner">
+      <p>&copy; <span id="cc-year"></span> Cedric Construction Services. All rights reserved.</p>
+      <nav class="cc-footer-legal">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('cc-year').textContent = new Date().getFullYear();
+</script>
+<!-- ================================================================ -->
+   
+   <!--
+    ┌─────────────────────────────────────────────────────────────┐
+    │  STEP 4 — Call loadHero() AFTER component.js               │
+    │                                                             │
+    │  We place this script LAST in <body> for two reasons:       │
+    │                                                             │
+    │   1. The #hero-placeholder div is guaranteed to exist in    │
+    │      the DOM by the time this script executes (top-down     │
+    │      parsing order).                                        │
+    │                                                             │
+    │   2. It runs after component.js so there are no race        │
+    │      conditions between your header loader and the hero.    │
+    │                                                             │
+    │  loadHero() takes 3 arguments:                              │
+    │   • "hero-placeholder" → the id of the div in Step 2        │
+    │   • "/assets/hero-template.html" → where the template lives │
+    │   • { ...config } → your page-specific content              │
+    │                                                             │
+    │  Internally loadHero() does this sequence automatically:    │
+    │   fetch(template) → inject HTML → requestAnimationFrame     │
+    │   → layoutHero(config)                                      │
+    │  You never need to call layoutHero() yourself.              │
+    └─────────────────────────────────────────────────────────────┘
+    -->
+    <script>
+        loadHero(
+            'hero-placeholder',             // must match the div id in Step 2
+            'hero-template.html',   // path to hero-template.html
+
+            {
+                // ── Eyebrow label (the small text above the headline) ──────
+                tag: 'Who We Are',
+
+                // ── Main headline ──────────────────────────────────────────
+                // Wrap one word in <em> for the gold italic accent font.
+                headline: 'Decades of <em>Trusted</em> Craftsmanship',
+
+                // ── Supporting paragraph ───────────────────────────────────
+                sub: 'A family-run construction firm with over 20 years of experience delivering premium results across residential and commercial projects.',
+
+                // ── Auto-advance delay in milliseconds ─────────────────────
+                interval: 6000,
+
+                // ── Slides (images and/or videos) ──────────────────────────
+                // First slide should always be an image for fast page load.
+                slides: [
+                    {
+                        type: 'video',
+                        src:  '/assets/video/hero-video-1.mp4',
+                        alt:  'Our team on a construction site',
+                    },
+                    {
+                        type: 'video',
+                        src:  '/assets/video/hero-video-1.mp4',
+                        alt:  'A recently completed residential build',
+                    },
+                    {
+                        type: 'video',
+                        src:    '/assets/video/hero-video-1.mp4',
+                        poster: '/assets/video/hero-video-1.mp4',
+                    },
+                ],
+
+                // ── Call-to-action buttons ─────────────────────────────────
+                // variant 'primary'   → solid gold button
+                // variant 'secondary' → transparent outline button
+                buttons: [
+                    {
+                        label:   'Meet the Team',
+                        href:    '#',
+                        variant: 'primary',
+                    },
+                    {
+                        label:   'View Our Work',
+                        href:    '#',
+                        variant: 'secondary',
+                    },
+                ],
+            }
+        );
+    </script>
+</body>
+</html>

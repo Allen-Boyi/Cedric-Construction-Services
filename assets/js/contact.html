@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us | Hakhesa Technologies — Web Design & Hosting Zimbabwe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CSS VARIABLES & RESET
+============================================================ */
+:root {
+  --orange:      #FF5722;
+  --orange-dark: #E4531B;
+  --navy:        #0A192F;
+  --navy-2:      #002366;
+  --royal:       #0047AB;
+  --white:       #FFFFFF;
+  --gray:        #333333;
+  --light-bg:    #F8F9FA;
+  --border:      #E8ECF0;
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.08);
+  --radius:      12px;
+  --transition:  0.32s cubic-bezier(.4,0,.2,1);
+  --font-main:   'Poppins', sans-serif;
+  --font-body:   'DM Sans', sans-serif;
+}
+[data-theme="dark"] {
+  --white:       #0A192F;
+  --gray:        #E8ECF0;
+  --light-bg:    #07111F;
+  --border:      #1E2D42;
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.3);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--white);color:var(--gray);overflow-x:hidden;transition:background var(--transition),color var(--transition);}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;}
+button{cursor:pointer;border:none;outline:none;font-family:var(--font-main);}
+
+/* ============================================================
+   PRE-HEADER
+============================================================ */
+.pre-header{background:var(--navy);color:rgba(255,255,255,.85);font-size:.78rem;padding:8px 0;font-family:var(--font-body);}
+.pre-header .inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+.pre-header .info{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.pre-header .info span{display:flex;align-items:center;gap:6px;}
+.pre-header .info span svg{width:13px;height:13px;fill:var(--orange);}
+.pre-socials{display:flex;align-items:center;gap:10px;}
+.pre-socials a{width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;transition:var(--transition);}
+.pre-socials a:hover{background:var(--orange);border-color:var(--orange);}
+.pre-socials a svg{width:13px;height:13px;fill:white;}
+
+/* ============================================================
+   MAIN NAVIGATION
+============================================================ */
+.main-nav{position:sticky;top:0;z-index:1000;background:var(--white);box-shadow:0 2px 20px rgba(0,0,0,.08);transition:background var(--transition),box-shadow var(--transition);}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:68px;position:relative;}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--font-main);font-weight:800;font-size:1.3rem;color:var(--navy);white-space:nowrap;}
+[data-theme="dark"] .logo{color:white;}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:10px;display:flex;align-items:center;justify-content:center;}
+.logo-icon svg{width:22px;height:22px;fill:white;}
+.logo span{color:var(--orange);}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;}
+.nav-links>li{position:relative;}
+.nav-links>li>a{display:flex;align-items:center;gap:4px;padding:10px 14px;font-family:var(--font-main);font-size:.88rem;font-weight:500;color:var(--gray);border-radius:8px;transition:var(--transition);}
+.nav-links>li>a:hover,.nav-links>li.active>a{color:var(--orange);}
+.nav-links>li>a .chevron{width:14px;height:14px;transition:transform var(--transition);}
+.nav-links>li:hover>a .chevron{transform:rotate(180deg);}
+.mega-menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-8px);background:white;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.16);border:1px solid var(--border);padding:20px;opacity:0;visibility:hidden;transition:opacity .22s ease,transform .22s ease,visibility .22s;pointer-events:none;min-width:200px;z-index:2000;}
+.nav-links>li:hover .mega-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);pointer-events:all;}
+.mega-menu-grid{display:grid;gap:6px;}
+.mega-menu-grid.cols-1{grid-template-columns:1fr;min-width:200px;}
+.mega-menu-grid.cols-2{grid-template-columns:1fr 1fr;min-width:380px;}
+.mega-menu-grid.cols-3{grid-template-columns:1fr 1fr 1fr;min-width:520px;}
+.mega-col{display:flex;flex-direction:column;gap:4px;}
+.mega-col-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#999;padding:4px 10px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;}
+.mega-link{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:8px;font-size:.88rem;font-weight:600;color:#1a1a2e;transition:var(--transition);}
+.mega-link:hover{background:#FFF3EE;color:var(--orange);}
+.mega-link-sub{font-size:.75rem;font-weight:400;color:#888;display:block;margin-top:1px;}
+.mega-link svg{width:16px;height:16px;flex-shrink:0;fill:var(--orange);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.theme-btn{width:38px;height:38px;border-radius:50%;border:2px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;transition:var(--transition);color:var(--gray);}
+.theme-btn:hover{border-color:var(--orange);color:var(--orange);}
+.theme-btn svg{width:18px;height:18px;}
+.nav-cta{background:var(--orange);color:white;padding:9px 20px;border-radius:8px;font-size:.85rem;font-weight:600;font-family:var(--font-main);transition:var(--transition);display:flex;align-items:center;gap:6px;}
+.nav-cta:hover{background:var(--orange-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(255,87,34,.35);}
+.hamburger{display:none;flex-direction:column;gap:5px;width:32px;height:32px;padding:5px;background:none;cursor:pointer;}
+.hamburger span{display:block;height:2px;width:100%;background:var(--gray);border-radius:2px;transition:var(--transition);}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;bottom:0;background:var(--white);z-index:999;padding:24px;overflow-y:auto;flex-direction:column;gap:8px;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{display:block;padding:12px 16px;font-family:var(--font-main);font-weight:600;font-size:1rem;color:var(--gray);border-radius:8px;border-bottom:1px solid var(--border);}
+.mobile-menu a:hover{color:var(--orange);background:#FFF3EE;}
+
+/* ============================================================
+   HERO — CONTACT PAGE
+============================================================ */
+.hero{position:relative;height:52vh;min-height:420px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.hero-bg{position:absolute;inset:0;background:#020d1a;overflow:hidden;}
+.hero-bg::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 60% 10%,#0a1e44 0%,transparent 62%),
+    radial-gradient(ellipse 50% 50% at 5% 80%,#001020 0%,transparent 58%),
+    radial-gradient(ellipse 40% 40% at 90% 80%,rgba(255,87,34,.06) 0%,transparent 65%),
+    linear-gradient(180deg,#020d1a 0%,#030f20 65%,#010810 100%);
+}
+/* bokeh orbs */
+.bokeh{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;animation:bokehFloat 9s ease-in-out infinite;}
+.b1{width:360px;height:360px;background:radial-gradient(circle,rgba(0,100,255,.14) 0%,transparent 70%);top:-80px;right:8%;animation-delay:0s;}
+.b2{width:280px;height:280px;background:radial-gradient(circle,rgba(255,87,34,.1) 0%,transparent 70%);bottom:5%;left:15%;animation-delay:3s;}
+.b3{width:200px;height:200px;background:radial-gradient(circle,rgba(0,200,255,.08) 0%,transparent 70%);top:35%;right:5%;animation-delay:5s;}
+@keyframes bokehFloat{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(14px,-18px) scale(1.07);}66%{transform:translate(-9px,9px) scale(.94);}}
+/* grid floor */
+.hero-grid{position:absolute;bottom:0;left:0;right:0;height:38%;background-image:linear-gradient(rgba(0,120,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,120,255,.06) 1px,transparent 1px);background-size:44px 44px;transform:perspective(380px) rotateX(58deg);transform-origin:bottom center;animation:gridScroll 14s linear infinite;pointer-events:none;}
+@keyframes gridScroll{from{background-position:0 0;}to{background-position:0 44px;}}
+.hero-scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.03) 3px,rgba(0,0,0,.03) 4px);pointer-events:none;z-index:1;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(110deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.40) 55%,rgba(0,0,0,.1) 100%);z-index:2;}
+
+/* hero text content */
+.hero-content{position:relative;z-index:10;max-width:1280px;width:100%;margin:0 auto;padding:0 52px;text-align:center;}
+.hero-breadcrumb{display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font-main);font-size:.72rem;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px;}
+.hero-breadcrumb a{color:rgba(255,255,255,.45);transition:color .2s;}
+.hero-breadcrumb a:hover{color:var(--orange);}
+.hero-breadcrumb .sep{color:rgba(255,255,255,.25);}
+.hero-breadcrumb .current{color:var(--orange);}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,87,34,.14);border:1px solid rgba(255,87,34,.38);color:#FFB39A;font-size:.74rem;font-weight:600;font-family:var(--font-main);letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:100px;margin-bottom:18px;backdrop-filter:blur(10px);}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--orange);border-radius:50%;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.4);}}
+.hero-title{font-family:var(--font-main);font-size:clamp(2rem,5vw,3.8rem);font-weight:800;color:white;line-height:1.12;margin-bottom:16px;text-shadow:0 2px 30px rgba(0,0,0,.5);}
+.hero-title em{font-style:normal;color:var(--orange);}
+.hero-sub{font-size:clamp(.9rem,1.8vw,1.05rem);color:rgba(255,255,255,.72);max-width:600px;margin:0 auto 28px;line-height:1.75;text-shadow:0 1px 10px rgba(0,0,0,.4);}
+.hero-cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{background:var(--orange);color:white;padding:13px 28px;border-radius:8px;font-family:var(--font-main);font-weight:700;font-size:.9rem;transition:var(--transition);display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 24px rgba(255,87,34,.45);}
+.btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,87,34,.55);}
+.btn-primary svg{width:16px;height:16px;fill:white;}
+.btn-outline{background:rgba(255,255,255,.08);color:white;border:1.5px solid rgba(255,255,255,.5);padding:12px 26px;border-radius:8px;font-family:var(--font-main);font-weight:600;font-size:.9rem;transition:var(--transition);display:inline-flex;align-items:center;gap:8px;backdrop-filter:blur(8px);}
+.btn-outline:hover{background:rgba(255,255,255,.18);border-color:white;transform:translateY(-2px);}
+
+/* ============================================================
+   QUICK STATS STRIP
+============================================================ */
+.stats-bar{background:var(--navy);padding:18px 0;}
+.stats-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.stat-item{display:flex;align-items:center;gap:12px;color:white;}
+.stat-icon{width:40px;height:40px;flex-shrink:0;background:rgba(255,87,34,.15);border:1px solid rgba(255,87,34,.3);border-radius:10px;display:flex;align-items:center;justify-content:center;}
+.stat-icon svg{width:18px;height:18px;fill:var(--orange);}
+.stat-num{font-family:var(--font-main);font-size:1.3rem;font-weight:800;color:white;line-height:1;}
+.stat-label{font-size:.72rem;color:rgba(255,255,255,.5);margin-top:2px;}
+
+/* ============================================================
+   CONTACT SECTION — SPLIT LAYOUT
+============================================================ */
+.contact-section{padding:90px 0;background:var(--white);}
+.contact-inner{max-width:1280px;margin:0 auto;padding:0 24px;}
+.contact-header{text-align:center;margin-bottom:64px;}
+.contact-header .section-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);font-family:var(--font-main);display:block;margin-bottom:12px;}
+.contact-header h2{font-family:var(--font-main);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;color:var(--gray);line-height:1.2;margin-bottom:14px;}
+[data-theme="dark"] .contact-header h2{color:white;}
+.contact-header p{font-size:1rem;color:#888;max-width:560px;margin:0 auto;line-height:1.75;}
+
+/* Two-column grid */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+
+/* ── LEFT: Contact Form ── */
+.form-card{
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:20px;
+  padding:44px 40px;
+  box-shadow:0 8px 40px rgba(0,0,0,.07);
+  position:relative;
+  overflow:hidden;
+  transition:var(--transition);
+}
+[data-theme="dark"] .form-card{background:#0d1f36;border-color:#1E2D42;}
+.form-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--orange),var(--orange-dark),var(--royal));
+}
+.form-card:hover{box-shadow:0 16px 56px rgba(0,0,0,.12);}
+.form-title{font-family:var(--font-main);font-size:1.4rem;font-weight:800;color:var(--gray);margin-bottom:6px;}
+[data-theme="dark"] .form-title{color:white;}
+.form-subtitle{font-size:.88rem;color:#888;margin-bottom:32px;line-height:1.6;}
+
+/* Row grouping */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.form-group{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
+.form-group:last-of-type{margin-bottom:0;}
+.form-label{font-family:var(--font-main);font-size:.78rem;font-weight:600;color:var(--gray);letter-spacing:.04em;}
+[data-theme="dark"] .form-label{color:rgba(255,255,255,.8);}
+.form-input,.form-textarea,.form-select{
+  width:100%;
+  background:var(--light-bg);
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  padding:13px 16px;
+  font-family:var(--font-body);
+  font-size:.9rem;
+  color:var(--gray);
+  transition:var(--transition);
+  outline:none;
+  appearance:none;
+}
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-textarea,
+[data-theme="dark"] .form-select{
+  background:rgba(255,255,255,.06);
+  border-color:#1E2D42;
+  color:rgba(255,255,255,.85);
+}
+.form-input::placeholder,.form-textarea::placeholder{color:#bbb;font-size:.88rem;}
+.form-input:focus,.form-textarea:focus,.form-select:focus{
+  border-color:var(--orange);
+  background:var(--white);
+  box-shadow:0 0 0 3px rgba(255,87,34,.1);
+}
+[data-theme="dark"] .form-input:focus,
+[data-theme="dark"] .form-textarea:focus{
+  background:rgba(255,255,255,.08);
+  box-shadow:0 0 0 3px rgba(255,87,34,.15);
+}
+.form-textarea{resize:vertical;min-height:140px;line-height:1.65;}
+.form-select option{background:var(--white);color:var(--gray);}
+
+/* Service checkboxes */
+.service-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.service-tag{
+  padding:6px 14px;border-radius:100px;
+  border:1.5px solid var(--border);
+  font-family:var(--font-main);font-size:.75rem;font-weight:600;
+  color:#888;cursor:pointer;transition:var(--transition);
+  background:transparent;
+  user-select:none;
+}
+.service-tag:hover{border-color:var(--orange);color:var(--orange);}
+.service-tag.selected{background:var(--orange);border-color:var(--orange);color:white;}
+
+/* Submit button — pill shape */
+.submit-btn{
+  width:100%;
+  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+  color:white;
+  padding:15px 32px;
+  border-radius:100px; /* pill shape */
+  font-family:var(--font-main);
+  font-weight:700;
+  font-size:1rem;
+  transition:var(--transition);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  box-shadow:0 4px 24px rgba(255,87,34,.40),0 6px 0 rgba(180,50,0,.3);
+  margin-top:28px;
+  border:none;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+}
+.submit-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.submit-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 32px rgba(255,87,34,.55),0 10px 0 rgba(180,50,0,.25);
+}
+.submit-btn:hover::before{opacity:1;}
+.submit-btn:active{transform:translateY(1px);box-shadow:0 3px 16px rgba(255,87,34,.4);}
+.submit-btn svg{width:18px;height:18px;fill:white;}
+/* Loading spinner */
+.submit-btn .spinner{
+  width:18px;height:18px;border:2px solid rgba(255,255,255,.4);
+  border-top-color:white;border-radius:50%;
+  animation:spin .7s linear infinite;display:none;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.submit-btn.loading .btn-text{display:none;}
+.submit-btn.loading .spinner{display:block;}
+
+/* Success toast */
+.toast{
+  position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--navy);color:white;padding:14px 24px;border-radius:12px;
+  font-family:var(--font-main);font-size:.88rem;font-weight:600;
+  box-shadow:0 8px 30px rgba(0,0,0,.25);z-index:9998;
+  opacity:0;transition:opacity .4s,transform .4s;pointer-events:none;
+  display:flex;align-items:center;gap:10px;
+}
+.toast.visible{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast svg{width:18px;height:18px;fill:#4CAF50;}
+
+/* ── RIGHT: Contact Details ── */
+.details-col{display:flex;flex-direction:column;gap:0;}
+
+/* Info card */
+.info-card{
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:20px;
+  padding:40px 36px;
+  box-shadow:0 8px 40px rgba(0,0,0,.07);
+  margin-bottom:24px;
+  transition:var(--transition);
+}
+[data-theme="dark"] .info-card{background:#0d1f36;border-color:#1E2D42;}
+.info-card:hover{box-shadow:0 16px 56px rgba(0,0,0,.12);}
+.info-card-title{font-family:var(--font-main);font-size:1.3rem;font-weight:800;color:var(--gray);margin-bottom:6px;}
+[data-theme="dark"] .info-card-title{color:white;}
+.info-card-sub{font-size:.88rem;color:#888;margin-bottom:28px;line-height:1.6;}
+
+/* Contact info rows */
+.contact-row{
+  display:flex;align-items:flex-start;gap:16px;
+  padding:16px 0;
+  border-bottom:1px solid var(--border);
+}
+.contact-row:last-child{border-bottom:none;}
+.contact-row-icon{
+  width:44px;height:44px;flex-shrink:0;
+  background:rgba(255,87,34,.1);
+  border:1px solid rgba(255,87,34,.25);
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:2px;
+  transition:var(--transition);
+}
+.contact-row:hover .contact-row-icon{background:var(--orange);}
+.contact-row-icon svg{width:18px;height:18px;fill:var(--orange);transition:var(--transition);}
+.contact-row:hover .contact-row-icon svg{fill:white;}
+.contact-row-label{font-family:var(--font-main);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#aaa;margin-bottom:4px;}
+.contact-row-value{font-family:var(--font-main);font-size:.92rem;font-weight:600;color:var(--gray);line-height:1.45;}
+[data-theme="dark"] .contact-row-value{color:rgba(255,255,255,.85);}
+.contact-row-value a{color:var(--orange);text-decoration:none;transition:color .2s;}
+.contact-row-value a:hover{color:var(--orange-dark);}
+
+/* Social links row */
+.social-row{display:flex;gap:10px;margin-top:24px;}
+.soc-link{
+  width:38px;height:38px;
+  background:var(--orange);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  transition:var(--transition);
+}
+.soc-link:hover{transform:translateY(-3px);box-shadow:0 4px 14px rgba(255,87,34,.45);}
+.soc-link svg{width:16px;height:16px;fill:white;}
+
+/* Map card */
+.map-card{
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 8px 40px rgba(0,0,0,.07);
+  transition:var(--transition);
+}
+[data-theme="dark"] .map-card{background:#0d1f36;border-color:#1E2D42;}
+.map-card:hover{box-shadow:0 16px 56px rgba(0,0,0,.12);}
+.map-header{padding:18px 22px 14px;border-bottom:1px solid var(--border);}
+.map-header-title{font-family:var(--font-main);font-size:.88rem;font-weight:700;color:var(--gray);display:flex;align-items:center;gap:8px;}
+[data-theme="dark"] .map-header-title{color:rgba(255,255,255,.85);}
+.map-header-title::before{content:'';width:8px;height:8px;background:var(--orange);border-radius:50%;flex-shrink:0;animation:pulse 1.5s infinite;}
+.map-frame{
+  width:100%;height:260px;
+  background:linear-gradient(145deg,#1a2a40 0%,#0d1b30 100%);
+  position:relative;
+  overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+/* Stylised map canvas (pure CSS city grid) */
+.map-canvas{
+  position:absolute;inset:0;
+  background-color:#0e1c30;
+}
+/* Roads */
+.map-canvas::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,200,80,.1) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,200,80,.1) 1px,transparent 1px),
+    linear-gradient(rgba(255,200,80,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,200,80,.06) 1px,transparent 1px);
+  background-size:60px 60px,60px 60px,20px 20px,20px 20px;
+}
+/* City blocks */
+.map-canvas::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    radial-gradient(2px 2px at 30px 30px,rgba(0,150,255,.25) 0%,transparent 100%),
+    radial-gradient(2px 2px at 90px 60px,rgba(0,150,255,.2) 0%,transparent 100%),
+    radial-gradient(2px 2px at 150px 30px,rgba(0,150,255,.2) 0%,transparent 100%),
+    radial-gradient(2px 2px at 210px 90px,rgba(255,87,34,.3) 0%,transparent 100%),
+    radial-gradient(2px 2px at 270px 30px,rgba(0,150,255,.2) 0%,transparent 100%);
+  background-size:300px 120px;
+}
+/* Map pin marker */
+.map-pin{
+  position:relative;z-index:5;
+  display:flex;flex-direction:column;align-items:center;
+  animation:pinBounce 2s ease-in-out infinite;
+}
+@keyframes pinBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.map-pin-dot{
+  width:44px;height:44px;
+  background:linear-gradient(135deg,var(--orange),var(--orange-dark));
+  border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);
+  box-shadow:0 4px 20px rgba(255,87,34,.6);
+  display:flex;align-items:center;justify-content:center;
+  border:3px solid white;
+}
+.map-pin-dot svg{transform:rotate(45deg);width:18px;height:18px;fill:white;}
+.map-pin-line{width:2px;height:14px;background:rgba(255,87,34,.5);margin-top:2px;}
+.map-pin-pulse{
+  position:absolute;
+  bottom:-8px;
+  width:50px;height:14px;
+  background:radial-gradient(ellipse 50% 7px at 50% 100%,rgba(255,87,34,.35),transparent);
+  border-radius:50%;
+}
+.map-label{
+  position:absolute;
+  top:14px;right:14px;
+  background:rgba(0,0,0,.55);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:8px;
+  padding:6px 12px;
+  font-family:var(--font-main);
+  font-size:.72rem;
+  font-weight:700;
+  color:rgba(255,255,255,.85);
+  backdrop-filter:blur(8px);
+  z-index:6;
+}
+.map-footer{padding:14px 22px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.map-addr{font-size:.8rem;color:#888;font-family:var(--font-main);}
+.map-open-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--orange);color:white;
+  padding:7px 16px;border-radius:7px;
+  font-family:var(--font-main);font-size:.75rem;font-weight:700;
+  transition:var(--transition);text-decoration:none;
+}
+.map-open-btn:hover{background:var(--orange-dark);transform:translateY(-1px);}
+.map-open-btn svg{width:12px;height:12px;fill:white;}
+
+/* ── Office hours strip inside info card ── */
+.hours-strip{
+  background:var(--light-bg);
+  border-radius:12px;
+  padding:16px 18px;
+  margin-top:20px;
+  border:1px solid var(--border);
+}
+[data-theme="dark"] .hours-strip{background:rgba(255,255,255,.04);border-color:#1E2D42;}
+.hours-strip-title{font-family:var(--font-main);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--orange);margin-bottom:10px;}
+.hours-row{display:flex;justify-content:space-between;font-size:.82rem;padding:5px 0;color:#777;}
+[data-theme="dark"] .hours-row{color:rgba(255,255,255,.6);}
+.hours-row .day{font-weight:600;color:var(--gray);}
+[data-theme="dark"] .hours-row .day{color:rgba(255,255,255,.82);}
+.hours-badge{
+  background:rgba(255,87,34,.12);color:var(--orange);
+  font-family:var(--font-main);font-size:.68rem;font-weight:700;
+  padding:2px 8px;border-radius:100px;
+}
+.closed-badge{background:rgba(200,200,200,.15);color:#aaa;}
+
+/* ============================================================
+   WHY US — 3-COLUMN TRUST CARDS
+============================================================ */
+.trust-section{padding:80px 0;background:var(--light-bg);}
+.section-inner{max-width:1280px;margin:0 auto;padding:0 24px;}
+.section-label{text-align:center;display:inline-block;width:100%;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:12px;font-family:var(--font-main);}
+.section-title{text-align:center;font-family:var(--font-main);font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;color:var(--gray);line-height:1.2;margin-bottom:14px;}
+[data-theme="dark"] .section-title{color:white;}
+.section-sub{text-align:center;font-size:1rem;color:#888;max-width:560px;margin:0 auto 52px;line-height:1.75;}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.trust-card{
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius);
+  padding:36px 28px;
+  text-align:center;
+  transition:var(--transition);
+  box-shadow:var(--shadow-card);
+  position:relative;
+  overflow:hidden;
+}
+[data-theme="dark"] .trust-card{background:#0d1f36;border-color:#1E2D42;}
+.trust-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--orange);transform:scaleX(0);transition:var(--transition);}
+.trust-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,.12);border-color:var(--orange);}
+.trust-card:hover::before{transform:scaleX(1);}
+.trust-icon{
+  width:64px;height:64px;
+  border:2px solid var(--orange);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+  transition:var(--transition);
+}
+.trust-card:hover .trust-icon{background:var(--orange);}
+.trust-icon svg{width:28px;height:28px;fill:none;stroke:var(--orange);stroke-width:1.8;transition:var(--transition);}
+.trust-card:hover .trust-icon svg{stroke:white;}
+.trust-title{font-family:var(--font-main);font-size:1rem;font-weight:700;color:var(--gray);margin-bottom:10px;}
+[data-theme="dark"] .trust-title{color:white;}
+.trust-desc{font-size:.85rem;color:#777;line-height:1.7;}
+
+/* ============================================================
+   ACTION BANNER
+============================================================ */
+.action-banner{background:linear-gradient(135deg,var(--navy-2) 0%,var(--royal) 100%);padding:52px 0 46px;position:relative;overflow:hidden;}
+.action-banner::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:50px 50px;}
+.banner-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;position:relative;z-index:2;}
+.banner-headline{font-family:var(--font-main);font-size:clamp(1.4rem,3vw,2.1rem);font-weight:800;color:white;margin-bottom:8px;}
+.banner-sub{font-size:.9rem;color:rgba(255,255,255,.65);max-width:500px;line-height:1.65;}
+.banner-btn{
+  background:var(--orange-dark);color:white;padding:15px 34px;border-radius:10px;
+  font-family:var(--font-main);font-weight:700;font-size:.94rem;flex-shrink:0;
+  transition:var(--transition);
+  box-shadow:0 6px 0 rgba(0,0,0,.25),0 8px 24px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.15);
+  display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+}
+.banner-btn:hover{background:var(--orange);transform:translateY(-3px);}
+.banner-btn svg{width:18px;height:18px;fill:white;}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+.footer{background:var(--navy);color:rgba(255,255,255,.75);padding:70px 0 0;}
+.footer-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:48px;}
+.footer-brand p{font-size:.88rem;line-height:1.7;color:rgba(255,255,255,.55);margin:16px 0 24px;max-width:280px;}
+.footer-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-main);font-size:1.2rem;font-weight:800;color:white;}
+.footer-logo span{color:var(--orange);}
+.footer-socials{display:flex;gap:10px;margin-bottom:24px;}
+.footer-social{width:36px;height:36px;border-radius:8px;background:var(--orange);display:flex;align-items:center;justify-content:center;transition:var(--transition);}
+.footer-social:hover{transform:translateY(-3px);box-shadow:0 4px 14px rgba(255,87,34,.45);}
+.footer-social svg{width:16px;height:16px;fill:white;}
+.footer-contact-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:.85rem;color:rgba(255,255,255,.65);}
+.footer-contact-item svg{width:15px;height:15px;fill:var(--orange);flex-shrink:0;margin-top:2px;}
+.footer-col-title{font-family:var(--font-main);font-size:.95rem;font-weight:700;color:white;margin-bottom:20px;position:relative;padding-bottom:12px;}
+.footer-col-title::after{content:'';position:absolute;bottom:0;left:0;width:32px;height:2px;background:var(--orange);}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-links a{display:flex;align-items:center;gap:8px;font-size:.87rem;color:rgba(255,255,255,.6);transition:var(--transition);}
+.footer-links a::before{content:'›';color:var(--orange);font-size:1.1rem;}
+.footer-links a:hover{color:white;padding-left:4px;}
+.hours-item{display:flex;justify-content:space-between;font-size:.87rem;color:rgba(255,255,255,.6);padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);}
+.hours-item:last-child{border-bottom:none;}
+.hours-item span:first-child{color:rgba(255,255,255,.85);font-weight:500;}
+.hours-status{font-size:.75rem;color:var(--orange);font-weight:600;}
+.payment-logos{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.payment-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:10px 14px;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:8px;}
+.footer-bottom{margin-top:50px;border-top:1px solid rgba(255,255,255,.08);padding:20px 24px;max-width:1280px;margin-left:auto;margin-right:auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.footer-bottom p{font-size:.82rem;color:rgba(255,255,255,.4);}
+.footer-bottom a{color:var(--orange);}
+
+/* ============================================================
+   FLOATING WIDGETS
+============================================================ */
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media(max-width:960px){
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);}
+  .footer-inner{grid-template-columns:1fr 1fr;}
+  .hero-content{padding:0 24px;}
+  .contact-grid{grid-template-columns:1fr;gap:32px;}
+  .trust-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:640px){
+  .form-row{grid-template-columns:1fr;}
+  .trust-grid{grid-template-columns:1fr;}
+  .footer-inner{grid-template-columns:1fr;}
+  .banner-inner{flex-direction:column;}
+  .stats-inner{grid-template-columns:1fr 1fr;}
+  .hero-cta-row{flex-direction:column;align-items:center;}
+}
+/* dark mode */
+[data-theme="dark"] .mega-menu{background:#0d1f36;border-color:#1E2D42;}
+[data-theme="dark"] .mega-link{color:rgba(255,255,255,.85);}
+[data-theme="dark"] .mega-link:hover{background:rgba(255,87,34,.12);color:var(--orange);}
+[data-theme="dark"] .mega-col-title{color:#666;}
+[data-theme="dark"] .support-popup{background:#0d1f36;border-color:#1E2D42;}
+[data-theme="dark"] .popup-msg{background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);}
+[data-theme="dark"] .popup-action-btn{background:#0d1f36;border-color:#1E2D42;color:rgba(255,255,255,.7);}
+[data-theme="dark"] .popup-action-btn:hover{border-color:var(--orange);background:rgba(255,87,34,.08);}
+[data-theme="dark"] .whatsapp-label{background:#0d1f36;color:rgba(255,255,255,.8);}
+</style>
+</head>
+<body>
+
+<!-- PRE-HEADER -->
+<div class="pre-header">
+  <div class="inner">
+    <div class="info">
+      <span>
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        Harare, Zimbabwe
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        +263 786095590
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        hakhesatechnologies@gmail.com
+      </span>
+    </div>
+    <div class="pre-socials">
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" fill="none" stroke="white" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN NAVIGATION -->
+<nav class="main-nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      Hakhesa<span>Tech</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="domains.html">Domains</a></li>
+      <li>
+        <a href="#">Hosting <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></a>
+        <div class="mega-menu">
+          <div class="mega-menu-grid cols-1">
+            <div class="mega-col">
+              <div class="mega-col-title">Hosting Services</div>
+              <a href="#" class="mega-link"><svg viewBox="0 0 24 24"><path d="M5 12H3l9-9 9 9h-2M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>Web Hosting<span class="mega-link-sub">Fast, reliable shared hosting</span></a>
+              <a href="#" class="mega-link"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email Hosting<span class="mega-link-sub">Professional business emails</span></a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <a href="#">Design <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></a>
+        <div class="mega-menu">
+          <div class="mega-menu-grid cols-2">
+            <div class="mega-col">
+              <div class="mega-col-title">Web Solutions</div>
+              <a href="#" class="mega-link"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Website Design<span class="mega-link-sub">Custom, modern websites</span></a>
+              <a href="#" class="mega-link"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Custom Software<span class="mega-link-sub">Tailored business systems</span></a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-title">Advanced Tech</div>
+              <a href="#" class="mega-link"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>Mobile &amp; Web Apps<span class="mega-link-sub">iOS, Android &amp; PWA</span></a>
+              <a href="#" class="mega-link"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>AI Solutions<span class="mega-link-sub">Smart automation &amp; AI tools</span></a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <a href="#">Pricing <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></a>
+        <div class="mega-menu" style="left:auto;right:-80px;transform:translateX(0);">
+          <div class="mega-menu-grid cols-3">
+            <div class="mega-col">
+              <div class="mega-col-title">Buy Domain</div>
+              <a href="#" class="mega-link" style="flex-direction:column;align-items:flex-start;">.co.zw<span class="mega-link-sub">Zimbabwe local domain</span></a>
+              <a href="#" class="mega-link" style="flex-direction:column;align-items:flex-start;">.com<span class="mega-link-sub">Global standard domain</span></a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-title">Hosting</div>
+              <a href="#" class="mega-link" style="flex-direction:column;align-items:flex-start;">Web Hosting<span class="mega-link-sub">From $25/year</span></a>
+              <a href="#" class="mega-link" style="flex-direction:column;align-items:flex-start;">Email Hosting<span class="mega-link-sub">Professional emails</span></a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-title">Design</div>
+              <a href="#" class="mega-link" style="flex-direction:column;align-items:flex-start;">Website Design<span class="mega-link-sub">From $120</span></a>
+              <a href="#" class="mega-link" style="flex-direction:column;align-items:flex-start;">Custom Software<span class="mega-link-sub">Tailored systems</span></a>
+              <a href="#" class="mega-link" style="flex-direction:column;align-items:flex-start;">Mobile &amp; Web Apps<span class="mega-link-sub">Cross-platform apps</span></a>
+              <a href="#" class="mega-link" style="flex-direction:column;align-items:flex-start;">AI Solutions<span class="mega-link-sub">AI-powered tools</span></a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="active"><a href="#">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
+        <svg id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <a href="#contact-form" class="nav-cta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Get a Quote
+      </a>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Home</a>
+  <a href="domains.html">🌐 Domains</a>
+  <a href="#">🖥️ Web Hosting</a>
+  <a href="#">📧 Email Hosting</a>
+  <a href="#">🎨 Website Design</a>
+  <a href="#">💻 Custom Software</a>
+  <a href="#">📱 Mobile &amp; Web Apps</a>
+  <a href="#">🤖 AI Solutions</a>
+  <a href="#">💰 Pricing</a>
+  <a href="#">📞 Contact</a>
+</div>
+
+<!-- ============================================================
+   HERO SECTION
+============================================================ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="bokeh b1"></div>
+    <div class="bokeh b2"></div>
+    <div class="bokeh b3"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-scanline"></div>
+  </div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">/</span>
+      <span class="current">Contact Us</span>
+    </div>
+    <div class="hero-badge">📞 We're Here to Help — Always</div>
+    <h1 class="hero-title">Ready to Launch Your<br><em>Next Big Project?</em></h1>
+    <p class="hero-sub">From .co.zw domain registration and secure hosting to custom software and mobile apps, we build the digital foundation your business deserves. Let's talk.</p>
+    <div class="hero-cta-row">
+      <a href="#contact-form" class="btn-primary">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Send Us a Message
+      </a>
+      <a href="https://wa.me/263786095590" target="_blank" rel="noopener" class="btn-outline">
+        💬 WhatsApp Us Now
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+      <div><div class="stat-num">&lt; 1hr</div><div class="stat-label">Average Email Reply</div></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <div><div class="stat-num">500+</div><div class="stat-label">Clients Helped</div></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.9 12a19.79 19.79 0 01-3-8.61A2 2 0 012.88 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+      <div><div class="stat-num">24/7</div><div class="stat-label">WhatsApp Support</div></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div><div class="stat-num">100%</div><div class="stat-label">Client Satisfaction</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+   CONTACT SECTION — FORM + DETAILS
+============================================================ -->
+<section class="contact-section" id="contact-form">
+  <div class="contact-inner">
+
+    <div class="contact-header">
+      <span class="section-label">Get in Touch</span>
+      <h2>Contact Us for Web Design &amp;<br>Hosting Queries</h2>
+      <p>Whether you need a new website, a .co.zw domain, secure hosting, or a full custom software solution — our team is ready to help you build it right.</p>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- ── LEFT: FORM ── -->
+      <div class="form-card">
+        <div class="form-title">Ready to Start Your Project?</div>
+        <p class="form-subtitle">Fill in the form below and we'll get back to you within 1 business hour.</p>
+
+        <form id="contactForm" novalidate>
+          <!-- Name + Email row -->
+          <div class="form-row">
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" for="name">Your Name *</label>
+              <input class="form-input" type="text" id="name" placeholder="e.g. Tendai Moyo" required>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" for="email">Your Email *</label>
+              <input class="form-input" type="email" id="email" placeholder="you@company.com" required>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group">
+            <label class="form-label" for="phone">Your Phone</label>
+            <input class="form-input" type="tel" id="phone" placeholder="+263 7XX XXX XXX">
+          </div>
+
+          <!-- Subject -->
+          <div class="form-group">
+            <label class="form-label" for="subject">Subject *</label>
+            <select class="form-select" id="subject" required>
+              <option value="" disabled selected>Select a service...</option>
+              <option>Domain Registration (.co.zw / .com)</option>
+              <option>Web Hosting</option>
+              <option>Email Hosting</option>
+              <option>Website Design</option>
+              <option>Custom Software Development</option>
+              <option>Mobile &amp; Web App Development</option>
+              <option>AI &amp; Machine Learning</option>
+              <option>General Enquiry</option>
+              <option>Get a Quote</option>
+            </select>
+          </div>
+
+          <!-- Services of interest -->
+          <div class="form-group">
+            <label class="form-label">Services of Interest (select all that apply)</label>
+            <div class="service-tags">
+              <span class="service-tag" onclick="toggleTag(this)">🌐 Domains</span>
+              <span class="service-tag" onclick="toggleTag(this)">🖥️ Hosting</span>
+              <span class="service-tag" onclick="toggleTag(this)">📧 Email</span>
+              <span class="service-tag" onclick="toggleTag(this)">🎨 Web Design</span>
+              <span class="service-tag" onclick="toggleTag(this)">💻 Software</span>
+              <span class="service-tag" onclick="toggleTag(this)">📱 Mobile App</span>
+              <span class="service-tag" onclick="toggleTag(this)">🤖 AI Solutions</span>
+            </div>
+          </div>
+
+          <!-- Budget range -->
+          <div class="form-group">
+            <label class="form-label" for="budget">Estimated Budget</label>
+            <select class="form-select" id="budget">
+              <option value="" disabled selected>Select a range...</option>
+              <option>Under $100</option>
+              <option>$100 – $300</option>
+              <option>$300 – $500</option>
+              <option>$500 – $1,000</option>
+              <option>$1,000 – $5,000</option>
+              <option>$5,000+</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+
+          <!-- Message -->
+          <div class="form-group">
+            <label class="form-label" for="message">Tell Us More *</label>
+            <textarea class="form-textarea" id="message" placeholder="Describe your project, goals, or questions. The more detail you share, the better we can help..." required></textarea>
+          </div>
+
+          <!-- Submit -->
+          <button class="submit-btn" type="submit" id="submitBtn">
+            <span class="btn-text" style="display:flex;align-items:center;gap:10px;">
+              <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+              Send Message
+            </span>
+            <span class="spinner"></span>
+          </button>
+        </form>
+      </div>
+
+      <!-- ── RIGHT: DETAILS + MAP ── -->
+      <div class="details-col">
+
+        <div class="info-card">
+          <div class="info-card-title">Our Contact Details</div>
+          <p class="info-card-sub">Reach us through any channel that works best for you. We're a Harare-based team with fast response times.</p>
+
+          <div class="contact-row">
+            <div class="contact-row-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <div>
+              <div class="contact-row-label">Location</div>
+              <div class="contact-row-value">Harare, Zimbabwe<br><span style="font-size:.8rem;color:#aaa;font-weight:400;">Serving clients across Zimbabwe &amp; beyond</span></div>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="contact-row-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.9 12a19.79 19.79 0 01-3-8.61A2 2 0 012.88 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="contact-row-label">Phone / WhatsApp</div>
+              <div class="contact-row-value">
+                <a href="tel:+263786095590">+263 786 095 590</a><br>
+                <a href="https://wa.me/263786095590" target="_blank" style="font-size:.8rem;color:#25D366;">💬 WhatsApp available 24/7</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="contact-row-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-row-label">Email</div>
+              <div class="contact-row-value">
+                <a href="mailto:hakhesatechnologies@gmail.com">hakhesatechnologies@gmail.com</a><br>
+                <span style="font-size:.8rem;color:#aaa;font-weight:400;">Replies within 1 business hour</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social links -->
+          <div class="social-row">
+            <a class="soc-link" href="#" title="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+            <a class="soc-link" href="#" title="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+            <a class="soc-link" href="#" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a class="soc-link" href="#" title="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg></a>
+          </div>
+
+          <!-- Office hours -->
+          <div class="hours-strip">
+            <div class="hours-strip-title">🕐 Business Hours</div>
+            <div class="hours-row"><span class="day">Mon – Fri</span><span>07:00 am – 05:00 pm <span class="hours-badge">Open</span></span></div>
+            <div class="hours-row"><span class="day">Saturday</span><span><span class="hours-badge closed-badge">Closed</span></span></div>
+            <div class="hours-row"><span class="day">Sunday</span><span><span class="hours-badge closed-badge">Closed</span></span></div>
+          </div>
+        </div>
+
+        <!-- Map card -->
+        <div class="map-card">
+          <div class="map-header">
+            <div class="map-header-title">Hakhesa Technologies — Harare, Zimbabwe</div>
+          </div>
+          <div class="map-frame">
+            <div class="map-canvas"></div>
+            <div class="map-label">📍 Harare, Zimbabwe</div>
+            <div class="map-pin">
+              <div class="map-pin-dot">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+              </div>
+              <div class="map-pin-line"></div>
+              <div class="map-pin-pulse"></div>
+            </div>
+          </div>
+          <div class="map-footer">
+            <span class="map-addr">📍 Harare, Zimbabwe</span>
+            <a href="https://maps.google.com/?q=Harare,Zimbabwe" target="_blank" rel="noopener" class="map-open-btn">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+              Open in Maps
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /details-col -->
+    </div><!-- /contact-grid -->
+  </div>
+</section>
+
+<!-- ============================================================
+   WHY WORK WITH US — TRUST CARDS
+============================================================ -->
+<section class="trust-section">
+  <div class="section-inner">
+    <div class="section-label">Why Choose Hakhesa</div>
+    <h2 class="section-title">Why Businesses Across Zimbabwe<br>Choose Us</h2>
+    <p class="section-sub">More than a service provider — we're a long-term digital partner committed to your growth.</p>
+
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div class="trust-title">Fast Response Times</div>
+        <p class="trust-desc">We respond to emails within 1 business hour and WhatsApp messages around the clock. Your project never waits long.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="trust-title">Dedicated Local Team</div>
+        <p class="trust-desc">We're a Harare-based team that understands Zimbabwe's market, payment ecosystem, and business culture from the inside out.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="trust-title">Transparent Pricing</div>
+        <p class="trust-desc">No hidden fees. No surprises. We give you a clear, itemised quote before work begins — and we stick to it.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="trust-title">Proven Track Record</div>
+        <p class="trust-desc">Over 80 websites launched, 500+ clients served, and a portfolio spanning industries from construction to fintech across Zimbabwe.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <div class="trust-title">End-to-End Service</div>
+        <p class="trust-desc">Domain → hosting → design → software → AI: one team, one invoice, one point of contact for your entire digital stack.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div class="trust-title">Local Payment Options</div>
+        <p class="trust-desc">Pay via EcoCash USD, InnBucks, ZIPIT, or bank transfer. We make it friction-free for Zimbabwean businesses of every size.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTION BANNER -->
+<div class="action-banner">
+  <div class="banner-inner">
+    <div>
+      <div class="banner-headline">Don't Wait — Let's Build Something Great Together</div>
+      <div class="banner-sub">Join 500+ Zimbabwean businesses that have trusted Hakhesa Technologies to power their digital presence. Your project starts with a single message.</div>
+    </div>
+    <a href="#contact-form" class="banner-btn">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Start Your Project Today
+    </a>
+  </div>
+</div>
+
+<!-- ============================================================
+   FOOTER
+============================================================ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="logo-icon" style="width:36px;height:36px;">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:white;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        Hakhesa<span>Tech</span>
+      </div>
+      <p>Zimbabwe's trusted partner for website design, web hosting, domain registration, custom software, mobile apps, and AI-powered digital solutions.</p>
+      <div class="footer-socials">
+        <a class="footer-social" href="#"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+        <a class="footer-social" href="#"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+        <a class="footer-social" href="#"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a class="footer-social" href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg></a>
+      </div>
+      <div class="footer-contact-item"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Harare, Zimbabwe</div>
+      <div class="footer-contact-item"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>+263 786095590</div>
+      <div class="footer-contact-item"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>hakhesatechnologies@gmail.com</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Partners</a></li>
+        <li><a href="#">Blog &amp; News</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Business Hours</div>
+      <div class="hours-item"><span>Monday</span><span>07:00 - 17:00</span></div>
+      <div class="hours-item"><span>Tuesday</span><span>07:00 - 17:00</span></div>
+      <div class="hours-item"><span>Wednesday</span><span>07:00 - 17:00</span></div>
+      <div class="hours-item"><span>Thursday</span><span>07:00 - 17:00</span></div>
+      <div class="hours-item"><span>Friday</span><span>07:00 - 17:00</span></div>
+      <div class="hours-item"><span>Saturday</span><span class="hours-status">Closed</span></div>
+      <div class="hours-item"><span>Sunday</span><span class="hours-status">Closed</span></div>
+    </div>
+    <div>
+      <div class="footer-col-title">We Accept</div>
+      <p style="font-size:.82rem;color:rgba(255,255,255,.5);margin-bottom:16px;line-height:1.6;">Secure &amp; convenient payment options.</p>
+      <div class="payment-logos">
+        <div class="payment-chip"><svg viewBox="0 0 24 24" style="width:20px;height:20px;"><circle cx="12" cy="12" r="10" fill="#4CAF50"/><path d="M12 6v6l4 2" stroke="white" stroke-width="2" fill="none"/></svg>Ecocash USD</div>
+        <div class="payment-chip"><svg viewBox="0 0 24 24" style="width:20px;height:20px;"><rect x="1" y="4" width="22" height="16" rx="2" fill="#1565C0"/><path d="M1 10h22" stroke="white" stroke-width="2"/></svg>Paynow Zimbabwe</div>
+        <div class="payment-chip"><svg viewBox="0 0 24 24" style="width:20px;height:20px;"><rect x="1" y="4" width="22" height="16" rx="2" fill="#FF5722"/><path d="M7 15h3m4 0h3M7 11h10" stroke="white" stroke-width="1.5" fill="none"/></svg>Bank Transfer</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 <a href="#">Hakhesa Technologies</a>. All rights reserved. Built with ❤️ in Zimbabwe.</p>
+    <p><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Sitemap</a></p>
+  </div>
+</footer>
+
+
+<!-- ============================================================
+   JAVASCRIPT
+============================================================ -->
+<script src="widget-loader.js"></script>
+<script>
+// Theme Toggle
+const themeToggle = document.getElementById('themeToggle');
+const moonIcon = document.getElementById('moonIcon');
+const sunIcon  = document.getElementById('sunIcon');
+const htmlEl   = document.documentElement;
+themeToggle.addEventListener('click', () => {
+  const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+  htmlEl.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  moonIcon.style.display = isDark ? 'block' : 'none';
+  sunIcon.style.display  = isDark ? 'none' : 'block';
+});
+
+// Hamburger
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+
+// Nav shadow
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').style.boxShadow =
+    window.scrollY > 20 ? '0 4px 30px rgba(0,0,0,.15)' : '0 2px 20px rgba(0,0,0,.08)';
+});
+
+// Service tag toggle
+function toggleTag(el) {
+  el.classList.toggle('selected');
+}
+
+// ── Contact Form Submit ──────────────────────────────────────
+const form = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const toast = document.getElementById('successToast');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name    = document.getElementById('name').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const subject = document.getElementById('subject').value;
+  const message = document.getElementById('message').value.trim();
+
+  if (!name || !email || !subject || !message) {
+    // Shake required fields
+    [document.getElementById('name'), document.getElementById('email'),
+     document.getElementById('subject'), document.getElementById('message')].forEach(field => {
+      if (!field.value.trim()) {
+        field.style.borderColor = 'var(--orange)';
+        field.style.boxShadow = '0 0 0 3px rgba(255,87,34,.2)';
+        setTimeout(() => {
+          field.style.borderColor = '';
+          field.style.boxShadow = '';
+        }, 2500);
+      }
+    });
+    return;
+  }
+
+  // Loading state
+  submitBtn.classList.add('loading');
+  submitBtn.disabled = true;
+
+  setTimeout(() => {
+    submitBtn.classList.remove('loading');
+    submitBtn.disabled = false;
+    // Reset form
+    form.reset();
+    document.querySelectorAll('.service-tag.selected').forEach(t => t.classList.remove('selected'));
+    // Show toast
+    toast.classList.add('visible');
+    setTimeout(() => toast.classList.remove('visible'), 4500);
+  }, 1800);
+});
+
+// Auto-clear error styles on input
+document.querySelectorAll('.form-input,.form-textarea,.form-select').forEach(el => {
+  el.addEventListener('input', () => {
+    el.style.borderColor = '';
+    el.style.boxShadow = '';
+  });
+});
+
+// Support Popup
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1971 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>painting — Cedric Construction Services</title>
+
+  <!--
+    THEME INIT — MUST be first, before any stylesheet.
+    about.html was MISSING this entirely — that's why dark mode
+    caused a white flash every time you navigated to this page.
+  -->
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Dark mode overrides for ALL page sections -->
+  <link rel="stylesheet" href="/assets/css/dark-mode.css">
+  <link rel="stylesheet" href="/assets/css/mobile-fixes.css">
+
+  <style>
+    #header-placeholder,
+    #footer-placeholder {
+      display: block;
+      width: 100%;
+    }
+  </style>
+
+  <script src="/assets/js/hero-engine.js"></script>
+  <script src="/assets/js/component.js" defer></script>
+</head>
+
+<body>
+  <div id="header-placeholder" style="position:sticky;top:0;z-index:1000;"></div>
+  <div id="hero-placeholder"></div>
+  <!--
+  ================================================================
+  CEDRIC CONSTRUCTION — PAINTING & PLASTERING SERVICES SECTION
+  Paste between #hero-placeholder and the footer in painting.html.
+  Dark mode: reacts to data-theme on <html> via CSS vars.
+  ================================================================
+-->
+
+  <style>
+    /* ── Site var inheritance + local fallbacks ──────────────────── */
+    :root {
+      --pp-gold: #D4AF37;
+      --pp-gold-dark: #b8941e;
+      --pp-gold-light: rgba(212, 175, 55, .10);
+      --pp-charcoal: #2D2D2D;
+      --pp-white: #FFFFFF;
+      --pp-light: #F7F7F5;
+      --pp-border: #E8E8E4;
+      --pp-orange: var(--orange, #FF5722);
+      --pp-navy: var(--navy, #0A192F);
+      --pp-navy-2: var(--navy-2, #002366);
+      --pp-font-main: var(--font-main, 'Poppins', sans-serif);
+      --pp-font-body: var(--font-body, 'DM Sans', sans-serif);
+      --pp-transition: var(--transition, 0.32s cubic-bezier(.4, 0, .2, 1));
+      /* Theme-aware tokens */
+      --pp-surface: #FFFFFF;
+      --pp-surface-alt: #F7F7F5;
+      --pp-text: #2D2D2D;
+      --pp-text-muted: #666666;
+      --pp-card-border: #E8E8E4;
+    }
+
+    [data-theme="dark"] {
+      --pp-surface: #0A192F;
+      --pp-surface-alt: #07111F;
+      --pp-text: #E8ECF0;
+      --pp-text-muted: rgba(255, 255, 255, .52);
+      --pp-card-border: #1E2D42;
+      --pp-border: #1E2D42;
+      --pp-light: #07111F;
+      --pp-gold-light: rgba(212, 175, 55, .08);
+    }
+
+    /* ── BASE ────────────────────────────────────────────────────── */
+    .pp-page {
+      font-family: var(--pp-font-body);
+    }
+
+    /* ── INTRO SECTION ───────────────────────────────────────────── */
+    .pp-intro {
+      background: var(--pp-surface);
+      padding: 80px 0 64px;
+      transition: background var(--pp-transition);
+    }
+
+    .pp-intro-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    /* Left: text */
+    .pp-intro-text {}
+
+    .pp-intro-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--pp-font-main);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--pp-gold);
+      margin-bottom: 18px;
+    }
+
+    .pp-intro-eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 3px;
+      background: var(--pp-gold);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .pp-intro-heading {
+      font-family: var(--pp-font-main);
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      font-weight: 800;
+      color: var(--pp-text);
+      line-height: 1.1;
+      margin: 0 0 8px;
+      transition: color var(--pp-transition);
+    }
+
+    .pp-intro-heading em {
+      font-style: italic;
+      color: var(--pp-gold);
+    }
+
+    /* 60px gold underline below heading */
+    .pp-intro-heading-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
+    }
+
+    .pp-intro-heading-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--pp-gold);
+      border-radius: 2px;
+    }
+
+    .pp-intro-body {
+      font-size: 1rem;
+      color: var(--pp-text-muted);
+      line-height: 1.85;
+      margin: 0;
+      transition: color var(--pp-transition);
+    }
+
+    /* Right: accent panel */
+    .pp-intro-panel {
+      background: var(--pp-surface-alt);
+      border: 1.5px solid var(--pp-card-border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: background var(--pp-transition), border-color var(--pp-transition);
+    }
+
+    .pp-intro-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--pp-gold), var(--pp-gold-dark), #f0d060, var(--pp-gold));
+      background-size: 300% 100%;
+      animation: ppShimmer 3.5s linear infinite;
+    }
+
+    @keyframes ppShimmer {
+      0% {
+        background-position: 0% center;
+      }
+
+      100% {
+        background-position: 300% center;
+      }
+    }
+
+    .pp-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .pp-stat {
+      text-align: center;
+    }
+
+    .pp-stat-num {
+      display: block;
+      font-family: var(--pp-font-main);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--pp-gold);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .pp-stat-label {
+      font-family: var(--pp-font-main);
+      font-size: .74rem;
+      font-weight: 600;
+      color: var(--pp-text-muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      transition: color var(--pp-transition);
+    }
+
+    .pp-intro-guarantee {
+      background: var(--pp-gold-light);
+      border: 1px solid rgba(212, 175, 55, .25);
+      border-radius: 12px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .pp-guarantee-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      background: rgba(212, 175, 55, .15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pp-guarantee-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--pp-gold);
+    }
+
+    .pp-guarantee-text p {
+      font-family: var(--pp-font-main);
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--pp-text);
+      margin: 0 0 2px;
+      transition: color var(--pp-transition);
+    }
+
+    .pp-guarantee-text span {
+      font-size: .76rem;
+      color: var(--pp-text-muted);
+      transition: color var(--pp-transition);
+    }
+
+    /* ── SERVICE BLOCKS ──────────────────────────────────────────── */
+    .pp-services {
+      background: var(--pp-surface);
+      padding: 0 0 80px;
+      transition: background var(--pp-transition);
+    }
+
+    .pp-services-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Category divider */
+    .pp-cat-divider {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 56px 0 0;
+      margin-bottom: 52px;
+      border-top: 1px solid var(--pp-card-border);
+      transition: border-color var(--pp-transition);
+    }
+
+    .pp-cat-divider:first-child {
+      border-top: none;
+    }
+
+    .pp-cat-divider h2 {
+      font-family: var(--pp-font-main);
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 800;
+      color: var(--pp-text);
+      white-space: nowrap;
+      margin: 0;
+      transition: color var(--pp-transition);
+    }
+
+    .pp-cat-line {
+      flex: 1;
+      height: 1px;
+      background: var(--pp-card-border);
+      transition: background var(--pp-transition);
+    }
+
+    .pp-cat-badge {
+      background: var(--pp-gold-light);
+      border: 1px solid rgba(212, 175, 55, .28);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-family: var(--pp-font-main);
+      font-size: .69rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--pp-gold);
+      white-space: nowrap;
+    }
+
+    /* ── Z-pattern block ── */
+    .pp-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-bottom: 80px;
+      /* Scroll reveal initial state */
+      opacity: 0;
+      transform: translateY(44px);
+      transition:
+        opacity .7s ease,
+        transform .7s ease;
+    }
+
+    .pp-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .pp-block.pp-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Flip: text left, image right */
+    .pp-block--flip .pp-block-img {
+      order: 2;
+    }
+
+    .pp-block--flip .pp-block-text {
+      order: 1;
+    }
+
+    /* ── IMAGE side ── */
+    .pp-block-img {}
+
+    .pp-img-frame {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      box-shadow:
+        0 4px 6px rgba(0, 0, 0, .04),
+        0 12px 32px rgba(0, 0, 0, .10),
+        0 32px 64px rgba(0, 0, 0, .08);
+      line-height: 0;
+      transition: transform .36s cubic-bezier(.4, 0, .2, 1),
+        box-shadow .36s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .pp-img-frame:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow:
+        0 8px 12px rgba(0, 0, 0, .06),
+        0 24px 56px rgba(0, 0, 0, .14),
+        0 48px 80px rgba(0, 0, 0, .10);
+    }
+
+    .pp-img-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .pp-img-frame:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Gold corner accent */
+    .pp-img-frame::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 90px;
+      height: 90px;
+      background: linear-gradient(135deg, transparent 50%, rgba(212, 175, 55, .2) 50%);
+      border-radius: 0 0 18px 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Service type label floating on image */
+    .pp-img-label {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 2;
+      background: rgba(10, 25, 47, .75);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(212, 175, 55, .28);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-family: var(--pp-font-main);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .9);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .pp-img-label svg {
+      width: 13px;
+      height: 13px;
+      fill: var(--pp-gold);
+    }
+
+    /* ── TEXT side ── */
+    .pp-block-text {}
+
+    .pp-block-service-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--pp-font-main);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--pp-gold);
+      margin-bottom: 14px;
+    }
+
+    .pp-block-service-label svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--pp-gold);
+    }
+
+    /* Block heading with 60px gold underline (spec: 4px solid) */
+    .pp-block-heading {
+      font-family: var(--pp-font-main);
+      font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+      font-weight: 800;
+      color: var(--pp-text);
+      line-height: 1.14;
+      margin: 0 0 14px;
+      padding-bottom: 16px;
+      position: relative;
+      transition: color var(--pp-transition);
+    }
+
+    .pp-block-heading::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--pp-gold);
+      border-radius: 2px;
+    }
+
+    .pp-block-desc {
+      font-size: .95rem;
+      color: var(--pp-text-muted);
+      line-height: 1.82;
+      margin: 0 0 28px;
+      transition: color var(--pp-transition);
+    }
+
+    /* Gold-bullet service list */
+    .pp-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .pp-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--pp-card-border);
+      transition: border-color var(--pp-transition);
+    }
+
+    .pp-list li:last-child {
+      border-bottom: none;
+    }
+
+    .pp-bullet {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      flex-shrink: 0;
+      background: var(--pp-gold-light);
+      border: 1.5px solid rgba(212, 175, 55, .25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+      transition: background var(--pp-transition), border-color var(--pp-transition),
+        transform var(--pp-transition);
+    }
+
+    .pp-list li:hover .pp-bullet {
+      background: var(--pp-gold);
+      border-color: var(--pp-gold);
+      transform: scale(1.08);
+    }
+
+    .pp-bullet svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .pp-bullet svg path {
+      stroke: var(--pp-gold);
+      transition: stroke var(--pp-transition);
+    }
+
+    .pp-list li:hover .pp-bullet svg path {
+      stroke: #fff;
+    }
+
+    .pp-list-content {}
+
+    .pp-list-title {
+      font-family: var(--pp-font-main);
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--pp-text);
+      margin-bottom: 3px;
+      transition: color var(--pp-transition);
+    }
+
+    .pp-list-sub {
+      font-size: .82rem;
+      color: var(--pp-text-muted);
+      line-height: 1.55;
+      transition: color var(--pp-transition);
+    }
+
+    /* CTA button — permanently visible, solid bg, scale on hover */
+    .pp-quote-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--pp-gold);
+      color: var(--pp-charcoal);
+      padding: 14px 30px;
+      border-radius: 10px;
+      font-family: var(--pp-font-main);
+      font-weight: 700;
+      font-size: .9rem;
+      border: none;
+      cursor: pointer;
+      letter-spacing: .01em;
+      box-shadow: 0 4px 18px rgba(212, 175, 55, .32), 0 4px 0 rgba(100, 80, 0, .14);
+      transition: transform .22s cubic-bezier(.4, 0, .2, 1),
+        box-shadow .22s cubic-bezier(.4, 0, .2, 1),
+        background .22s ease, color .22s ease;
+      text-decoration: none;
+    }
+
+    .pp-quote-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 28px rgba(212, 175, 55, .48), 0 6px 0 rgba(100, 80, 0, .12);
+      background: var(--pp-gold-dark);
+    }
+
+    .pp-quote-btn:active {
+      transform: scale(0.98);
+    }
+
+    .pp-quote-btn svg {
+      width: 17px;
+      height: 17px;
+      transition: transform .22s ease;
+    }
+
+    .pp-quote-btn:hover svg {
+      transform: translateX(3px);
+    }
+
+    /* ── PROCESS STRIP ───────────────────────────────────────────── */
+    .pp-process {
+      background: var(--pp-surface-alt);
+      padding: 72px 0;
+      transition: background var(--pp-transition);
+    }
+
+    .pp-process-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .pp-process-header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+
+    .pp-process-header h2 {
+      font-family: var(--pp-font-main);
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800;
+      color: var(--pp-text);
+      margin: 0 0 8px;
+      transition: color var(--pp-transition);
+    }
+
+    .pp-process-header p {
+      font-size: .93rem;
+      color: var(--pp-text-muted);
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto;
+      transition: color var(--pp-transition);
+    }
+
+    .pp-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    /* Connecting line */
+    .pp-steps::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: calc(12.5% + 14px);
+      right: calc(12.5% + 14px);
+      height: 2px;
+      background: var(--pp-card-border);
+      transition: background var(--pp-transition);
+      z-index: 0;
+    }
+
+    .pp-step {
+      text-align: center;
+      padding: 0 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pp-step-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--pp-surface);
+      border: 2px solid var(--pp-card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      font-family: var(--pp-font-main);
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--pp-text-muted);
+      transition: background var(--pp-transition), border-color var(--pp-transition),
+        color var(--pp-transition);
+    }
+
+    .pp-step:hover .pp-step-num {
+      background: var(--pp-gold);
+      border-color: var(--pp-gold);
+      color: #fff;
+    }
+
+    .pp-step-title {
+      font-family: var(--pp-font-main);
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--pp-text);
+      margin-bottom: 6px;
+      transition: color var(--pp-transition);
+    }
+
+    .pp-step-sub {
+      font-size: .8rem;
+      color: var(--pp-text-muted);
+      line-height: 1.6;
+      transition: color var(--pp-transition);
+    }
+
+    .t-cta {
+      background: var(--light-bg);
+      padding: 80px 0;
+    }
+
+    [data-theme="dark"] .t-cta {
+      background: #0d1f36;
+    }
+
+    .t-cta-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+      text-align: center;
+    }
+
+    .t-cta h2 {
+      font-family: var(--font-main);
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: var(--gray);
+      margin-bottom: 14px;
+      line-height: 1.18;
+    }
+
+    [data-theme="dark"] .t-cta h2 {
+      color: #fff;
+    }
+
+    .t-cta p {
+      font-size: .96rem;
+      color: #888;
+      line-height: 1.78;
+      margin-bottom: 36px;
+    }
+
+    .t-cta-btns {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .t-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      color: #fff;
+      padding: 15px 34px;
+      border-radius: 100px;
+      font-family: var(--font-main);
+      font-weight: 700;
+      font-size: .94rem;
+      box-shadow: 0 4px 24px rgba(255, 87, 34, .38), 0 6px 0 rgba(140, 30, 0, .22);
+      transition: var(--transition);
+    }
+
+    .t-btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(255, 87, 34, .5), 0 10px 0 rgba(140, 30, 0, .18);
+    }
+
+    .t-btn-primary svg {
+      width: 17px;
+      height: 17px;
+      fill: #fff;
+    }
+
+    .t-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: transparent;
+      color: var(--orange);
+      border: 2px solid var(--orange);
+      padding: 15px 34px;
+      border-radius: 100px;
+      font-family: var(--font-main);
+      font-weight: 700;
+      font-size: .94rem;
+      transition: var(--transition);
+    }
+
+    .t-btn-secondary:hover {
+      background: rgba(255, 87, 34, .07);
+      transform: translateY(-2px);
+    }
+
+    .t-btn-secondary svg {
+      width: 17px;
+      height: 17px;
+      fill: var(--orange);
+    }
+
+
+    /* ── RESPONSIVE ──────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+
+      /* Intro grid stacks */
+      .pp-intro-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      /* Service blocks stack — image on top, text centred */
+      .pp-block {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        margin-bottom: 64px;
+      }
+
+      .pp-block-img {
+        order: 0 !important;
+      }
+
+      .pp-block-text {
+        order: 1 !important;
+        text-align: center;
+      }
+
+      .pp-block-heading::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .pp-block-service-label {
+        justify-content: center;
+      }
+
+      .pp-list li {
+        text-align: left;
+      }
+
+      .pp-quote-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Process steps */
+      .pp-steps {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
+
+      .pp-steps::before {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .pp-intro {
+        padding: 52px 0 44px;
+      }
+
+      .pp-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .pp-final-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .pp-final-btns>* {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .pp-cat-divider {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+
+  <div class="pp-page">
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     INTRO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <section class="pp-intro" aria-labelledby="pp-intro-heading">
+      <div class="pp-intro-inner">
+
+        <!-- Left: headline + body -->
+        <div class="pp-intro-text">
+          <div class="pp-intro-eyebrow">Painting &amp; Plastering</div>
+          <div class="pp-intro-heading-wrap">
+            <h1 class="pp-intro-heading" id="pp-intro-heading">
+              Masterful Finishes,<br><em>Inside and Out.</em>
+            </h1>
+          </div>
+          <p class="pp-intro-body">We specialise in transforming spaces through precision painting and expert
+            plastering. Using only top-tier materials and refined techniques, our team ensures every wall is flawless,
+            durable, and reflective of your vision. Whether it's a modern interior refresh or a protective exterior
+            coat, we deliver excellence with a commitment to cleanliness and client satisfaction.</p>
+        </div>
+
+        <!-- Right: stats panel -->
+        <div class="pp-intro-panel" aria-hidden="true">
+          <div class="pp-stat-grid">
+            <div class="pp-stat">
+              <span class="pp-stat-num">20+</span>
+              <span class="pp-stat-label">Years Experience</span>
+            </div>
+            <div class="pp-stat">
+              <span class="pp-stat-num">600+</span>
+              <span class="pp-stat-label">Projects Done</span>
+            </div>
+            <div class="pp-stat">
+              <span class="pp-stat-num">100%</span>
+              <span class="pp-stat-label">Satisfaction</span>
+            </div>
+            <div class="pp-stat">
+              <span class="pp-stat-num">5★</span>
+              <span class="pp-stat-label">Avg Rating</span>
+            </div>
+          </div>
+          <div class="pp-intro-guarantee">
+            <div class="pp-guarantee-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <div class="pp-guarantee-text">
+              <p>Workmanship Guarantee</p>
+              <span>Every project is backed by our quality commitment. If it's not right, we fix it — at no extra
+                cost.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     SERVICE BLOCKS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <section class="pp-services" aria-label="Services" id="pp-services">
+      <div class="pp-services-inner">
+
+        <!-- Category label -->
+        <div class="pp-cat-divider">
+          <h2>Our Services</h2>
+          <div class="pp-cat-line"></div>
+          <span class="pp-cat-badge">2 Specialisations</span>
+        </div>
+
+        <!-- ── BLOCK 1: Interior — Image LEFT, Text RIGHT ── -->
+        <article class="pp-block" aria-label="Interior Painting & Plastering">
+
+          <div class="pp-block-img">
+            <div class="pp-img-frame">
+              <img src="assets/images/in_painting.webp" alt="Interior Painting and Plastering" loading="lazy"
+                onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23ece8e0%22/><text x=%222%22 y=%221.8%22 font-size=%221%22 text-anchor=%22middle%22 fill=%22%23aaa%22 font-family=%22sans-serif%22>interior-painting.png</text></svg>'">
+              <div class="pp-img-label">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M7 16.5A4.5 4.5 0 1 0 7 7.5a4.5 4.5 0 0 0 0 9zm0 0V20M7 7.5V4M4 16.5H2M12 16.5h-2M4 7.5H2M12 7.5h-2" />
+                </svg>
+                Interior
+              </div>
+            </div>
+          </div>
+
+          <div class="pp-block-text">
+            <span class="pp-block-service-label">
+              <!-- Paint roller icon -->
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="4" width="18" height="6" rx="2" />
+                <path d="M14 7h2" />
+                <path d="M11 10v4" />
+                <rect x="9" y="14" width="4" height="6" rx="1" />
+              </svg>
+              Interior Specialist
+            </span>
+            <h2 class="pp-block-heading">Interior Painting<br>&amp; Plastering</h2>
+            <p class="pp-block-desc">Transform your living and working spaces from the inside out. We combine skilled
+              brushwork with expert plastering to create interiors that are smooth, vibrant, and built to last. Every
+              room gets our full attention from prep through to the final coat.</p>
+
+            <ul class="pp-list" aria-label="Interior services">
+              <li>
+                <div class="pp-bullet">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="pp-list-content">
+                  <div class="pp-list-title">Walls &amp; Ceilings</div>
+                  <div class="pp-list-sub">Full-room preparation, priming, and finishing in any colour or sheen — from
+                    matte wash to high-gloss feature walls.</div>
+                </div>
+              </li>
+              <li>
+                <div class="pp-bullet">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="pp-list-content">
+                  <div class="pp-list-title">Trim &amp; Cabinetry</div>
+                  <div class="pp-list-sub">Precision-cut painting of skirting boards, cornices, door frames, and kitchen
+                    cabinetry for a crisp, professional finish.</div>
+                </div>
+              </li>
+              <li>
+                <div class="pp-bullet">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="pp-list-content">
+                  <div class="pp-list-title">Plaster Repair &amp; Skimming</div>
+                  <div class="pp-list-sub">From hairline cracks to full re-skim, we restore damaged or uneven plaster
+                    surfaces to a glass-smooth standard before painting.</div>
+                </div>
+              </li>
+              <li>
+                <div class="pp-bullet">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="pp-list-content">
+                  <div class="pp-list-title">Specialty Finishes</div>
+                  <div class="pp-list-sub">Venetian plaster, limewash, textured coatings, and decorative effects to
+                    create distinctive, design-led spaces.</div>
+                </div>
+              </li>
+            </ul>
+            <a href="contact.html#contact-form">
+              <button class="t-btn-primary" onclick="ppInquiry('Interior Painting & Plastering')"
+                aria-label="Request a quote for Interior Painting and Plastering">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                Request a Quote
+              </button>
+            </a>
+          </div>
+
+        </article>
+
+        <!-- ── BLOCK 2: Exterior — Text LEFT, Image RIGHT ── -->
+        <article class="pp-block pp-block--flip" aria-label="Exterior Painting & Protection" id="pp-block-article">
+
+          <div class="pp-block-img">
+            <div class="pp-img-frame">
+              <img src="assets/images/ext_painting2.webp" alt="Exterior Painting and Protection" loading="lazy"
+                onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23ece8e0%22/><text x=%222%22 y=%221.8%22 font-size=%221%22 text-anchor=%22middle%22 fill=%22%23aaa%22 font-family=%22sans-serif%22>exterior-painting.png</text></svg>'">
+              <div class="pp-img-label">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                Exterior
+              </div>
+            </div>
+          </div>
+
+          <div class="pp-block-text">
+            <span class="pp-block-service-label">
+              <!-- House/shield icon -->
+              <svg viewBox="0 0 24 24">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+              </svg>
+              Exterior &amp; Protection
+            </span>
+            <h2 class="pp-block-heading">Exterior Painting<br>&amp; Protection</h2>
+            <p class="pp-block-desc">Your home's exterior is its first line of defence against the elements. We apply
+              premium weather-resistant coatings using thorough surface preparation techniques that extend the life of
+              your paintwork and protect the structure beneath.</p>
+
+            <ul class="pp-list" aria-label="Exterior services">
+              <li>
+                <div class="pp-bullet">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="pp-list-content">
+                  <div class="pp-list-title">Siding &amp; Stucco</div>
+                  <div class="pp-list-sub">Full exterior repaint of all cladding types — face brick, plaster, fibre
+                    cement, and stucco — using UV-stable elastomeric coatings.</div>
+                </div>
+              </li>
+              <li>
+                <div class="pp-bullet">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="pp-list-content">
+                  <div class="pp-list-title">Wood Restoration</div>
+                  <div class="pp-list-sub">Sanding, sealing, and re-coating of timber fascias, window frames, pergolas,
+                    and decking to halt rot and restore natural beauty.</div>
+                </div>
+              </li>
+              <li>
+                <div class="pp-bullet">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="pp-list-content">
+                  <div class="pp-list-title">Surface Prep</div>
+                  <div class="pp-list-sub">Professional pressure washing, crack filling, bonding agent application, and
+                    primer coating — the foundation of a long-lasting exterior finish.</div>
+                </div>
+              </li>
+              <li>
+                <div class="pp-bullet">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="pp-list-content">
+                  <div class="pp-list-title">Masonry Coatings</div>
+                  <div class="pp-list-sub">Damp-proof and waterproof masonry treatments for boundary walls, retaining
+                    walls, and foundations exposed to moisture and weathering.</div>
+                </div>
+              </li>
+            </ul>
+            <a href="contact.html#contact-form">
+              <button class="t-btn-primary" onclick="ppInquiry('Exterior Painting & Protection')"
+                aria-label="Request a quote for Exterior Painting and Protection">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                Request a Quote
+              </button>
+            </a>
+          </div>
+
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     OUR PROCESS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <section class="pp-process" aria-label="Our process">
+      <div class="pp-process-inner">
+        <div class="pp-process-header">
+          <h2>How We Work</h2>
+          <p>A clean, professional process that respects your home and delivers outstanding results every time.</p>
+        </div>
+        <div class="pp-steps">
+          <div class="pp-step">
+            <div class="pp-step-num">01</div>
+            <div class="pp-step-title">Site Assessment</div>
+            <div class="pp-step-sub">Free walkthrough to assess surface condition, scope the work, and confirm colour
+              selection.</div>
+          </div>
+          <div class="pp-step">
+            <div class="pp-step-num">02</div>
+            <div class="pp-step-title">Preparation</div>
+            <div class="pp-step-sub">Cleaning, masking, crack filling, and priming — we never skip prep. It's what makes
+              the finish last.</div>
+          </div>
+          <div class="pp-step">
+            <div class="pp-step-num">03</div>
+            <div class="pp-step-title">Application</div>
+            <div class="pp-step-sub">Multiple coats applied by hand or spray for full coverage, even colour, and a
+              flawless surface.</div>
+          </div>
+          <div class="pp-step">
+            <div class="pp-step-num">04</div>
+            <div class="pp-step-title">Inspection &amp; Sign-Off</div>
+            <div class="pp-step-sub">A final walkthrough with you before we pack up. If anything isn't perfect, we fix
+              it on the spot.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div><!-- /pp-page -->
+
+  <script>
+    (function () {
+      /* ════════════════════════════════════════
+         SCROLL REVEAL — IntersectionObserver
+         Fade-in-up on .pp-block as it enters
+         viewport. Respects prefers-reduced-motion.
+      ════════════════════════════════════════ */
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduced) {
+        document.querySelectorAll('.pp-block').forEach(el => el.classList.add('pp-visible'));
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('pp-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.10, rootMargin: '0px 0px -48px 0px' });
+
+        document.querySelectorAll('.pp-block').forEach(el => io.observe(el));
+      }
+
+      /* ════════════════════════════════════════
+         DYNAMIC CTA
+         Logs service name, opens WhatsApp
+         with pre-filled message.
+      ════════════════════════════════════════ */
+      window.ppInquiry = function (service) {
+        console.log('Inquiry started for:', service);
+        const msg = encodeURIComponent(
+          `Hi Cedric Construction, I'd like to request a quote for ${service}. Please could you advise on pricing and availability?`
+        );
+        window.open(`https://wa.me/27849614552?text=${msg}`, '_blank');
+      };
+
+      /* ════════════════════════════════════════
+         THEME REACTIVITY
+         CSS vars handle all colour changes.
+         Hook provided for future JS-driven logic.
+      ════════════════════════════════════════ */
+      new MutationObserver(() => {
+        void document.documentElement.getAttribute('data-theme');
+      }).observe(document.documentElement, { attributes: true });
+
+      document.addEventListener('themechange', (e) => { void e.detail.theme; });
+
+    })();
+  </script>
+
+  <style>
+    .cc-footer {
+      background: #0d1b2e;
+      color: #c8d8eb;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      padding: 64px 0 0;
+      margin-top: 0;
+    }
+
+    .cc-footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Grid */
+    .cc-footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1.1fr 1.3fr;
+      gap: 48px 32px;
+    }
+
+    @media(max-width:1024px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 40px 24px;
+      }
+
+      .cc-footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media(max-width:640px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px 20px;
+      }
+
+      .cc-footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      .cc-footer-hours {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media(max-width:420px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Brand */
+    .cc-footer-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 14px;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+    }
+
+    .cc-footer-logo span {
+      color: #e85d04;
+    }
+
+    .cc-footer-tagline {
+      font-size: 13.5px;
+      color: #8ba7c2;
+      line-height: 1.65;
+      margin: 0 0 22px;
+      max-width: 300px;
+    }
+
+    /* Social icons */
+    .cc-social-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .cc-social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      background: #e85d04;
+      border-radius: 7px;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+      flex-shrink: 0;
+    }
+
+    .cc-social-icon:hover {
+      background: #ff7a2a;
+      transform: translateY(-2px);
+    }
+
+    .cc-social-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+      display: block;
+    }
+
+    /* Column headings */
+    .cc-footer-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      margin: 0 0 6px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e85d04;
+      display: inline-block;
+    }
+
+    /* Column links */
+    .cc-footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 0;
+    }
+
+    .cc-footer-col ul li {
+      margin-bottom: 10px;
+      font-size: 13.5px;
+      color: #8ba7c2;
+      line-height: 1.5;
+    }
+
+    .cc-footer-col ul li a {
+      color: #8ba7c2;
+      text-decoration: none;
+      transition: color .18s;
+    }
+
+    .cc-footer-col ul li a:hover {
+      color: #e85d04;
+    }
+
+    /* Contact items */
+    .cc-contact-item {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 9px;
+    }
+
+    .cc-contact-item svg {
+      width: 14px;
+      height: 14px;
+      fill: #e85d04;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Business hours */
+    .cc-hours-table {
+      margin-top: 14px;
+      width: 100%;
+    }
+
+    .cc-hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .05);
+      font-size: 13px;
+    }
+
+    .cc-hours-row:last-child {
+      border-bottom: none;
+    }
+
+    .cc-hours-row:first-child {
+      border-top: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .cc-hours-day {
+      color: #c8d8eb;
+      font-weight: 400;
+      min-width: 90px;
+    }
+
+    .cc-hours-time {
+      color: #e85d04;
+      font-weight: 600;
+      font-size: 12.5px;
+      text-align: right;
+    }
+
+    /* Bottom bar */
+    .cc-footer-bottom {
+      margin-top: 52px;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      padding: 20px 0;
+    }
+
+    .cc-footer-bottom-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .cc-footer-bottom p {
+      font-size: 12.5px;
+      color: #556f88;
+      margin: 0;
+    }
+
+    .cc-footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+
+    .cc-footer-legal a {
+      font-size: 12.5px;
+      color: #556f88;
+      text-decoration: none;
+      transition: color .18s;
+    }
+
+    .cc-footer-legal a:hover {
+      color: #e85d04;
+    }
+  </style>
+
+  <!-- footer content -->
+  <style>
+    .cc-footer {
+      background: #0d1b2e;
+      color: #c8d8eb;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      padding: 64px 0 0;
+      margin-top: 0;
+    }
+
+    .cc-footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Grid */
+    .cc-footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1.1fr 1.3fr;
+      gap: 48px 32px;
+    }
+
+    @media(max-width:1024px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 40px 24px;
+      }
+
+      .cc-footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media(max-width:640px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px 20px;
+      }
+
+      .cc-footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      .cc-footer-hours {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media(max-width:420px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Brand */
+    .cc-footer-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 14px;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+    }
+
+    .cc-footer-logo span {
+      color: #e85d04;
+    }
+
+    .cc-footer-tagline {
+      font-size: 13.5px;
+      color: #8ba7c2;
+      line-height: 1.65;
+      margin: 0 0 22px;
+      max-width: 300px;
+    }
+
+    /* Social icons */
+    .cc-social-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .cc-social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      background: #e85d04;
+      border-radius: 7px;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+      flex-shrink: 0;
+    }
+
+    .cc-social-icon:hover {
+      background: #ff7a2a;
+      transform: translateY(-2px);
+    }
+
+    .cc-social-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+      display: block;
+    }
+
+    /* Column headings */
+    .cc-footer-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      margin: 0 0 6px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e85d04;
+      display: inline-block;
+    }
+
+    /* Column links */
+    .cc-footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 0;
+    }
+
+    .cc-footer-col ul li {
+      margin-bottom: 10px;
+      font-size: 13.5px;
+      color: #8ba7c2;
+      line-height: 1.5;
+    }
+
+    .cc-footer-col ul li a {
+      color: #8ba7c2;
+      text-decoration: none;
+      transition: color .18s;
+    }
+
+    .cc-footer-col ul li a:hover {
+      color: #e85d04;
+    }
+
+    /* Contact items */
+    .cc-contact-item {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 9px;
+    }
+
+    .cc-contact-item svg {
+      width: 14px;
+      height: 14px;
+      fill: #e85d04;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Business hours */
+    .cc-hours-table {
+      margin-top: 14px;
+      width: 100%;
+    }
+
+    .cc-hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .05);
+      font-size: 13px;
+    }
+
+    .cc-hours-row:last-child {
+      border-bottom: none;
+    }
+
+    .cc-hours-row:first-child {
+      border-top: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .cc-hours-day {
+      color: #c8d8eb;
+      font-weight: 400;
+      min-width: 90px;
+    }
+
+    .cc-hours-time {
+      color: #e85d04;
+      font-weight: 600;
+      font-size: 12.5px;
+      text-align: right;
+    }
+
+    /* Bottom bar */
+    .cc-footer-bottom {
+      margin-top: 52px;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      padding: 20px 0;
+    }
+
+    .cc-footer-bottom-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .cc-footer-bottom p {
+      font-size: 12.5px;
+      color: #556f88;
+      margin: 0;
+    }
+
+    .cc-footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+
+    .cc-footer-legal a {
+      font-size: 12.5px;
+      color: #556f88;
+      text-decoration: none;
+      transition: color .18s;
+    }
+
+    .cc-footer-legal a:hover {
+      color: #e85d04;
+    }
+  </style>
+
+  <footer class="cc-footer">
+    <div class="cc-footer-inner">
+      <div class="cc-footer-grid">
+
+        <!-- ── Brand ────────────────────────────────────────── -->
+        <div class="cc-footer-brand cc-footer-col">
+          <h3 class="cc-footer-logo">Cedric <span>Construction</span></h3>
+          <p class="cc-footer-tagline">Your trusted construction partner in Cape Town. We deliver quality building
+            services with professionalism, skill, and lasting dedication to every project.</p>
+
+          <div class="cc-social-row">
+            <!-- Facebook -->
+            <a class="cc-social-icon" href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C17.56 21.45 22 17.19 22 12z" />
+              </svg>
+            </a>
+            <!-- Twitter / X -->
+            <a class="cc-social-icon" href="#" aria-label="Twitter">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L2.25 2.25h6.928l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+            <!-- LinkedIn -->
+            <a class="cc-social-icon" href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+              </svg>
+            </a>
+            <!-- Instagram -->
+            <a class="cc-social-icon" href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.8v8.4C4 18.39 5.61 20 7.8 20h8.4a3.6 3.6 0 0 0 3.6-3.6V7.8C20 5.61 18.39 4 16.2 4H7.8m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
+              </svg>
+            </a>
+            <!-- WhatsApp -->
+            <a class="cc-social-icon" href="https://wa.me/27849614552" target="_blank" rel="noopener"
+              aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ── Services ──────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="tiling.html">Tiling &amp; Flooring</a></li>
+            <li><a href="roofing.html">Roofing</a></li>
+            <li><a href="painting.html#pp-block-article">Painting</a></li>
+            <li><a href="building.html">General Building</a></li>
+            <li><a href="painting.html#pp-services">Plastering</a></li>
+            <li><a href="building.html#gb-block-2">Renovations</a></li>
+          </ul>
+        </div>
+
+        <!-- ── Company ───────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="projects.html">Our Projects</a></li>
+            <li><a href="testimonials.html">Testimonials</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html#contact-form">Get a Quote</a></li>
+          </ul>
+        </div>
+
+        <!-- ── Contact ───────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+              </svg>
+              <span>Wallacedene, Kraaifontein<br>Cape Town, South Africa</span>
+            </li>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+              </svg>
+              <a href="tel:+27849614552">+27 84 961 4552</a>
+            </li>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+              </svg>
+              <a href="mailto:cedricconstructionservices@gmail.com"
+                style="word-break:break-all;">cedricconstructionservices@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- ── Business Hours ────────────────────────────────── -->
+        <div class="cc-footer-col cc-footer-hours">
+          <h4>Business Hours</h4>
+          <div class="cc-hours-table">
+            <div class="cc-hours-row"><span class="cc-hours-day">Monday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Tuesday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Wednesday</span><span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Thursday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Friday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Saturday</span> <span class="cc-hours-time">08:00 –
+                14:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Sunday</span> <span class="cc-hours-time">08:00 –
+                13:00</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="cc-footer-bottom">
+      <div class="cc-footer-bottom-inner">
+        <p>&copy; <span id="cc-year"></span> Cedric Construction Services. All rights reserved.</p>
+        <nav class="cc-footer-legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('cc-year').textContent = new Date().getFullYear();
+  </script>
+  <!-- ================================================================ -->
+  <!--
+    ┌─────────────────────────────────────────────────────────────┐
+    │  STEP 4 — Call loadHero() AFTER component.js               │
+    │                                                             │
+    │  We place this script LAST in <body> for two reasons:       │
+    │                                                             │
+    │   1. The #hero-placeholder div is guaranteed to exist in    │
+    │      the DOM by the time this script executes (top-down     │
+    │      parsing order).                                        │
+    │                                                             │
+    │   2. It runs after component.js so there are no race        │
+    │      conditions between your header loader and the hero.    │
+    │                                                             │
+    │  loadHero() takes 3 arguments:                              │
+    │   • "hero-placeholder" → the id of the div in Step 2        │
+    │   • "/assets/hero-template.html" → where the template lives │
+    │   • { ...config } → your page-specific content              │
+    │                                                             │
+    │  Internally loadHero() does this sequence automatically:    │
+    │   fetch(template) → inject HTML → requestAnimationFrame     │
+    │   → layoutHero(config)                                      │
+    │  You never need to call layoutHero() yourself.              │
+    └─────────────────────────────────────────────────────────────┘
+    -->
+  <script>
+    loadHero(
+      'hero-placeholder',             // must match the div id in Step 2
+      'hero-template.html',   // path to hero-template.html
+
+      {
+        // ── Eyebrow label (the small text above the headline) ──────
+        tag: 'PREMIUM INTERIOR & EXTERIOR FINISHES',
+
+        // ── Main headline ──────────────────────────────────────────
+        // Wrap one word in <em> for the gold italic accent font.
+        headline: 'Color your world with <em>flawless</em> precision.',
+
+        // ── Supporting paragraph ───────────────────────────────────
+        sub: 'From refreshing interior living spaces to protecting exterior walls against the elements, we provide professional painting services that redefine your property  . Our team uses premium-grade paints and meticulous preparation techniques to ensure a durable, high-end finish for residential and commercial projects across Cape Town',
+
+        // ── Auto-advance delay in milliseconds ─────────────────────
+        interval: 6000,
+
+        // ── Slides (images and/or videos) ──────────────────────────
+        // First slide should always be an image for fast page load.
+        slides: [
+          {
+            type: 'image',
+            src: '/assets/images/ext_painting.webp',
+            alt: 'Our team on a construction site',
+          },
+          {
+            type: 'video',
+            src: '/assets/video/painting.webm',
+            alt: 'A recently completed residential build',
+          }
+        ],
+
+        // ── Call-to-action buttons ─────────────────────────────────
+        // variant 'primary'   → solid gold button
+        // variant 'secondary' → transparent outline button
+        buttons: [
+          {
+            label: 'Get a Free Quote',
+            href: 'contact.html#contact-form',
+            variant: 'primary',
+          },
+          {
+            label: 'Our Portfolio',
+            href: 'projects.html',
+            variant: 'secondary',
+          },
+        ],
+      }
+    );
+  </script>
+</body>
+
+</html>

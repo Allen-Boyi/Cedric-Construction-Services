@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testimonials — Cedric Construction Services</title>
+
+  <style>
+    /* ─── IMPORT FONTS ─────────────────────────────────── */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+    /* ─── SITE VARS (mirrors header.html) ──────────────── */
+    :root {
+      --orange:      #FF5722;
+      --orange-dark: #E4531B;
+      --navy:        #0A192F;
+      --navy-2:      #002366;
+      --white:       #FFFFFF;
+      --gray:        #333333;
+      --light-bg:    #F8F9FA;
+      --border:      #E8ECF0;
+      --transition:  0.32s cubic-bezier(.4,0,.2,1);
+      --font-main:   'Poppins', sans-serif;
+      --font-body:   'DM Sans', sans-serif;
+    }
+    [data-theme="dark"] {
+      --white:    #0A192F;
+      --gray:     #E8ECF0;
+      --light-bg: #07111F;
+      --border:   #1E2D42;
+      --navy:     #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--gray);
+      overflow-x: hidden;
+      transition: background var(--transition), color var(--transition);
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── HERO STRIP ────────────────────────────────────── */
+    .t-hero {
+      background: linear-gradient(135deg, var(--navy-2) 0%, #0A192F 55%, #001a4d 100%);
+      padding: 100px 0 80px;
+      position: relative; overflow: hidden;
+    }
+    .t-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    /* Large decorative quote mark */
+    .t-hero::after {
+      content: '\201C';
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-main);
+      font-size: 28rem;
+      font-weight: 800;
+      line-height: 1;
+      color: rgba(255,87,34,.07);
+      pointer-events: none;
+      user-select: none;
+    }
+    .t-hero-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 24px;
+      position: relative; z-index: 2;
+    }
+    .t-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,87,34,.14);
+      border: 1px solid rgba(255,87,34,.28);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-family: var(--font-main);
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 20px;
+    }
+    .t-eyebrow::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--orange); border-radius: 50%;
+      animation: tPulse 1.6s ease-in-out infinite;
+    }
+    @keyframes tPulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.4; transform:scale(1.5); }
+    }
+    .t-hero h1 {
+      font-family: var(--font-main);
+      font-size: clamp(2rem,5vw,3.4rem);
+      font-weight: 800; color: #fff;
+      line-height: 1.12; margin: 0 0 18px;
+      max-width: 640px;
+    }
+    .t-hero h1 em {
+      font-style: normal; color: var(--orange);
+    }
+    .t-hero p {
+      font-size: 1rem; color: rgba(255,255,255,.68);
+      line-height: 1.78; max-width: 520px; margin: 0 0 36px;
+    }
+    /* Star row in hero */
+    .t-hero-stars {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .t-hero-stars svg {
+      width: 22px; height: 22px; fill: var(--orange);
+    }
+    .t-hero-stars span {
+      font-family: var(--font-main);
+      font-size: .88rem; font-weight: 700;
+      color: rgba(255,255,255,.82);
+      margin-left: 6px;
+    }
+
+    /* ─── STATS BAR ─────────────────────────────────────── */
+    .t-stats {
+      background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+      padding: 0;
+    }
+    .t-stats-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 24px;
+      display: grid; grid-template-columns: repeat(4,1fr);
+    }
+    .t-stat {
+      padding: 36px 24px;
+      text-align: center;
+      position: relative;
+    }
+    .t-stat + .t-stat::before {
+      content: '';
+      position: absolute; left: 0; top: 20%; bottom: 20%;
+      width: 1px; background: rgba(255,255,255,.22);
+    }
+    .t-stat-num {
+      font-family: var(--font-main);
+      font-size: clamp(2rem,4vw,2.8rem);
+      font-weight: 800; color: #fff;
+      line-height: 1; margin-bottom: 6px;
+      display: block;
+    }
+    .t-stat-label {
+      font-size: .82rem; color: rgba(255,255,255,.78);
+      font-family: var(--font-main); font-weight: 500;
+    }
+
+    /* ─── TESTIMONIALS SECTION ──────────────────────────── */
+    .t-section {
+      padding: 88px 0;
+      background: var(--light-bg);
+    }
+    [data-theme="dark"] .t-section { background: #07111F; }
+
+    .t-section-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    }
+
+    /* Section header */
+    .t-section-header { text-align: center; margin-bottom: 64px; }
+    .t-section-label {
+      display: inline-block;
+      font-family: var(--font-main); font-size: .72rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 12px;
+    }
+    .t-section-title {
+      font-family: var(--font-main);
+      font-size: clamp(1.8rem,4vw,2.6rem); font-weight: 800;
+      color: var(--gray); line-height: 1.18; margin-bottom: 14px;
+    }
+    [data-theme="dark"] .t-section-title { color: #fff; }
+    .t-section-sub {
+      font-size: 1rem; color: #888;
+      max-width: 520px; margin: 0 auto; line-height: 1.75;
+    }
+
+    /* 3-col masonry-feel grid */
+    .t-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 24px;
+    }
+
+    /* Individual card */
+    .t-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      position: relative; overflow: hidden;
+      transition: var(--transition);
+      box-shadow: 0 2px 16px rgba(0,0,0,.055);
+      /* staggered fade-up on load */
+      opacity: 0;
+      transform: translateY(28px);
+      animation: tCardIn .55s ease forwards;
+    }
+    [data-theme="dark"] .t-card { background: #0d1f36; border-color: #1E2D42; }
+
+    .t-card:nth-child(1) { animation-delay: .05s; }
+    .t-card:nth-child(2) { animation-delay: .12s; }
+    .t-card:nth-child(3) { animation-delay: .19s; }
+    .t-card:nth-child(4) { animation-delay: .26s; }
+    .t-card:nth-child(5) { animation-delay: .33s; }
+    .t-card:nth-child(6) { animation-delay: .40s; }
+
+    @keyframes tCardIn {
+      to { opacity:1; transform:translateY(0); }
+    }
+
+    /* Orange top-edge accent on hover */
+    .t-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--orange);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s ease;
+    }
+    .t-card:hover { 
+      transform: translateY(-7px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.11);
+      border-color: var(--orange);
+    }
+    .t-card:hover::before { transform: scaleX(1); }
+
+    /* Big decorative quote mark */
+    .t-card-quote-mark {
+      position: absolute;
+      top: 18px; right: 22px;
+      font-family: var(--font-main);
+      font-size: 5.5rem;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--orange);
+      opacity: .09;
+      user-select: none;
+      pointer-events: none;
+      transition: opacity var(--transition);
+    }
+    .t-card:hover .t-card-quote-mark { opacity: .16; }
+
+    /* Stars */
+    .t-card-stars {
+      display: flex; gap: 3px; margin-bottom: 18px;
+    }
+    .t-card-stars svg {
+      width: 16px; height: 16px; fill: var(--orange);
+    }
+
+    /* Review text */
+    .t-card-text {
+      font-size: .9rem; color: #666;
+      line-height: 1.8; margin-bottom: 24px;
+      font-style: italic;
+      position: relative; z-index: 1;
+    }
+    [data-theme="dark"] .t-card-text { color: rgba(255,255,255,.62); }
+
+    /* Author row */
+    .t-card-author {
+      display: flex; align-items: center; gap: 13px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    [data-theme="dark"] .t-card-author { border-color: #1E2D42; }
+
+    .t-card-avatar {
+      width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-main); font-size: 1.1rem; font-weight: 800;
+      color: #fff;
+      box-shadow: 0 3px 12px rgba(255,87,34,.35);
+    }
+    .t-card-name {
+      font-family: var(--font-main);
+      font-size: .92rem; font-weight: 700; color: var(--gray);
+      margin-bottom: 2px;
+    }
+    [data-theme="dark"] .t-card-name { color: #fff; }
+    .t-card-role {
+      font-size: .78rem; color: #aaa;
+      font-family: var(--font-main); font-weight: 500;
+    }
+    /* Verified badge */
+    .t-verified {
+      margin-left: auto; flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: 4px;
+      background: rgba(255,87,34,.08);
+      border: 1px solid rgba(255,87,34,.2);
+      border-radius: 100px;
+      padding: 3px 10px;
+      font-family: var(--font-main); font-size: .66rem; font-weight: 700;
+      color: var(--orange);
+    }
+    .t-verified svg { width: 10px; height: 10px; fill: var(--orange); }
+
+    /* ─── FEATURED BANNER (large quote) ─────────────────── */
+    .t-featured {
+      background: linear-gradient(135deg, var(--navy-2) 0%, #001a4d 100%);
+      padding: 72px 0;
+      position: relative; overflow: hidden;
+    }
+    .t-featured::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .t-featured-inner {
+      max-width: 900px; margin: 0 auto; padding: 0 24px;
+      text-align: center; position: relative; z-index: 2;
+    }
+    .t-featured-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(255,87,34,.2);
+      border: 2px solid rgba(255,87,34,.4);
+      margin-bottom: 28px;
+    }
+    .t-featured-icon svg { width: 26px; height: 26px; fill: var(--orange); }
+    .t-featured blockquote {
+      font-family: var(--font-main);
+      font-size: clamp(1.2rem,3vw,1.8rem);
+      font-weight: 700; font-style: italic;
+      color: rgba(255,255,255,.92);
+      line-height: 1.55; margin-bottom: 28px;
+    }
+    .t-featured blockquote::before { content: '\201C'; color: var(--orange); }
+    .t-featured blockquote::after  { content: '\201D'; color: var(--orange); }
+    .t-featured-author {
+      display: inline-flex; align-items: center; gap: 12px;
+    }
+    .t-featured-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-main); font-weight: 800;
+      color: #fff; font-size: 1.1rem;
+      box-shadow: 0 3px 14px rgba(255,87,34,.4);
+    }
+    .t-featured-name {
+      font-family: var(--font-main); font-weight: 700;
+      color: #fff; font-size: .94rem;
+    }
+    .t-featured-role { font-size: .8rem; color: rgba(255,255,255,.55); }
+
+    /* ─── CTA BANNER ─────────────────────────────────────── */
+    .t-cta {
+      background: var(--light-bg);
+      padding: 80px 0;
+    }
+    [data-theme="dark"] .t-cta { background: #0d1f36; }
+    .t-cta-inner {
+      max-width: 720px; margin: 0 auto; padding: 0 24px;
+      text-align: center;
+    }
+    .t-cta h2 {
+      font-family: var(--font-main);
+      font-size: clamp(1.7rem,4vw,2.4rem);
+      font-weight: 800; color: var(--gray);
+      margin-bottom: 14px; line-height: 1.18;
+    }
+    [data-theme="dark"] .t-cta h2 { color: #fff; }
+    .t-cta p {
+      font-size: .96rem; color: #888;
+      line-height: 1.78; margin-bottom: 36px;
+    }
+    .t-cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    .t-btn-primary {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      color: #fff; padding: 15px 34px; border-radius: 100px;
+      font-family: var(--font-main); font-weight: 700; font-size: .94rem;
+      box-shadow: 0 4px 24px rgba(255,87,34,.38), 0 6px 0 rgba(140,30,0,.22);
+      transition: var(--transition);
+    }
+    .t-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(255,87,34,.5), 0 10px 0 rgba(140,30,0,.18); }
+    .t-btn-primary svg { width: 17px; height: 17px; fill: #fff; }
+
+    .t-btn-secondary {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: transparent;
+      color: var(--orange);
+      border: 2px solid var(--orange);
+      padding: 15px 34px; border-radius: 100px;
+      font-family: var(--font-main); font-weight: 700; font-size: .94rem;
+      transition: var(--transition);
+    }
+    .t-btn-secondary:hover { background: rgba(255,87,34,.07); transform: translateY(-2px); }
+    .t-btn-secondary svg { width: 17px; height: 17px; fill: var(--orange); }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .t-grid        { grid-template-columns: 1fr 1fr; }
+      .t-stats-inner { grid-template-columns: 1fr 1fr; }
+      .t-stat + .t-stat::before { display: none; }
+      .t-stat { border-bottom: 1px solid rgba(255,255,255,.12); }
+    }
+    @media (max-width: 640px) {
+      .t-grid        { grid-template-columns: 1fr; }
+      .t-stats-inner { grid-template-columns: 1fr 1fr; }
+      .t-hero::after { display: none; }
+      .t-cta-btns    { flex-direction: column; align-items: center; }
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/css/mobile-fixes.css">
+</head>
+<body>
+
+  <div id="header-placeholder"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO STRIP
+  ════════════════════════════════════════════════════════ -->
+  <section class="t-hero">
+    <div class="t-hero-inner">
+      <div class="t-eyebrow">Client Reviews</div>
+      <h1>What Our Clients <em>Say</em></h1>
+      <p>
+        Don't just take our word for it. Hear from the homeowners, developers,
+        and business owners who've trusted Cedric Construction with their most
+        important projects.
+      </p>
+      <div class="t-hero-stars">
+        <!-- 5 stars -->
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span>5.0 Average Rating · 50+ Happy Clients</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       STATS BAR
+  ════════════════════════════════════════════════════════ -->
+  <div class="t-stats">
+    <div class="t-stats-inner">
+      <div class="t-stat">
+        <span class="t-stat-num">50+</span>
+        <span class="t-stat-label">Projects Completed</span>
+      </div>
+      <div class="t-stat">
+        <span class="t-stat-num">100%</span>
+        <span class="t-stat-label">Client Satisfaction</span>
+      </div>
+      <div class="t-stat">
+        <span class="t-stat-num">20+</span>
+        <span class="t-stat-label">Years Experience</span>
+      </div>
+      <div class="t-stat">
+        <span class="t-stat-num">5★</span>
+        <span class="t-stat-label">Average Rating</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TESTIMONIALS GRID
+  ════════════════════════════════════════════════════════ -->
+  <section class="t-section">
+    <div class="t-section-inner">
+
+      <div class="t-section-header">
+        <span class="t-section-label">Real Reviews · Real Clients</span>
+        <h2 class="t-section-title">Stories From People We've Built For</h2>
+        <p class="t-section-sub">Every review represents a project we poured craftsmanship and care into — from a single bathroom to a full commercial renovation.</p>
+      </div>
+
+      <div class="t-grid">
+
+        <!-- Card 1 -->
+        <div class="t-card">
+          <div class="t-card-quote-mark">&ldquo;</div>
+          <div class="t-card-stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="t-card-text">Cedric and his team did an amazing job renovating our bathroom. The attention to detail was incredible, and they finished on time. Highly recommend!</p>
+          <div class="t-card-author">
+            <div class="t-card-avatar">S</div>
+            <div>
+              <div class="t-card-name">Sarah Johnson</div>
+              <div class="t-card-role">Homeowner</div>
+            </div>
+            <div class="t-verified">
+              <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              Verified
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="t-card">
+          <div class="t-card-quote-mark">&ldquo;</div>
+          <div class="t-card-stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="t-card-text">We've worked with Cedric Construction on multiple projects. Their tiling work is exceptional, and they always deliver quality results. Professional and reliable.</p>
+          <div class="t-card-author">
+            <div class="t-card-avatar">M</div>
+            <div>
+              <div class="t-card-name">Michael van der Berg</div>
+              <div class="t-card-role">Property Developer</div>
+            </div>
+            <div class="t-verified">
+              <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              Verified
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="t-card">
+          <div class="t-card-quote-mark">&ldquo;</div>
+          <div class="t-card-stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="t-card-text">The kitchen renovation for our restaurant was completed perfectly. The team was professional, clean, and the quality of work exceeded our expectations.</p>
+          <div class="t-card-author">
+            <div class="t-card-avatar">T</div>
+            <div>
+              <div class="t-card-name">Thandiwe Mbeki</div>
+              <div class="t-card-role">Restaurant Owner</div>
+            </div>
+            <div class="t-verified">
+              <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              Verified
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="t-card">
+          <div class="t-card-quote-mark">&ldquo;</div>
+          <div class="t-card-stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="t-card-text">From start to finish, the experience was fantastic. Our new floor tiles look stunning, and the team was respectful of our home throughout the entire process.</p>
+          <div class="t-card-author">
+            <div class="t-card-avatar">D</div>
+            <div>
+              <div class="t-card-name">David Smith</div>
+              <div class="t-card-role">Homeowner</div>
+            </div>
+            <div class="t-verified">
+              <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              Verified
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="t-card">
+          <div class="t-card-quote-mark">&ldquo;</div>
+          <div class="t-card-stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="t-card-text">I recommend Cedric Construction to all my clients. Their workmanship is top-notch, and they have a great eye for detail. An absolute pleasure to work with.</p>
+          <div class="t-card-author">
+            <div class="t-card-avatar">A</div>
+            <div>
+              <div class="t-card-name">Amanda Pretorius</div>
+              <div class="t-card-role">Interior Designer</div>
+            </div>
+            <div class="t-verified">
+              <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              Verified
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="t-card">
+          <div class="t-card-quote-mark">&ldquo;</div>
+          <div class="t-card-stars">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="t-card-text">The office renovation was handled professionally from start to finish. Great communication, quality work, and fair pricing. Would definitely use again.</p>
+          <div class="t-card-author">
+            <div class="t-card-avatar">J</div>
+            <div>
+              <div class="t-card-name">John Nkosi</div>
+              <div class="t-card-role">Business Owner</div>
+            </div>
+            <div class="t-verified">
+              <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              Verified
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /t-grid -->
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FEATURED QUOTE BANNER
+  ════════════════════════════════════════════════════════ -->
+  <div class="t-featured">
+    <div class="t-featured-inner">
+      <div class="t-featured-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1zm12 0c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+      </div>
+      <blockquote>
+        We've worked with Cedric Construction on multiple projects. Their tiling work is exceptional, and they always deliver quality results. Professional and reliable.
+      </blockquote>
+      <div class="t-featured-author">
+        <div class="t-featured-avatar">M</div>
+        <div style="text-align:left;">
+          <div class="t-featured-name">Michael van der Berg</div>
+          <div class="t-featured-role">Property Developer, Cape Town</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CTA SECTION
+  ════════════════════════════════════════════════════════ -->
+  <section class="t-cta">
+    <div class="t-cta-inner">
+      <h2>Ready to Join Our Happy Clients?</h2>
+      <p>
+        Experience the craftsmanship and professionalism that has earned us five-star
+        reviews across Cape Town. Get your free quote today — no obligation, no pressure.
+      </p>
+      <div class="t-cta-btns">
+        <a href="contact.html#contact-form" class="t-btn-primary">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Get a Free Quote
+        </a>
+      </div>
+    </div>
+  </section>
+    
+<!-- footer content -->
+<style>
+  .cc-footer{background:#0d1b2e;color:#c8d8eb;font-family:'Segoe UI',Arial,sans-serif;padding:64px 0 0;margin-top:0;}
+  .cc-footer-inner{max-width:1200px;margin:0 auto;padding:0 24px;}
+
+  /* Grid */
+  .cc-footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.1fr 1.3fr;gap:48px 32px;}
+  @media(max-width:1024px){
+    .cc-footer-grid{grid-template-columns:1fr 1fr 1fr;gap:40px 24px;}
+    .cc-footer-brand{grid-column:1 / -1;}
+  }
+  @media(max-width:640px){
+    .cc-footer-grid{grid-template-columns:1fr 1fr;gap:32px 20px;}
+    .cc-footer-brand{grid-column:1 / -1;}
+    .cc-footer-hours{grid-column:1 / -1;}
+  }
+  @media(max-width:420px){
+    .cc-footer-grid{grid-template-columns:1fr;}
+  }
+
+  /* Brand */
+  .cc-footer-logo{font-size:20px;font-weight:700;color:#fff;margin:0 0 14px;letter-spacing:-0.3px;line-height:1.2;}
+  .cc-footer-logo span{color:#e85d04;}
+  .cc-footer-tagline{font-size:13.5px;color:#8ba7c2;line-height:1.65;margin:0 0 22px;max-width:300px;}
+
+  /* Social icons */
+  .cc-social-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .cc-social-icon{display:flex;align-items:center;justify-content:center;width:38px;height:38px;background:#e85d04;border-radius:7px;text-decoration:none;transition:background .2s,transform .15s;flex-shrink:0;}
+  .cc-social-icon:hover{background:#ff7a2a;transform:translateY(-2px);}
+  .cc-social-icon svg{width:18px;height:18px;fill:#fff;display:block;}
+
+  /* Column headings */
+  .cc-footer-col h4{font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.09em;margin:0 0 6px;padding-bottom:10px;border-bottom:2px solid #e85d04;display:inline-block;}
+
+  /* Column links */
+  .cc-footer-col ul{list-style:none;padding:0;margin:14px 0 0;}
+  .cc-footer-col ul li{margin-bottom:10px;font-size:13.5px;color:#8ba7c2;line-height:1.5;}
+  .cc-footer-col ul li a{color:#8ba7c2;text-decoration:none;transition:color .18s;}
+  .cc-footer-col ul li a:hover{color:#e85d04;}
+
+  /* Contact items */
+  .cc-contact-item{display:flex !important;align-items:flex-start;gap:9px;}
+  .cc-contact-item svg{width:14px;height:14px;fill:#e85d04;flex-shrink:0;margin-top:2px;}
+
+  /* Business hours */
+  .cc-hours-table{margin-top:14px;width:100%;}
+  .cc-hours-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;}
+  .cc-hours-row:last-child{border-bottom:none;}
+  .cc-hours-row:first-child{border-top:1px solid rgba(255,255,255,.05);}
+  .cc-hours-day{color:#c8d8eb;font-weight:400;min-width:90px;}
+  .cc-hours-time{color:#e85d04;font-weight:600;font-size:12.5px;text-align:right;}
+
+  /* Bottom bar */
+  .cc-footer-bottom{margin-top:52px;border-top:1px solid rgba(255,255,255,.08);padding:20px 0;}
+  .cc-footer-bottom-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+  .cc-footer-bottom p{font-size:12.5px;color:#556f88;margin:0;}
+  .cc-footer-legal{display:flex;gap:20px;}
+  .cc-footer-legal a{font-size:12.5px;color:#556f88;text-decoration:none;transition:color .18s;}
+  .cc-footer-legal a:hover{color:#e85d04;}
+</style>
+
+<footer class="cc-footer">
+  <div class="cc-footer-inner">
+    <div class="cc-footer-grid">
+
+      <!-- ── Brand ────────────────────────────────────────── -->
+      <div class="cc-footer-brand cc-footer-col">
+        <h3 class="cc-footer-logo">Cedric <span>Construction</span></h3>
+        <p class="cc-footer-tagline">Your trusted construction partner in Cape Town. We deliver quality building services with professionalism, skill, and lasting dedication to every project.</p>
+
+        <div class="cc-social-row">
+          <!-- Facebook -->
+          <a class="cc-social-icon" href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C17.56 21.45 22 17.19 22 12z"/></svg>
+          </a>
+          <!-- Twitter / X -->
+          <a class="cc-social-icon" href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L2.25 2.25h6.928l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <!-- LinkedIn -->
+          <a class="cc-social-icon" href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+          </a>
+          <!-- Instagram -->
+          <a class="cc-social-icon" href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.8v8.4C4 18.39 5.61 20 7.8 20h8.4a3.6 3.6 0 0 0 3.6-3.6V7.8C20 5.61 18.39 4 16.2 4H7.8m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+          </a>
+          <!-- WhatsApp -->
+          <a class="cc-social-icon" href="https://wa.me/27849614552" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- ── Services ──────────────────────────────────────── -->
+      <div class="cc-footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="tiling.html">Tiling &amp; Flooring</a></li>
+          <li><a href="roofing.html">Roofing</a></li>
+          <li><a href="painting.html#pp-block-article">Painting</a></li>
+          <li><a href="building.html">General Building</a></li>
+          <li><a href="painting.html#pp-services">Plastering</a></li>
+          <li><a href="building.html#gb-block-2">Renovations</a></li>
+        </ul>
+      </div>
+
+      <!-- ── Company ───────────────────────────────────────── -->
+      <div class="cc-footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="projects.html">Our Projects</a></li>
+          <li><a href="testimonials.html">Testimonials</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html#contact-form">Get a Quote</a></li>
+        </ul>
+      </div>
+
+      <!-- ── Contact ───────────────────────────────────────── -->
+      <div class="cc-footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li class="cc-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>Wallacedene, Kraaifontein<br>Cape Town, South Africa</span>
+          </li>
+          <li class="cc-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <a href="tel:+27849614552">+27 84 961 4552</a>
+          </li>
+          <li class="cc-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <a href="mailto:cedricconstructionservices@gmail.com" style="word-break:break-all;">cedricconstructionservices@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ── Business Hours ────────────────────────────────── -->
+      <div class="cc-footer-col cc-footer-hours">
+        <h4>Business Hours</h4>
+        <div class="cc-hours-table">
+          <div class="cc-hours-row"><span class="cc-hours-day">Monday</span>   <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Tuesday</span>  <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Wednesday</span><span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Thursday</span> <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Friday</span>   <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Saturday</span> <span class="cc-hours-time">08:00 – 14:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Sunday</span>   <span class="cc-hours-time">08:00 – 13:00</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="cc-footer-bottom">
+    <div class="cc-footer-bottom-inner">
+      <p>&copy; <span id="cc-year"></span> Cedric Construction Services. All rights reserved.</p>
+      <nav class="cc-footer-legal">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('cc-year').textContent = new Date().getFullYear();
+</script>
+
+  <script src="assets/js/component.js"></script>
+
+</body>
+</html>

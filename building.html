@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="assets/js/hero-engine.js"></script>
+  <style>
+    #header-placeholder,
+    #hero-placeholder {
+      display: block;
+      width: 100%;
+    }
+  </style>
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+    }());
+  </script>
+
+  <!-- Your fonts, stylesheets etc. come AFTER this script -->
+  <link rel="stylesheet" href="/assets/css/mobile-fixes.css">
+  <link rel="stylesheet" href="/assets/css/your-styles.css">
+  <script src="/assets/js/hero-engine.js" defer></script>
+  <script src="/assets/js/component.js" defer></script>
+</head>
+
+<body>
+  <div id="header-placeholder"></div>
+  <div id="hero-placeholder"></div>
+
+
+  <style>
+    /* ── Var inheritance + local fallbacks ───────────────────────── */
+    :root {
+      --gb-gold: #D4AF37;
+      --gb-gold-dark: #b8941e;
+      --gb-gold-light: rgba(212, 175, 55, .10);
+      --gb-charcoal: #1C1C1C;
+      --gb-white: #FFFFFF;
+      --gb-smoke: #F9F9F9;
+      --gb-border: #E8E8E4;
+      --gb-navy: var(--navy, #0A192F);
+      --gb-navy-2: var(--navy-2, #002366);
+      --gb-orange: var(--orange, #FF5722);
+      --gb-font-main: var(--font-main, 'Poppins', sans-serif);
+      --gb-font-body: var(--font-body, 'DM Sans', sans-serif);
+      --gb-transition: var(--transition, 0.32s cubic-bezier(.4, 0, .2, 1));
+      /* Theme-aware */
+      --gb-surface: #FFFFFF;
+      --gb-surface-alt: #F9F9F9;
+      --gb-text: #1C1C1C;
+      --gb-text-muted: #5C5C5C;
+      --gb-card-border: #E8E8E4;
+    }
+
+    [data-theme="dark"] {
+      --gb-surface: #0A192F;
+      --gb-surface-alt: #07111F;
+      --gb-text: #E8ECF0;
+      --gb-text-muted: rgba(255, 255, 255, .52);
+      --gb-card-border: #1E2D42;
+      --gb-border: #1E2D42;
+      --gb-smoke: #07111F;
+      --gb-gold-light: rgba(212, 175, 55, .08);
+    }
+
+    .gb-page {
+      font-family: var(--gb-font-body);
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     INTRO SECTION
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .gb-intro {
+      background: var(--gb-surface);
+      padding: 88px 0 72px;
+      transition: background var(--gb-transition);
+    }
+
+    .gb-intro-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .gb-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--gb-font-main);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gb-gold);
+      margin-bottom: 20px;
+    }
+
+    .gb-eyebrow::before {
+      content: '';
+      width: 36px;
+      height: 3px;
+      background: var(--gb-gold);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .gb-intro-heading {
+      font-family: var(--gb-font-main);
+      font-size: clamp(2.1rem, 4.8vw, 3.2rem);
+      font-weight: 800;
+      color: var(--gb-text);
+      line-height: 1.1;
+      margin: 0;
+      transition: color var(--gb-transition);
+    }
+
+    .gb-intro-heading em {
+      font-style: italic;
+      color: var(--gb-gold);
+    }
+
+    .gb-heading-wrap {
+      position: relative;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+    }
+
+    .gb-heading-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--gb-gold);
+      border-radius: 2px;
+    }
+
+    .gb-intro-body {
+      font-size: .97rem;
+      color: var(--gb-text-muted);
+      line-height: 1.88;
+      margin: 0;
+      max-width: 580px;
+      transition: color var(--gb-transition);
+    }
+
+    /* Right: feature panel */
+    .gb-intro-panel {
+      background: var(--gb-surface-alt);
+      border: 1.5px solid var(--gb-card-border);
+      border-radius: 20px;
+      padding: 0;
+      overflow: hidden;
+      transition: background var(--gb-transition), border-color var(--gb-transition);
+    }
+
+    /* Shimmer top bar */
+    .gb-panel-bar {
+      height: 5px;
+      background: linear-gradient(90deg, var(--gb-charcoal) 0%, #3a3a3a 40%, var(--gb-gold) 60%, var(--gb-charcoal) 100%);
+      background-size: 300% 100%;
+      animation: gbShimmer 4s linear infinite;
+    }
+
+    @keyframes gbShimmer {
+      0% {
+        background-position: 0% center;
+      }
+
+      100% {
+        background-position: 300% center;
+      }
+    }
+
+    .gb-panel-body {
+      padding: 32px 30px;
+    }
+
+    .gb-panel-title {
+      font-family: var(--gb-font-main);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gb-gold);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .gb-pillar-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .gb-pillar {
+      background: var(--gb-surface);
+      border: 1.5px solid var(--gb-card-border);
+      border-radius: 12px;
+      padding: 16px;
+      transition: background var(--gb-transition), border-color var(--gb-transition),
+        box-shadow var(--gb-transition);
+      cursor: default;
+    }
+
+    .gb-pillar:hover {
+      border-color: var(--gb-gold);
+      box-shadow: 0 4px 16px rgba(212, 175, 55, .12);
+    }
+
+    .gb-pillar-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--gb-gold-light);
+      border: 1px solid rgba(212, 175, 55, .22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .gb-pillar-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--gb-gold);
+    }
+
+    .gb-pillar h4 {
+      font-family: var(--gb-font-main);
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--gb-text);
+      margin: 0 0 3px;
+      transition: color var(--gb-transition);
+    }
+
+    .gb-pillar p {
+      font-size: .75rem;
+      color: var(--gb-text-muted);
+      line-height: 1.5;
+      margin: 0;
+      transition: color var(--gb-transition);
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     TRUST STRIP
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .gb-trust {
+      background: var(--gb-charcoal);
+      padding: 44px 0;
+      transition: background var(--gb-transition);
+    }
+
+    [data-theme="dark"] .gb-trust {
+      background: #0d1f36;
+    }
+
+    .gb-trust-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .gb-trust-item {
+      text-align: center;
+      padding: 8px 16px;
+      position: relative;
+    }
+
+    .gb-trust-item+.gb-trust-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10%;
+      bottom: 10%;
+      width: 1px;
+      background: rgba(255, 255, 255, .1);
+    }
+
+    .gb-trust-num {
+      display: block;
+      font-family: var(--gb-font-main);
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--gb-gold);
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .gb-trust-label {
+      font-family: var(--gb-font-main);
+      font-size: .74rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, .6);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     SERVICE BLOCKS SECTION
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .gb-block-section {
+      padding: 0;
+    }
+
+    /* Alternating surface colours */
+    .gb-block-wrap {
+      background: var(--gb-surface);
+      transition: background var(--gb-transition);
+    }
+
+    .gb-block-wrap--alt {
+      background: var(--gb-surface-alt);
+      transition: background var(--gb-transition);
+    }
+
+    .gb-block-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    /* Slide-in reveal states */
+    .gb-block-img,
+    .gb-block-text {
+      transition: opacity .75s ease, transform .75s ease;
+    }
+
+    /* Block 1: image is RIGHT so it slides from right */
+    .gb-block-wrap .gb-block-img {
+      opacity: 0;
+      transform: translateX(60px);
+    }
+
+    .gb-block-wrap .gb-block-text {
+      opacity: 0;
+      transform: translateX(-60px);
+    }
+
+    /* Block 2: image is LEFT so it slides from left */
+    .gb-block-wrap--alt .gb-block-img {
+      opacity: 0;
+      transform: translateX(-60px);
+    }
+
+    .gb-block-wrap--alt .gb-block-text {
+      opacity: 0;
+      transform: translateX(60px);
+    }
+
+    /* Revealed */
+    .gb-block-wrap.gb-visible .gb-block-img,
+    .gb-block-wrap.gb-visible .gb-block-text,
+    .gb-block-wrap--alt.gb-visible .gb-block-img,
+    .gb-block-wrap--alt.gb-visible .gb-block-text {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Text side reveals slightly after image */
+    .gb-block-wrap.gb-visible .gb-block-text,
+    .gb-block-wrap--alt.gb-visible .gb-block-text {
+      transition-delay: .12s;
+    }
+
+    /* Block 1: Text LEFT, Image RIGHT (default column order) */
+    /* Block 2: Image LEFT, Text RIGHT — we swap via order */
+    .gb-block-wrap--alt .gb-block-img {
+      order: 1;
+    }
+
+    .gb-block-wrap--alt .gb-block-text {
+      order: 2;
+    }
+
+    /* ── IMAGE column ── */
+    .gb-img-frame {
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .06), 0 24px 56px rgba(0, 0, 0, .12), 0 48px 80px rgba(0, 0, 0, .07);
+      line-height: 0;
+      position: relative;
+      transition: transform .36s cubic-bezier(.4, 0, .2, 1), box-shadow .36s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .gb-img-frame:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 24px rgba(0, 0, 0, .09), 0 40px 72px rgba(0, 0, 0, .16);
+    }
+
+    .gb-img-frame img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      display: block;
+      transition: transform .55s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .gb-img-frame:hover img {
+      transform: scale(1.04);
+    }
+
+    /* Gold diagonal corner */
+    .gb-img-frame::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, transparent 50%, rgba(212, 175, 55, .18) 50%);
+      border-radius: 0 0 15px 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Floating service badge */
+    .gb-img-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 2;
+      background: rgba(10, 25, 47, .78);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(212, 175, 55, .3);
+      border-radius: 10px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .gb-badge-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gb-gold);
+      flex-shrink: 0;
+      animation: gbPulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes gbPulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: .35;
+        transform: scale(1.5);
+      }
+    }
+
+    .gb-img-badge span {
+      font-family: var(--gb-font-main);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: rgba(255, 255, 255, .9);
+    }
+
+    /* ── TEXT column ── */
+    .gb-block-service-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--gb-font-main);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gb-gold);
+      margin-bottom: 14px;
+    }
+
+    .gb-block-service-label svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--gb-gold);
+      flex-shrink: 0;
+    }
+
+    /* 60px gold underline, 3px */
+    .gb-block-heading {
+      font-family: var(--gb-font-main);
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      font-weight: 800;
+      color: var(--gb-text);
+      line-height: 1.12;
+      margin: 0 0 14px;
+      padding-bottom: 16px;
+      position: relative;
+      transition: color var(--gb-transition);
+    }
+
+    .gb-block-heading::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--gb-gold);
+      border-radius: 2px;
+    }
+
+    .gb-block-desc {
+      font-size: .95rem;
+      color: var(--gb-text-muted);
+      line-height: 1.84;
+      margin: 0 0 28px;
+      transition: color var(--gb-transition);
+    }
+
+    /* Gold-check feature list */
+    .gb-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 34px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gb-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--gb-card-border);
+      transition: border-color var(--gb-transition);
+    }
+
+    .gb-list li:last-child {
+      border-bottom: none;
+    }
+
+    .gb-list-icon {
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+      border-radius: 6px;
+      background: var(--gb-gold-light);
+      border: 1.5px solid rgba(212, 175, 55, .25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+      transition: background var(--gb-transition), border-color var(--gb-transition),
+        transform var(--gb-transition);
+    }
+
+    .gb-list li:hover .gb-list-icon {
+      background: var(--gb-gold);
+      border-color: var(--gb-gold);
+      transform: scale(1.1);
+    }
+
+    .gb-list-icon svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .gb-list-icon svg path {
+      stroke: var(--gb-gold);
+      transition: stroke var(--gb-transition);
+    }
+
+    .gb-list li:hover .gb-list-icon svg path {
+      stroke: #fff;
+    }
+
+    .gb-list-content {}
+
+    .gb-list-title {
+      font-family: var(--gb-font-main);
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--gb-text);
+      margin-bottom: 2px;
+      transition: color var(--gb-transition);
+    }
+
+    .gb-list-sub {
+      font-size: .81rem;
+      color: var(--gb-text-muted);
+      line-height: 1.55;
+      transition: color var(--gb-transition);
+    }
+
+    /* CTA button — dark bg, white text; hover shifts to gold */
+    .gb-quote-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gb-charcoal);
+      color: #fff;
+      padding: 14px 30px;
+      border-radius: 10px;
+      font-family: var(--gb-font-main);
+      font-weight: 700;
+      font-size: .9rem;
+      border: 2px solid var(--gb-charcoal);
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, .18), 0 4px 0 rgba(0, 0, 0, .1);
+      transition: background var(--gb-transition), color var(--gb-transition),
+        border-color var(--gb-transition), transform var(--gb-transition),
+        box-shadow var(--gb-transition);
+      text-decoration: none;
+      letter-spacing: .01em;
+    }
+
+    .gb-quote-btn:hover {
+      background: var(--gb-gold);
+      color: var(--gb-charcoal);
+      border-color: var(--gb-gold);
+      box-shadow: 0 8px 28px rgba(212, 175, 55, .35), 0 6px 0 rgba(100, 80, 0, .1);
+      transform: translateY(-3px);
+    }
+
+    .gb-quote-btn:active {
+      transform: translateY(0);
+    }
+
+    .gb-quote-btn svg {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+      transition: fill var(--gb-transition);
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     PROCESS STRIP
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .gb-process {
+      background: var(--gb-charcoal);
+      padding: 72px 0;
+      transition: background var(--gb-transition);
+    }
+
+    [data-theme="dark"] .gb-process {
+      background: #0A192F;
+    }
+
+    .gb-process-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .gb-process-header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+
+    .gb-process-header h2 {
+      font-family: var(--gb-font-main);
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 10px;
+    }
+
+    .gb-process-header h2 em {
+      font-style: italic;
+      color: var(--gb-gold);
+    }
+
+    .gb-process-header p {
+      font-size: .92rem;
+      color: rgba(255, 255, 255, .58);
+      line-height: 1.7;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .gb-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    /* Connector line */
+    .gb-steps::before {
+      content: '';
+      position: absolute;
+      top: 27px;
+      left: calc(10% + 14px);
+      right: calc(10% + 14px);
+      height: 2px;
+      background: rgba(255, 255, 255, .1);
+      z-index: 0;
+    }
+
+    .gb-step {
+      text-align: center;
+      padding: 0 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .gb-step-num {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .06);
+      border: 2px solid rgba(255, 255, 255, .12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-family: var(--gb-font-main);
+      font-size: .95rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, .5);
+      transition: background var(--gb-transition), border-color var(--gb-transition), color var(--gb-transition);
+    }
+
+    .gb-step:hover .gb-step-num {
+      background: var(--gb-gold);
+      border-color: var(--gb-gold);
+      color: var(--gb-charcoal);
+    }
+
+    .gb-step-title {
+      font-family: var(--gb-font-main);
+      font-size: .8rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .85);
+      margin-bottom: 5px;
+      transition: color var(--gb-transition);
+    }
+
+    .gb-step-sub {
+      font-size: .74rem;
+      color: rgba(255, 255, 255, .45);
+      line-height: 1.55;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     FINAL CTA BANNER
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .t-cta {
+      background: var(--light-bg);
+      padding: 80px 0;
+    }
+
+    [data-theme="dark"] .t-cta {
+      background: #0d1f36;
+    }
+
+    .t-cta-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+      text-align: center;
+    }
+
+    .t-cta h2 {
+      font-family: var(--font-main);
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: var(--gray);
+      margin-bottom: 14px;
+      line-height: 1.18;
+    }
+
+    [data-theme="dark"] .t-cta h2 {
+      color: #fff;
+    }
+
+    .t-cta p {
+      font-size: .96rem;
+      color: #888;
+      line-height: 1.78;
+      margin-bottom: 36px;
+    }
+
+    .t-cta-btns {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .t-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      color: #fff;
+      padding: 15px 34px;
+      border-radius: 100px;
+      font-family: var(--font-main);
+      font-weight: 700;
+      font-size: .94rem;
+      box-shadow: 0 4px 24px rgba(255, 87, 34, .38), 0 6px 0 rgba(140, 30, 0, .22);
+      transition: var(--transition);
+    }
+
+    .t-btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(255, 87, 34, .5), 0 10px 0 rgba(140, 30, 0, .18);
+    }
+
+    .t-btn-primary svg {
+      width: 17px;
+      height: 17px;
+      fill: #fff;
+    }
+
+    .t-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: transparent;
+      color: var(--orange);
+      border: 2px solid var(--orange);
+      padding: 15px 34px;
+      border-radius: 100px;
+      font-family: var(--font-main);
+      font-weight: 700;
+      font-size: .94rem;
+      transition: var(--transition);
+    }
+
+    .t-btn-secondary:hover {
+      background: rgba(255, 87, 34, .07);
+      transform: translateY(-2px);
+    }
+
+    .t-btn-secondary svg {
+      width: 17px;
+      height: 17px;
+      fill: var(--orange);
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     RESPONSIVE
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    @media (max-width: 1024px) {
+      .gb-intro-inner {
+        grid-template-columns: 1fr;
+        gap: 44px;
+      }
+
+      .gb-block-inner {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 60px 24px;
+      }
+
+      /* Image always on top */
+      .gb-block-img {
+        order: 0 !important;
+      }
+
+      .gb-block-text {
+        order: 1 !important;
+        text-align: center;
+      }
+
+      .gb-block-heading::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .gb-block-service-label {
+        justify-content: center;
+      }
+
+      .gb-list li {
+        text-align: left;
+      }
+
+      .gb-quote-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Slide-in reset: fade-up instead on mobile */
+      .gb-block-wrap .gb-block-img,
+      .gb-block-wrap .gb-block-text,
+      .gb-block-wrap--alt .gb-block-img,
+      .gb-block-wrap--alt .gb-block-text {
+        transform: translateY(40px);
+      }
+
+      .gb-steps {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+
+      .gb-steps::before {
+        display: none;
+      }
+
+      .gb-trust-inner {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .gb-trust-item+.gb-trust-item::before {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .gb-intro {
+        padding: 56px 0 44px;
+      }
+
+      .gb-img-frame img {
+        height: 300px;
+      }
+
+      .gb-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .gb-pillar-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gb-final-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .gb-final-btns>* {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+
+  <div class="gb-page">
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     INTRO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <section class="gb-intro" aria-labelledby="gb-intro-heading">
+      <div class="gb-intro-inner">
+
+        <div class="gb-intro-text">
+          <div class="gb-eyebrow">General Building &amp; Structural Services</div>
+          <div class="gb-heading-wrap">
+            <h1 class="gb-intro-heading" id="gb-intro-heading">
+              Transforming Homes with<br><em>Structural Excellence.</em>
+            </h1>
+          </div>
+          <p class="gb-intro-body">From ambitious home extensions to complete property modernisations, we specialise in
+            high-impact building solutions. Our team blends traditional craftsmanship with modern engineering to expand
+            your living space and enhance your property's value. Whether you are looking to add a master suite, open up
+            a cramped floor plan, or restore a period property, we provide a seamless concept-to-completion service
+            defined by transparency, safety, and uncompromising quality.</p>
+        </div>
+
+        <div class="gb-intro-panel" aria-hidden="true">
+          <div class="gb-panel-bar"></div>
+          <div class="gb-panel-body">
+            <span class="gb-panel-title">Our Core Commitments</span>
+            <div class="gb-pillar-grid">
+              <div class="gb-pillar">
+                <div class="gb-pillar-icon">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                </div>
+                <h4>Structural Safety</h4>
+                <p>Every project is engineered to code with full council compliance.</p>
+              </div>
+              <div class="gb-pillar">
+                <div class="gb-pillar-icon">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 6v6l4 2" />
+                  </svg>
+                </div>
+                <h4>On-Time Delivery</h4>
+                <p>Realistic timelines we commit to and honour, every project.</p>
+              </div>
+              <div class="gb-pillar">
+                <div class="gb-pillar-icon">
+                  <svg viewBox="0 0 24 24">
+                    <line x1="12" y1="1" x2="12" y2="23" />
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                  </svg>
+                </div>
+                <h4>Transparent Pricing</h4>
+                <p>Itemised quotes with no hidden costs or surprise invoices.</p>
+              </div>
+              <div class="gb-pillar">
+                <div class="gb-pillar-icon">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                  </svg>
+                </div>
+                <h4>Quality Guaranteed</h4>
+                <p>Backed by a workmanship warranty on all structural work.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     TRUST STRIP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <div class="gb-trust" aria-hidden="true">
+      <div class="gb-trust-inner">
+        <div class="gb-trust-item"><span class="gb-trust-num">20+</span><span class="gb-trust-label">Years
+            Experience</span></div>
+        <div class="gb-trust-item"><span class="gb-trust-num">350+</span><span class="gb-trust-label">Builds
+            Completed</span></div>
+        <div class="gb-trust-item"><span class="gb-trust-num">100%</span><span class="gb-trust-label">Council
+            Compliant</span></div>
+        <div class="gb-trust-item"><span class="gb-trust-num">5★</span><span class="gb-trust-label">Client Rating</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     BLOCK 1 — HOME EXTENSIONS
+     Text LEFT · Image RIGHT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <div class="gb-block-wrap" id="gb-block-1">
+      <article class="gb-block-inner" aria-label="Home Extensions service">
+
+        <div class="gb-block-text">
+          <span class="gb-block-service-label">
+            <!-- Blueprint icon -->
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path d="M3 9h18M9 21V9" />
+              <path d="M9 3v6" />
+            </svg>
+            Service One
+          </span>
+          <h2 class="gb-block-heading">Home Extensions<br><small
+              style="font-size:.65em;font-weight:600;color:var(--gb-gold);">Expanding Out &amp; Up</small></h2>
+          <p class="gb-block-desc">Maximise your property's footprint and market value with our expert extension
+            services. We handle everything from the initial foundation pour to the final roof tile, managing every trade
+            under one roof so you don't have to.</p>
+
+          <ul class="gb-list" aria-label="Home extension features">
+            <li>
+              <div class="gb-list-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="gb-list-content">
+                <div class="gb-list-title">Single &amp; Double Storey Additions</div>
+                <div class="gb-list-sub">Structurally engineered additions that match the existing architecture and meet
+                  all local authority requirements.</div>
+              </div>
+            </li>
+            <li>
+              <div class="gb-list-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="gb-list-content">
+                <div class="gb-list-title">Kitchen &amp; Wrap-around Extensions</div>
+                <div class="gb-list-sub">Open up the heart of your home with a fully integrated kitchen extension or
+                  seamless wrap-around design.</div>
+              </div>
+            </li>
+            <li>
+              <div class="gb-list-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="gb-list-content">
+                <div class="gb-list-title">Side-Return &amp; Rear Extensions</div>
+                <div class="gb-list-sub">Recover unused side or rear ground to gain substantial living space without
+                  changing the character of your street frontage.</div>
+              </div>
+            </li>
+            <li>
+              <div class="gb-list-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="gb-list-content">
+                <div class="gb-list-title">Garage &amp; Loft Conversions</div>
+                <div class="gb-list-sub">Transform underutilised space into a bedroom, home office, or studio — one of
+                  the most cost-effective ways to add value.</div>
+              </div>
+            </li>
+          </ul>
+          <a href="contact.html#contact-form">
+            <button class="t-btn-primary" onclick="gbInquiry('Home Extensions')"
+              aria-label="Request a quote for Home Extensions">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              Request a Quote
+            </button>
+          </a>
+        </div>
+
+        <div class="gb-block-img">
+          <div class="gb-img-frame">
+            <img src="assets/images/extensions.webp" alt="Home extension construction" loading="lazy"
+              onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23e8e4dc%22/><text x=%222%22 y=%221.8%22 font-size=%221%22 text-anchor=%22middle%22 fill=%22%23aaa%22 font-family=%22sans-serif%22>home-extensions.png</text></svg>'">
+            <div class="gb-img-badge">
+              <div class="gb-badge-pulse"></div>
+              <span>Home Extensions</span>
+            </div>
+          </div>
+        </div>
+
+      </article>
+    </div>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     BLOCK 2 — GENERAL RENOVATIONS
+     Image LEFT · Text RIGHT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <div class="gb-block-wrap--alt" id="gb-block-2">
+      <article class="gb-block-inner" aria-label="General Renovations service">
+
+        <div class="gb-block-img">
+          <div class="gb-img-frame">
+            <img src="assets/images/renovations.webp" alt="General renovation and structural work" loading="lazy"
+              onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23e8e4dc%22/><text x=%222%22 y=%221.8%22 font-size=%221%22 text-anchor=%22middle%22 fill=%22%23aaa%22 font-family=%22sans-serif%22>general-renovations.png</text></svg>'">
+            <div class="gb-img-badge">
+              <div class="gb-badge-pulse"></div>
+              <span>Renovations</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gb-block-text">
+          <span class="gb-block-service-label">
+            <!-- Hammer icon -->
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M15 4h3a1 1 0 0 1 1 1v2M8 4H5a1 1 0 0 0-1 1v2M3 10h18M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9" />
+              <path d="M9 21v-6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6" />
+            </svg>
+            Service Two
+          </span>
+          <h2 class="gb-block-heading">General Renovations<br><small
+              style="font-size:.65em;font-weight:600;color:var(--gb-gold);">Modernising Within</small></h2>
+          <p class="gb-block-desc">Reimagine your existing space with structural precision. We specialise in modernising
+            interiors while preserving the character and integrity of your home, from knocking through walls to full
+            property refurbishments.</p>
+
+          <ul class="gb-list" aria-label="Renovation features">
+            <li>
+              <div class="gb-list-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="gb-list-content">
+                <div class="gb-list-title">Structural Remodelling — Steel Beam Installation</div>
+                <div class="gb-list-sub">Safe removal of load-bearing walls and professional steel beam installation to
+                  create open-plan living spaces.</div>
+              </div>
+            </li>
+            <li>
+              <div class="gb-list-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="gb-list-content">
+                <div class="gb-list-title">Complete Property Refurbishment</div>
+                <div class="gb-list-sub">Full-scope modernisation — electrics, plumbing, finishes, and structure —
+                  managed as a single coordinated project.</div>
+              </div>
+            </li>
+            <li>
+              <div class="gb-list-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="gb-list-content">
+                <div class="gb-list-title">Period Property Restoration</div>
+                <div class="gb-list-sub">Sensitive restoration of heritage features — cornice work, sash windows, brick
+                  pointing — respecting the original character.</div>
+              </div>
+            </li>
+            <li>
+              <div class="gb-list-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="gb-list-content">
+                <div class="gb-list-title">Basement &amp; Attic Finishing</div>
+                <div class="gb-list-sub">Convert raw basement or attic space into habitable, insulated, and fully
+                  finished rooms with proper waterproofing.</div>
+              </div>
+            </li>
+          </ul>
+          <a href="contact.html#contact-form">
+            <button class="t-btn-primary" onclick="gbInquiry('General Renovations')"
+              aria-label="Request a quote for General Renovations">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              Request a Quote
+            </button>
+
+        </div>
+        </a>
+      </article>
+    </div>
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     PROCESS STRIP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <section class="gb-process" aria-label="Our building process">
+      <div class="gb-process-inner">
+        <div class="gb-process-header">
+          <h2>From <em>Concept</em> to Completion</h2>
+          <p>A structured, transparent process that keeps you informed and in control at every stage of the build.</p>
+        </div>
+        <div class="gb-steps">
+          <div class="gb-step">
+            <div class="gb-step-num">01</div>
+            <div class="gb-step-title">Consultation</div>
+            <div class="gb-step-sub">Free site visit to understand your vision, assess feasibility, and define the
+              scope.</div>
+          </div>
+          <div class="gb-step">
+            <div class="gb-step-num">02</div>
+            <div class="gb-step-title">Design &amp; Quote</div>
+            <div class="gb-step-sub">Detailed drawings and an itemised, fixed-price quote — no ambiguity, no surprises.
+            </div>
+          </div>
+          <div class="gb-step">
+            <div class="gb-step-num">03</div>
+            <div class="gb-step-title">Approvals</div>
+            <div class="gb-step-sub">We manage all council submissions, building permits, and structural engineer
+              sign-offs.</div>
+          </div>
+          <div class="gb-step">
+            <div class="gb-step-num">04</div>
+            <div class="gb-step-title">Build Phase</div>
+            <div class="gb-step-sub">Full construction managed by a dedicated site foreman with weekly progress updates.
+            </div>
+          </div>
+          <div class="gb-step">
+            <div class="gb-step-num">05</div>
+            <div class="gb-step-title">Handover</div>
+            <div class="gb-step-sub">Final inspection walkthrough, snag list resolved, and certificate of completion
+              issued.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </div><!-- /gb-page -->
+
+  <script>
+    (function () {
+
+      /* ════════════════════════════════════════════════
+         SLIDE-IN REVEAL — IntersectionObserver
+         Block 1 (wrap): image slides from RIGHT,
+                         text slides from LEFT.
+         Block 2 (wrap--alt): image slides from LEFT,
+                              text slides from RIGHT.
+         The CSS initial states set the correct
+         translateX direction. All we do here is
+         add .gb-visible to the wrapper, which
+         transitions both children to translateX(0).
+         On mobile the CSS resets both to translateY.
+      ════════════════════════════════════════════════ */
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const blocks = document.querySelectorAll('.gb-block-wrap, .gb-block-wrap--alt');
+
+      if (reduced) {
+        blocks.forEach(el => el.classList.add('gb-visible'));
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('gb-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.08, rootMargin: '0px 0px -56px 0px' });
+
+        blocks.forEach(el => io.observe(el));
+      }
+
+      /* ════════════════════════════════════════════════
+         THEME REACTIVITY
+         CSS vars handle all colour changes automatically.
+         Observer + event hook provided for extension.
+      ════════════════════════════════════════════════ */
+      new MutationObserver(() => {
+        void document.documentElement.getAttribute('data-theme');
+      }).observe(document.documentElement, { attributes: true });
+
+      document.addEventListener('themechange', (e) => { void e.detail.theme; });
+
+    })();
+  </script>
+
+  <!-- footer content -->
+  <style>
+    .cc-footer {
+      background: #0d1b2e;
+      color: #c8d8eb;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      padding: 64px 0 0;
+      margin-top: 0;
+    }
+
+    .cc-footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Grid */
+    .cc-footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1.1fr 1.3fr;
+      gap: 48px 32px;
+    }
+
+    @media(max-width:1024px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 40px 24px;
+      }
+
+      .cc-footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media(max-width:640px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px 20px;
+      }
+
+      .cc-footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      .cc-footer-hours {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media(max-width:420px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Brand */
+    .cc-footer-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 14px;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+    }
+
+    .cc-footer-logo span {
+      color: #e85d04;
+    }
+
+    .cc-footer-tagline {
+      font-size: 13.5px;
+      color: #8ba7c2;
+      line-height: 1.65;
+      margin: 0 0 22px;
+      max-width: 300px;
+    }
+
+    /* Social icons */
+    .cc-social-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .cc-social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      background: #e85d04;
+      border-radius: 7px;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+      flex-shrink: 0;
+    }
+
+    .cc-social-icon:hover {
+      background: #ff7a2a;
+      transform: translateY(-2px);
+    }
+
+    .cc-social-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+      display: block;
+    }
+
+    /* Column headings */
+    .cc-footer-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      margin: 0 0 6px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e85d04;
+      display: inline-block;
+    }
+
+    /* Column links */
+    .cc-footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 0;
+    }
+
+    .cc-footer-col ul li {
+      margin-bottom: 10px;
+      font-size: 13.5px;
+      color: #8ba7c2;
+      line-height: 1.5;
+    }
+
+    .cc-footer-col ul li a {
+      color: #8ba7c2;
+      text-decoration: none;
+      transition: color .18s;
+    }
+
+    .cc-footer-col ul li a:hover {
+      color: #e85d04;
+    }
+
+    /* Contact items */
+    .cc-contact-item {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 9px;
+    }
+
+    .cc-contact-item svg {
+      width: 14px;
+      height: 14px;
+      fill: #e85d04;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Business hours */
+    .cc-hours-table {
+      margin-top: 14px;
+      width: 100%;
+    }
+
+    .cc-hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .05);
+      font-size: 13px;
+    }
+
+    .cc-hours-row:last-child {
+      border-bottom: none;
+    }
+
+    .cc-hours-row:first-child {
+      border-top: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .cc-hours-day {
+      color: #c8d8eb;
+      font-weight: 400;
+      min-width: 90px;
+    }
+
+    .cc-hours-time {
+      color: #e85d04;
+      font-weight: 600;
+      font-size: 12.5px;
+      text-align: right;
+    }
+
+    /* Bottom bar */
+    .cc-footer-bottom {
+      margin-top: 52px;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      padding: 20px 0;
+    }
+
+    .cc-footer-bottom-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .cc-footer-bottom p {
+      font-size: 12.5px;
+      color: #556f88;
+      margin: 0;
+    }
+
+    .cc-footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+
+    .cc-footer-legal a {
+      font-size: 12.5px;
+      color: #556f88;
+      text-decoration: none;
+      transition: color .18s;
+    }
+
+    .cc-footer-legal a:hover {
+      color: #e85d04;
+    }
+  </style>
+
+  <footer class="cc-footer">
+    <div class="cc-footer-inner">
+      <div class="cc-footer-grid">
+
+        <!-- ── Brand ────────────────────────────────────────── -->
+        <div class="cc-footer-brand cc-footer-col">
+          <h3 class="cc-footer-logo">Cedric <span>Construction</span></h3>
+          <p class="cc-footer-tagline">Your trusted construction partner in Cape Town. We deliver quality building
+            services with professionalism, skill, and lasting dedication to every project.</p>
+
+          <div class="cc-social-row">
+            <!-- Facebook -->
+            <a class="cc-social-icon" href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C17.56 21.45 22 17.19 22 12z" />
+              </svg>
+            </a>
+            <!-- Twitter / X -->
+            <a class="cc-social-icon" href="#" aria-label="Twitter">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L2.25 2.25h6.928l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+            <!-- LinkedIn -->
+            <a class="cc-social-icon" href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+              </svg>
+            </a>
+            <!-- Instagram -->
+            <a class="cc-social-icon" href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.8v8.4C4 18.39 5.61 20 7.8 20h8.4a3.6 3.6 0 0 0 3.6-3.6V7.8C20 5.61 18.39 4 16.2 4H7.8m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
+              </svg>
+            </a>
+            <!-- WhatsApp -->
+            <a class="cc-social-icon" href="https://wa.me/27849614552" target="_blank" rel="noopener"
+              aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ── Services ──────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="tiling.html">Tiling &amp; Flooring</a></li>
+            <li><a href="roofing.html">Roofing</a></li>
+            <li><a href="painting.html#pp-block-article">Painting</a></li>
+            <li><a href="building.html">General Building</a></li>
+            <li><a href="painting.html#pp-services">Plastering</a></li>
+            <li><a href="building.html#gb-block-2">Renovations</a></li>
+          </ul>
+        </div>
+
+        <!-- ── Company ───────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="projects.html">Our Projects</a></li>
+            <li><a href="testimonials.html">Testimonials</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html#contact-form">Get a Quote</a></li>
+          </ul>
+        </div>
+
+        <!-- ── Contact ───────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+              </svg>
+              <span>Wallacedene, Kraaifontein<br>Cape Town, South Africa</span>
+            </li>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+              </svg>
+              <a href="tel:+27849614552">+27 84 961 4552</a>
+            </li>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+              </svg>
+              <a href="mailto:cedricconstructionservices@gmail.com"
+                style="word-break:break-all;">cedricconstructionservices@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- ── Business Hours ────────────────────────────────── -->
+        <div class="cc-footer-col cc-footer-hours">
+          <h4>Business Hours</h4>
+          <div class="cc-hours-table">
+            <div class="cc-hours-row"><span class="cc-hours-day">Monday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Tuesday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Wednesday</span><span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Thursday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Friday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Saturday</span> <span class="cc-hours-time">08:00 –
+                14:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Sunday</span> <span class="cc-hours-time">08:00 –
+                13:00</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="cc-footer-bottom">
+      <div class="cc-footer-bottom-inner">
+        <p>&copy; <span id="cc-year"></span> Cedric Construction Services. All rights reserved.</p>
+        <nav class="cc-footer-legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('cc-year').textContent = new Date().getFullYear();
+  </script>
+  <!-- ================================================================ -->
+
+  <!--
+    ┌─────────────────────────────────────────────────────────────┐
+    │  STEP 4 — Call loadHero() AFTER component.js               │
+    │                                                             │
+    │  We place this script LAST in <body> for two reasons:       │
+    │                                                             │
+    │   1. The #hero-placeholder div is guaranteed to exist in    │
+    │      the DOM by the time this script executes (top-down     │
+    │      parsing order).                                        │
+    │                                                             │
+    │   2. It runs after component.js so there are no race        │
+    │      conditions between your header loader and the hero.    │
+    │                                                             │
+    │  loadHero() takes 3 arguments:                              │
+    │   • "hero-placeholder" → the id of the div in Step 2        │
+    │   • "/assets/hero-template.html" → where the template lives │
+    │   • { ...config } → your page-specific content              │
+    │                                                             │
+    │  Internally loadHero() does this sequence automatically:    │
+    │   fetch(template) → inject HTML → requestAnimationFrame     │
+    │   → layoutHero(config)                                      │
+    │  You never need to call layoutHero() yourself.              │
+    └─────────────────────────────────────────────────────────────┘
+    -->
+  <script>
+    loadHero(
+      'hero-placeholder',             // must match the div id in Step 2
+      'hero-template.html',   // path to hero-template.html
+
+      {
+        // ── Eyebrow label (the small text above the headline) ──────
+        tag: 'ESTABLISHED BUILDING & RENOVATION EXPERTS',
+
+        // ── Main headline ──────────────────────────────────────────
+        // Wrap one word in <em> for the gold italic accent font.
+        headline: 'Transforming spaces with <em>masterful</em> renovation.',
+
+        // ── Supporting paragraph ───────────────────────────────────
+        sub: 'From foundational building work to high-end architectural renovations, Cedric Construction Services specializes in revitalizing properties  . We provide comprehensive general construction, expert repairs, and structural upgrades designed to last for generations across Cape Town.',
+
+        // ── Auto-advance delay in milliseconds ─────────────────────
+        interval: 6000,
+
+        // ── Slides (images and/or videos) ──────────────────────────
+        // First slide should always be an image for fast page load.
+        slides: [
+          {
+            type: 'image',
+            src: '/assets/images/building2.webp',
+            alt: 'Our team on a construction site',
+          },
+          {
+            type: 'video',
+            src: '/assets/video/building.webm',
+            alt: 'A recently completed residential build',
+          },
+          {
+            type: 'video',
+            src: '/assets/video/building_2.webm',
+            poster: '/assets/video/building_2.webm',
+          },
+        ],
+
+        // ── Call-to-action buttons ─────────────────────────────────
+        // variant 'primary'   → solid gold button
+        // variant 'secondary' → transparent outline button
+        buttons: [
+          {
+            label: 'Request a Renovation Quote',
+            href: 'contact.html#contact-form',
+            variant: 'primary',
+          },
+          {
+            label: 'Our Portfolio',
+            href: 'projects.html',
+            variant: 'secondary',
+          },
+        ],
+      }
+    );
+  </script>
+</body>
+
+</html>

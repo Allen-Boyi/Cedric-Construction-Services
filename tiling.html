@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — Cedric Construction Services</title>
+
+  <!--
+    THEME INIT — MUST be first, before any stylesheet.
+    about.html was MISSING this entirely — that's why dark mode
+    caused a white flash every time you navigated to this page.
+  -->
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Dark mode overrides for ALL page sections -->
+  <link rel="stylesheet" href="/assets/css/dark-mode.css">
+  <link rel="stylesheet" href="/assets/css/mobile-fixes.css">
+
+  <style>
+    #header-placeholder,
+    #footer-placeholder {
+      display: block;
+      width: 100%;
+    }
+  </style>
+
+  <script src="/assets/js/hero-engine.js"></script>
+  <script src="/assets/js/component.js" defer></script>
+</head>
+
+<body>
+  <div id="header-placeholder"></div>
+  <div id="hero-placeholder"></div><!--
+  ================================================================
+  CEDRIC CONSTRUCTION — MATERIALS & PRICING SECTION
+  Paste this block between #hero-placeholder and the <footer>
+  in tiling.html.
+
+  Dark-mode: reacts automatically to data-theme on <html>.
+  Theme toggle: also listens to the 'themechange' custom event
+  from component.js v3 via MutationObserver.
+  ================================================================
+-->
+
+  <style>
+    /* ── Inherit site vars (declared in header.html) ─────────────
+     We re-declare them here as fallbacks so this section renders
+     correctly even if header.html hasn't loaded yet.            */
+    :root {
+      --mp-orange: var(--orange, #FF5722);
+      --mp-orange-dark: var(--orange-dark, #E4531B);
+      --mp-navy: var(--navy, #0A192F);
+      --mp-navy-2: var(--navy-2, #002366);
+      --mp-white: var(--white, #ffffff);
+      --mp-gray: var(--gray, #1a1a1a);
+      --mp-light-bg: var(--light-bg, #f4f4f4);
+      --mp-border: var(--border, #E8ECF0);
+      --mp-font-main: var(--font-main, 'Poppins', sans-serif);
+      --mp-font-body: var(--font-body, 'DM Sans', sans-serif);
+      --mp-gold: #D4AF37;
+      /* spec accent */
+      --mp-gold-dark: #b8941e;
+      --mp-transition: var(--transition, 0.32s cubic-bezier(.4, 0, .2, 1));
+    }
+
+    /* Dark mode overrides */
+    [data-theme="dark"] {
+      --mp-white: #0A192F;
+      --mp-gray: #E8ECF0;
+      --mp-light-bg: #07111F;
+      --mp-border: #1E2D42;
+    }
+
+    /* ── BASE ────────────────────────────────────────────────────── */
+    .mp-page {
+      font-family: var(--mp-font-body);
+    }
+
+    /* ── INTRO SECTION ───────────────────────────────────────────── */
+    .mp-intro {
+      background: var(--mp-white);
+      padding: 72px 0 48px;
+      transition: background var(--mp-transition);
+    }
+
+    .mp-intro-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Section label */
+    .mp-section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mp-font-main);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--mp-orange);
+      margin-bottom: 16px;
+    }
+
+    .mp-section-label::before {
+      content: '';
+      width: 28px;
+      height: 3px;
+      background: var(--mp-orange);
+      border-radius: 2px;
+    }
+
+    .mp-intro-heading {
+      font-family: var(--mp-font-main);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      color: var(--mp-gray);
+      line-height: 1.15;
+      margin: 0 0 32px;
+      transition: color var(--mp-transition);
+    }
+
+    .mp-intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .mp-intro-block {}
+
+    .mp-intro-block-title {
+      font-family: var(--mp-font-main);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--mp-gray);
+      margin: 0 0 8px;
+      padding-bottom: 10px;
+      /* Gold underline — 60px wide as specified */
+      border-bottom: 3px solid transparent;
+      background:
+        linear-gradient(var(--mp-white), var(--mp-white)) padding-box,
+        linear-gradient(var(--mp-white), var(--mp-white)) padding-box;
+      position: relative;
+      transition: color var(--mp-transition);
+    }
+
+    .mp-intro-block-title::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--mp-gold);
+      border-radius: 2px;
+    }
+
+    .mp-intro-block p {
+      font-size: .96rem;
+      color: #666;
+      line-height: 1.78;
+      transition: color var(--mp-transition);
+    }
+
+    [data-theme="dark"] .mp-intro-block p {
+      color: rgba(255, 255, 255, .58);
+    }
+
+    /* ── CATEGORY DIVIDER ────────────────────────────────────────── */
+    .mp-cat-divider {
+      padding: 48px 0 16px;
+      background: var(--mp-white);
+      transition: background var(--mp-transition);
+    }
+
+    .mp-cat-divider-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .mp-cat-divider h2 {
+      font-family: var(--mp-font-main);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      color: var(--mp-gray);
+      white-space: nowrap;
+      position: relative;
+      padding-bottom: 10px;
+      transition: color var(--mp-transition);
+    }
+
+    .mp-cat-divider h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--mp-gold);
+      border-radius: 2px;
+    }
+
+    .mp-cat-line {
+      flex: 1;
+      height: 1px;
+      background: var(--mp-border);
+      transition: background var(--mp-transition);
+    }
+
+    .mp-cat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(212, 175, 55, .12);
+      border: 1px solid rgba(212, 175, 55, .3);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-family: var(--mp-font-main);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mp-gold);
+      white-space: nowrap;
+    }
+
+    /* ── Z-PATTERN SECTION ───────────────────────────────────────── */
+    .mp-materials {
+      background: var(--mp-white);
+      padding: 0 0 72px;
+      transition: background var(--mp-transition);
+    }
+
+    .mp-materials-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Individual material block */
+    .mp-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      padding: 64px 0;
+      border-bottom: 1px solid var(--mp-border);
+      /* Scroll-reveal initial state */
+      opacity: 0;
+      transform: translateY(36px);
+      transition:
+        opacity .6s ease,
+        transform .6s ease,
+        border-color var(--mp-transition);
+    }
+
+    .mp-block:last-child {
+      border-bottom: none;
+    }
+
+    .mp-block.mp-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Alternate: odd = image left, even = image right */
+    .mp-block:nth-child(even) .mp-block-img {
+      order: 2;
+    }
+
+    .mp-block:nth-child(even) .mp-block-text {
+      order: 1;
+    }
+
+    /* Alternate background on even blocks */
+    .mp-block-wrap-alt {
+      background: var(--mp-light-bg);
+      margin: 0 -24px;
+      padding: 0 24px;
+      transition: background var(--mp-transition);
+    }
+
+    /* ── Image side ── */
+    .mp-block-img {
+      position: relative;
+    }
+
+    .mp-img-frame {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 12px 48px rgba(0, 0, 0, .14);
+      line-height: 0;
+    }
+
+    .mp-img-frame img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .mp-img-frame:hover img {
+      transform: scale(1.04);
+    }
+
+    /* Category pill on image */
+    .mp-img-pill {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(10, 25, 47, .72);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-family: var(--mp-font-main);
+      font-size: .68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: rgba(255, 255, 255, .9);
+    }
+
+    /* Gold corner accent */
+    .mp-img-frame::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, transparent 50%, rgba(212, 175, 55, .25) 50%);
+      border-radius: 0 0 15px 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ── Text side ── */
+    .mp-block-text {}
+
+    .mp-block-cat {
+      font-family: var(--mp-font-main);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--mp-orange);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .mp-block-title {
+      font-family: var(--mp-font-main);
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      font-weight: 800;
+      color: var(--mp-gray);
+      line-height: 1.15;
+      margin: 0 0 16px;
+      padding-bottom: 14px;
+      position: relative;
+      transition: color var(--mp-transition);
+    }
+
+    .mp-block-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--mp-gold);
+      border-radius: 2px;
+    }
+
+    .mp-block-desc {
+      font-size: .96rem;
+      color: #555;
+      line-height: 1.82;
+      margin: 0 0 24px;
+      transition: color var(--mp-transition);
+    }
+
+    [data-theme="dark"] .mp-block-desc {
+      color: rgba(255, 255, 255, .6);
+    }
+
+    /* Feature tags */
+    .mp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .mp-tag {
+      padding: 5px 13px;
+      border-radius: 100px;
+      border: 1.5px solid var(--mp-border);
+      font-family: var(--mp-font-main);
+      font-size: .72rem;
+      font-weight: 600;
+      color: #888;
+      transition: var(--mp-transition);
+    }
+
+    [data-theme="dark"] .mp-tag {
+      color: rgba(255, 255, 255, .55);
+    }
+
+    /* CTA button */
+    .mp-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: linear-gradient(135deg, var(--mp-orange), var(--mp-orange-dark));
+      color: #fff;
+      padding: 13px 28px;
+      border-radius: 100px;
+      font-family: var(--mp-font-main);
+      font-weight: 700;
+      font-size: .88rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(255, 87, 34, .32), 0 4px 0 rgba(140, 30, 0, .2);
+      transition: var(--mp-transition);
+      text-decoration: none;
+    }
+
+    .mp-cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(255, 87, 34, .48), 0 8px 0 rgba(140, 30, 0, .16);
+    }
+
+    .mp-cta-btn:active {
+      transform: translateY(0);
+    }
+
+    .mp-cta-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: #fff;
+      flex-shrink: 0;
+    }
+
+    /* ── BANNER between tiling + flooring ───────────────────────── */
+    .mp-split-banner {
+      background: linear-gradient(135deg, var(--mp-navy-2) 0%, #0A192F 100%);
+      padding: 52px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mp-split-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    .mp-split-banner-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    .mp-split-banner h3 {
+      font-family: var(--mp-font-main);
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 6px;
+    }
+
+    .mp-split-banner h3 em {
+      font-style: normal;
+      color: var(--mp-gold);
+    }
+
+    .mp-split-banner p {
+      font-size: .9rem;
+      color: rgba(255, 255, 255, .62);
+      margin: 0;
+    }
+
+    .mp-split-banner-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--mp-gold);
+      color: #1a1a1a;
+      padding: 13px 28px;
+      border-radius: 100px;
+      font-family: var(--mp-font-main);
+      font-weight: 700;
+      font-size: .88rem;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: var(--mp-transition);
+      text-decoration: none;
+      box-shadow: 0 4px 18px rgba(212, 175, 55, .35), 0 4px 0 rgba(100, 80, 0, .18);
+    }
+
+    .mp-split-banner-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(212, 175, 55, .5), 0 8px 0 rgba(100, 80, 0, .14);
+      background: var(--mp-gold-dark);
+    }
+
+    .mp-split-banner-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: #1a1a1a;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .mp-intro-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .mp-block {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 48px 0;
+      }
+
+      /* Always image on top on mobile */
+      .mp-block-img {
+        order: 0 !important;
+      }
+
+      .mp-block-text {
+        order: 1 !important;
+      }
+
+      .mp-img-frame img {
+        height: 260px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .mp-intro {
+        padding: 48px 0 32px;
+      }
+
+      .mp-img-frame img {
+        height: 220px;
+      }
+
+      .mp-split-banner-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .mp-split-banner-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- INTRO                                      -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="mp-page">
+    <section class="mp-intro">
+      <div class="mp-intro-inner">
+        <div class="mp-section-label">Materials &amp; Pricing</div>
+        <h1 class="mp-intro-heading">Expert Surfaces for Every Space</h1>
+        <div class="mp-intro-grid">
+          <div class="mp-intro-block">
+            <h3 class="mp-intro-block-title">Tiling</h3>
+            <p>Professional installation of durable, water-resistant surfaces designed for beauty and precision in wet
+              and high-traffic areas. From sleek porcelain to handcrafted natural stone, our tiling solutions bring
+              lasting character to every room.</p>
+          </div>
+          <div class="mp-intro-block">
+            <h3 class="mp-intro-block-title">Flooring</h3>
+            <p>Premium flooring options that combine aesthetic appeal with long-term endurance, tailored for comfort and
+              style. Whether you need the engineering strength of vitrified tiles or the budget-friendly versatility of
+              vinyl, we have the right fit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- TILING CATEGORY HEADER                     -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="mp-cat-divider">
+      <div class="mp-cat-divider-inner">
+        <h2>Tiling Options</h2>
+        <div class="mp-cat-line"></div>
+        <span class="mp-cat-badge">3 Materials</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- TILING BLOCKS — Z-PATTERN                  -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="mp-materials">
+      <div class="mp-materials-inner">
+
+        <!-- 1. Porcelain — Image LEFT, Text RIGHT (odd) -->
+        <div class="mp-block" data-material="Porcelain Tiles">
+          <div class="mp-block-img">
+            <div class="mp-img-frame">
+              <img src="assets/images/In_tiling.webp" alt="Porcelain Tiles" loading="lazy"
+                onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23e0e5ec%22/><text x=%222%22 y=%221.8%22 font-size=%221%22 text-anchor=%22middle%22 fill=%22%23aaa%22 font-family=%22sans-serif%22>📷 porcelain.png</text></svg>'">
+              <span class="mp-img-pill">Tiling</span>
+            </div>
+          </div>
+          <div class="mp-block-text">
+            <span class="mp-block-cat">Tiling · Best for wet &amp; high-traffic zones</span>
+            <h3 class="mp-block-title">Porcelain Tiles</h3>
+            <p class="mp-block-desc">The ultimate choice for high-traffic and wet zones. These tiles are incredibly
+              dense and offer superior water resistance, making them perfect for kitchens, bathrooms, and even outdoor
+              patios. Their near-zero porosity means they resist staining and frost, giving you decades of performance
+              with minimal maintenance.</p>
+            <div class="mp-tags">
+              <span class="mp-tag">💧 Water Resistant</span>
+              <span class="mp-tag">🏗️ High-Traffic</span>
+              <span class="mp-tag">🌿 Outdoor Safe</span>
+              <span class="mp-tag">⚡ Low Maintenance</span>
+            </div>
+            <button class="mp-cta-btn" onclick="mpInquiry(this)" data-material="Porcelain Tiles">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              Request a Quote
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Ceramic — Image RIGHT, Text LEFT (even) -->
+        <div class="mp-block" data-material="Ceramic Tiles">
+          <div class="mp-block-img">
+            <div class="mp-img-frame">
+              <img src="assets/images/ceramic.webp" alt="Ceramic Tiles" loading="lazy"
+                onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23e0e5ec%22/><text x=%222%22 y=%221.8%22 font-size=%221%22 text-anchor=%22middle%22 fill=%22%23aaa%2２ font-family=%2２sans-serif%２２>📷 ceramic.png</text></svg>'">
+              <span class="mp-img-pill">Tiling</span>
+            </div>
+          </div>
+          <div class="mp-block-text">
+            <span class="mp-block-cat">Tiling · Ideal for indoor living areas</span>
+            <h3 class="mp-block-title">Ceramic Tiles</h3>
+            <p class="mp-block-desc">A versatile and popular indoor flooring option. They offer a great balance of style
+              and durability, performing best in living areas where a wide range of colours and finishes is desired.
+              Ceramic tiles are lighter and easier to cut than porcelain, making them a cost-effective choice for large
+              surface areas.</p>
+            <div class="mp-tags">
+              <span class="mp-tag">🎨 Wide Range of Finishes</span>
+              <span class="mp-tag">🏠 Indoor Specialist</span>
+              <span class="mp-tag">💰 Cost Effective</span>
+            </div>
+            <button class="mp-cta-btn" onclick="mpInquiry(this)" data-material="Ceramic Tiles">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              Request a Quote
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Natural Stone — Image LEFT, Text RIGHT (odd) -->
+        <div class="mp-block" data-material="Natural Stone">
+          <div class="mp-block-img">
+            <div class="mp-img-frame">
+              <img src="assets/images/stones.webp" alt="Natural Stone" loading="lazy"
+                onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23e0e5ec%22/><text x=%222%22 y=%221.8%22 font-size=%221%22 text-anchor=%22middle%22 fill=%22%23aaa%22 font-family=%22sans-serif%22>📷 natural-stone.png</text></svg>'">
+              <span class="mp-img-pill">Tiling</span>
+            </div>
+          </div>
+          <div class="mp-block-text">
+            <span class="mp-block-cat">Tiling · Luxury marble, granite &amp; slate</span>
+            <h3 class="mp-block-title">Natural Stone</h3>
+            <p class="mp-block-desc">Bring luxury and a unique aesthetic to your space with marble, granite, or slate.
+              No two slabs are ever identical, giving each installation a one-of-a-kind character. While durable and
+              timelessly beautiful, these require professional sealing to maintain their appearance in high-end living
+              areas and feature walls.</p>
+            <div class="mp-tags">
+              <span class="mp-tag">💎 Luxury Finish</span>
+              <span class="mp-tag">🪨 Unique Every Time</span>
+              <span class="mp-tag">🔒 Requires Sealing</span>
+              <span class="mp-tag">🏆 High-End Appeal</span>
+            </div>
+            <button class="mp-cta-btn" onclick="mpInquiry(this)" data-material="Natural Stone">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              Request a Quote
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SPLIT BANNER                               -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="mp-split-banner">
+      <div class="mp-split-banner-inner">
+        <div>
+          <h3>Not sure which tile is right for <em>your space?</em></h3>
+          <p>Our team will assess your area and recommend the ideal surface — no obligation, just honest expert advice.
+          </p>
+        </div>
+        <a href="contact.html" class="mp-split-banner-btn">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+          </svg>
+          Talk to an Expert
+        </a>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- FLOORING CATEGORY HEADER                   -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="mp-cat-divider" style="padding-top: 64px;">
+      <div class="mp-cat-divider-inner">
+        <h2>Flooring Options</h2>
+        <div class="mp-cat-line"></div>
+        <span class="mp-cat-badge">3 Materials</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- FLOORING BLOCKS — Z-PATTERN (continues)    -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="mp-materials">
+      <div class="mp-materials-inner">
+
+        <!-- 4. Vitrified — Image LEFT, Text RIGHT (odd = 1st in new section) -->
+        <div class="mp-block" data-material="Vitrified Tiles">
+          <div class="mp-block-img">
+            <div class="mp-img-frame">
+              <img src="assets/images/tiles1.webp" alt="Vitrified Tiles" loading="lazy"
+                onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23e0e5ec%22/><text x=%222%22 y=%221.8%22 font-size=%221%2２ text-anchor=%２２middle%２２ fill=%２２%23aaa%２２ font-family=%２２sans-serif%２２>📷 vitrified.png</text></svg>'">
+              <span class="mp-img-pill">Flooring</span>
+            </div>
+          </div>
+          <div class="mp-block-text">
+            <span class="mp-block-cat">Flooring · Modern high-traffic indoor solution</span>
+            <h3 class="mp-block-title">Vitrified Tiles</h3>
+            <p class="mp-block-desc">Engineered for strength and low porosity, vitrified tiles are a modern solution for
+              high-traffic indoor environments. They offer a polished, seamless look that is highly resistant to stains,
+              scratches, and chemicals. Ideal for large open-plan spaces where a clean, refined aesthetic is the goal.
+            </p>
+            <div class="mp-tags">
+              <span class="mp-tag">🛡️ Stain Resistant</span>
+              <span class="mp-tag">✨ Polished Finish</span>
+              <span class="mp-tag">🏢 Large Format</span>
+              <span class="mp-tag">⚙️ Low Porosity</span>
+            </div>
+            <button class="mp-cta-btn" onclick="mpInquiry(this)" data-material="Vitrified Tiles">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              Request a Quote
+            </button>
+          </div>
+        </div>
+
+        <!-- 5. Vinyl — Image RIGHT, Text LEFT (even = 2nd in section) -->
+        <div class="mp-block" data-material="Vinyl Flooring">
+          <div class="mp-block-img">
+            <div class="mp-img-frame">
+              <img src="assets/images/vinyl.webp" alt="Vinyl Flooring" loading="lazy"
+                onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23e0e5ec%22/><text x=%222%22 y=%221.8%22 font-size=%221%22 text-anchor=%22middle%22 fill=%22%23aaa%22 font-family=%22sans-serif%22>📷 vinyl.png</text></svg>'">
+              <span class="mp-img-pill">Flooring</span>
+            </div>
+          </div>
+          <div class="mp-block-text">
+            <span class="mp-block-cat">Flooring · Budget-friendly &amp; moisture resistant</span>
+            <h3 class="mp-block-title">Vinyl Flooring</h3>
+            <p class="mp-block-desc">A practical, budget-friendly, and moisture-resistant option. It's particularly
+              popular for kitchen upgrades and renovations where comfort underfoot and easy installation are priorities.
+              Modern luxury vinyl planks convincingly replicate the look of hardwood or stone at a fraction of the cost.
+            </p>
+            <div class="mp-tags">
+              <span class="mp-tag">💰 Budget Friendly</span>
+              <span class="mp-tag">💧 Moisture Resistant</span>
+              <span class="mp-tag">🦵 Comfort Underfoot</span>
+              <span class="mp-tag">🔧 Easy Installation</span>
+            </div>
+            <button class="mp-cta-btn" onclick="mpInquiry(this)" data-material="Vinyl Flooring">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              Request a Quote
+            </button>
+          </div>
+        </div>
+
+        <!-- 6. Quarry — Image LEFT, Text RIGHT (odd = 3rd in section) -->
+        <div class="mp-block" data-material="Quarry Tiles">
+          <div class="mp-block-img">
+            <div class="mp-img-frame">
+              <img src="assets/images/quarry.webp" alt="Quarry Tiles" loading="lazy"
+                onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23e0e5ec%22/><text x=%222%22 y=%221.8%22 font-size=%221%2２ text-anchor=%２２middle%２２ fill=%２２%23aaa%２２ font-family=%２２sans-serif%２２>📷 quarry.png</text></svg>'">
+              <span class="mp-img-pill">Flooring</span>
+            </div>
+          </div>
+          <div class="mp-block-text">
+            <span class="mp-block-cat">Flooring · Rugged, slip-resistant &amp; outdoor ready</span>
+            <h3 class="mp-block-title">Quarry Tiles</h3>
+            <p class="mp-block-desc">Known for their rugged, earthy charm and slip-resistant surface. These unglazed
+              tiles are exceptionally tough, making them a go-to for mudrooms, utility areas, and outdoor walkways.
+              Their natural texture improves grip underfoot and their dense clay body makes them nearly impervious to
+              the elements.</p>
+            <div class="mp-tags">
+              <span class="mp-tag">🧱 Unglazed Clay</span>
+              <span class="mp-tag">🌧️ Outdoor Ready</span>
+              <span class="mp-tag">👟 Slip Resistant</span>
+              <span class="mp-tag">💪 Extremely Tough</span>
+            </div>
+            <button class="mp-cta-btn" onclick="mpInquiry(this)" data-material="Quarry Tiles">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              Request a Quote
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /mp-page -->
+
+  <script>
+    (function () {
+      /* ════════════════════════════════════════════
+         SCROLL REVEAL — IntersectionObserver
+         Fades blocks in and slides them up as the
+         user scrolls. Respects prefers-reduced-motion.
+      ════════════════════════════════════════════ */
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (prefersReduced) {
+        // Skip animation — just reveal all immediately
+        document.querySelectorAll('.mp-block').forEach(el => {
+          el.classList.add('mp-revealed');
+        });
+      } else {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('mp-revealed');
+              observer.unobserve(entry.target); // Animate once only
+            }
+          });
+        }, {
+          threshold: 0.12,    // Trigger when 12% of the block is visible
+          rootMargin: '0px 0px -40px 0px'  // Slight early trigger
+        });
+
+        document.querySelectorAll('.mp-block').forEach(el => observer.observe(el));
+      }
+
+
+      /* ════════════════════════════════════════════
+         THEME REACTIVITY
+         MutationObserver watches data-theme on <html>
+         — all colour changes are handled by CSS vars
+         so no JS colour updates are needed here.
+         This hook is wired up as a ready point for
+         any future JS-driven theme-aware logic.
+      ════════════════════════════════════════════ */
+      const themeObserver = new MutationObserver(() => {
+        const theme = document.documentElement.getAttribute('data-theme') || 'light';
+        // Hook: add any JS-driven theme logic here if needed
+        // e.g. update a canvas, chart, or map colour scheme
+        void theme;
+      });
+      themeObserver.observe(document.documentElement, { attributes: true });
+
+      // Also listen to component.js v3 custom event
+      document.addEventListener('themechange', (e) => {
+        void e.detail.theme; // same hook — extend here if needed
+      });
+
+    })();
+  </script>
+
+  <!-- footer content -->
+  <style>
+    .cc-footer {
+      background: #0d1b2e;
+      color: #c8d8eb;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      padding: 64px 0 0;
+      margin-top: 0;
+    }
+
+    .cc-footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Grid */
+    .cc-footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1.1fr 1.3fr;
+      gap: 48px 32px;
+    }
+
+    @media(max-width:1024px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 40px 24px;
+      }
+
+      .cc-footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media(max-width:640px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px 20px;
+      }
+
+      .cc-footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      .cc-footer-hours {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media(max-width:420px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Brand */
+    .cc-footer-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 14px;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+    }
+
+    .cc-footer-logo span {
+      color: #e85d04;
+    }
+
+    .cc-footer-tagline {
+      font-size: 13.5px;
+      color: #8ba7c2;
+      line-height: 1.65;
+      margin: 0 0 22px;
+      max-width: 300px;
+    }
+
+    /* Social icons */
+    .cc-social-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .cc-social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      background: #e85d04;
+      border-radius: 7px;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+      flex-shrink: 0;
+    }
+
+    .cc-social-icon:hover {
+      background: #ff7a2a;
+      transform: translateY(-2px);
+    }
+
+    .cc-social-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+      display: block;
+    }
+
+    /* Column headings */
+    .cc-footer-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      margin: 0 0 6px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e85d04;
+      display: inline-block;
+    }
+
+    /* Column links */
+    .cc-footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 0;
+    }
+
+    .cc-footer-col ul li {
+      margin-bottom: 10px;
+      font-size: 13.5px;
+      color: #8ba7c2;
+      line-height: 1.5;
+    }
+
+    .cc-footer-col ul li a {
+      color: #8ba7c2;
+      text-decoration: none;
+      transition: color .18s;
+    }
+
+    .cc-footer-col ul li a:hover {
+      color: #e85d04;
+    }
+
+    /* Contact items */
+    .cc-contact-item {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 9px;
+    }
+
+    .cc-contact-item svg {
+      width: 14px;
+      height: 14px;
+      fill: #e85d04;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Business hours */
+    .cc-hours-table {
+      margin-top: 14px;
+      width: 100%;
+    }
+
+    .cc-hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .05);
+      font-size: 13px;
+    }
+
+    .cc-hours-row:last-child {
+      border-bottom: none;
+    }
+
+    .cc-hours-row:first-child {
+      border-top: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .cc-hours-day {
+      color: #c8d8eb;
+      font-weight: 400;
+      min-width: 90px;
+    }
+
+    .cc-hours-time {
+      color: #e85d04;
+      font-weight: 600;
+      font-size: 12.5px;
+      text-align: right;
+    }
+
+    /* Bottom bar */
+    .cc-footer-bottom {
+      margin-top: 52px;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      padding: 20px 0;
+    }
+
+    .cc-footer-bottom-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .cc-footer-bottom p {
+      font-size: 12.5px;
+      color: #556f88;
+      margin: 0;
+    }
+
+    .cc-footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+
+    .cc-footer-legal a {
+      font-size: 12.5px;
+      color: #556f88;
+      text-decoration: none;
+      transition: color .18s;
+    }
+
+    .cc-footer-legal a:hover {
+      color: #e85d04;
+    }
+  </style>
+
+  <footer class="cc-footer">
+    <div class="cc-footer-inner">
+      <div class="cc-footer-grid">
+
+        <!-- ── Brand ────────────────────────────────────────── -->
+        <div class="cc-footer-brand cc-footer-col">
+          <h3 class="cc-footer-logo">Cedric <span>Construction</span></h3>
+          <p class="cc-footer-tagline">Your trusted construction partner in Cape Town. We deliver quality building
+            services with professionalism, skill, and lasting dedication to every project.</p>
+
+          <div class="cc-social-row">
+            <!-- Facebook -->
+            <a class="cc-social-icon" href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C17.56 21.45 22 17.19 22 12z" />
+              </svg>
+            </a>
+            <!-- Twitter / X -->
+            <a class="cc-social-icon" href="#" aria-label="Twitter">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L2.25 2.25h6.928l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+            <!-- LinkedIn -->
+            <a class="cc-social-icon" href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+              </svg>
+            </a>
+            <!-- Instagram -->
+            <a class="cc-social-icon" href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.8v8.4C4 18.39 5.61 20 7.8 20h8.4a3.6 3.6 0 0 0 3.6-3.6V7.8C20 5.61 18.39 4 16.2 4H7.8m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
+              </svg>
+            </a>
+            <!-- WhatsApp -->
+            <a class="cc-social-icon" href="https://wa.me/27849614552" target="_blank" rel="noopener"
+              aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ── Services ──────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="tiling.html">Tiling &amp; Flooring</a></li>
+            <li><a href="roofing.html">Roofing</a></li>
+            <li><a href="painting.html#pp-block-article">Painting</a></li>
+            <li><a href="building.html">General Building</a></li>
+            <li><a href="painting.html#pp-services">Plastering</a></li>
+            <li><a href="building.html#gb-block-2">Renovations</a></li>
+          </ul>
+        </div>
+
+        <!-- ── Company ───────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="projects.html">Our Projects</a></li>
+            <li><a href="testimonials.html">Testimonials</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html#contact-form">Get a Quote</a></li>
+          </ul>
+        </div>
+
+        <!-- ── Contact ───────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+              </svg>
+              <span>Wallacedene, Kraaifontein<br>Cape Town, South Africa</span>
+            </li>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+              </svg>
+              <a href="tel:+27849614552">+27 84 961 4552</a>
+            </li>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+              </svg>
+              <a href="mailto:cedricconstructionservices@gmail.com"
+                style="word-break:break-all;">cedricconstructionservices@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- ── Business Hours ────────────────────────────────── -->
+        <div class="cc-footer-col cc-footer-hours">
+          <h4>Business Hours</h4>
+          <div class="cc-hours-table">
+            <div class="cc-hours-row"><span class="cc-hours-day">Monday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Tuesday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Wednesday</span><span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Thursday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Friday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Saturday</span> <span class="cc-hours-time">08:00 –
+                14:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Sunday</span> <span class="cc-hours-time">08:00 –
+                13:00</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="cc-footer-bottom">
+      <div class="cc-footer-bottom-inner">
+        <p>&copy; <span id="cc-year"></span> Cedric Construction Services. All rights reserved.</p>
+        <nav class="cc-footer-legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('cc-year').textContent = new Date().getFullYear();
+  </script>
+  <!-- ================================================================ -->
+
+  <!--
+    ┌─────────────────────────────────────────────────────────────┐
+    │  STEP 4 — Call loadHero() AFTER component.js               │
+    │                                                             │
+    │  We place this script LAST in <body> for two reasons:       │
+    │                                                             │
+    │   1. The #hero-placeholder div is guaranteed to exist in    │
+    │      the DOM by the time this script executes (top-down     │
+    │      parsing order).                                        │
+    │                                                             │
+    │   2. It runs after component.js so there are no race        │
+    │      conditions between your header loader and the hero.    │
+    │                                                             │
+    │  loadHero() takes 3 arguments:                              │
+    │   • "hero-placeholder" → the id of the div in Step 2        │
+    │   • "/assets/hero-template.html" → where the template lives │
+    │   • { ...config } → your page-specific content              │
+    │                                                             │
+    │  Internally loadHero() does this sequence automatically:    │
+    │   fetch(template) → inject HTML → requestAnimationFrame     │
+    │   → layoutHero(config)                                      │
+    │  You never need to call layoutHero() yourself.              │
+    └─────────────────────────────────────────────────────────────┘
+    -->
+  <script>
+    loadHero(
+      'hero-placeholder',             // must match the div id in Step 2
+      'hero-template.html',   // path to hero-template.html
+
+      {
+        // ── Eyebrow label (the small text above the headline) ──────
+        tag: 'EXPERT INDOOR & OUTDOOR TILING',
+
+        // ── Main headline ──────────────────────────────────────────
+        // Wrap one word in <em> for the gold italic accent font.
+        headline: 'The perfect finish in every <em>detail</em>',
+
+        // ── Supporting paragraph ───────────────────────────────────
+        sub: 'From elegant interior floor designs to durable outdoor paving, we specialize in high-precision tiling for every environment  . Whether it’s ceramic, porcelain, or natural stone, our team delivers seamless installations that enhance the beauty and value of your property across Cape Town',
+
+        // ── Auto-advance delay in milliseconds ─────────────────────
+        interval: 6000,
+
+        // ── Slides (images and/or videos) ──────────────────────────
+        // First slide should always be an image for fast page load.
+        slides: [
+          {
+            type: 'image',
+            src: '/assets/video/tiles1.webp',
+            alt: 'Our team on a construction site',
+          },
+          {
+            type: 'video',
+            src: '/assets/video/paving_2.webm',
+            alt: 'A recently completed residential build',
+          }
+        ],
+
+        // ── Call-to-action buttons ─────────────────────────────────
+        // variant 'primary'   → solid gold button
+        // variant 'secondary' → transparent outline button
+        buttons: [
+          {
+            label: 'Request a Tiling Quote',
+            href: 'contact.html#contact-form',
+            variant: 'primary',
+          },
+          {
+            label: 'Our Portfolio',
+            href: 'projects.html',
+            variant: 'secondary',
+          },
+        ],
+      }
+    );
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,456 @@
+<!--
+  hero-template.html
+  ─────────────────────────────────────────────────────────────────────────────
+  This file is the PURE STRUCTURAL SHELL of the hero.
+  It contains NO content — all text, media, and buttons are
+  injected by hero-engine.js at runtime via layoutHero(config).
+
+  DO NOT add content directly here. Edit the config object on each page.
+  ─────────────────────────────────────────────────────────────────────────────
+-->
+
+<!-- Google Fonts: Barlow Condensed (display) + DM Serif Display (accent) + DM Sans (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ── Design Tokens ──────────────────────────────────────────────────────── */
+  :root {
+    --hero-gold:        #C9A84C;
+    --hero-gold-light:  #E8C96A;
+    --hero-gold-dim:    rgba(201,168,76,0.18);
+    --hero-dark:        #0D0D0D;
+    --hero-slate:       #1A1A1A;
+    --hero-overlay:     rgba(10, 10, 10, 0.58);
+    --hero-text:        #F5F0E8;
+    --hero-text-muted:  rgba(245,240,232,0.65);
+    --hero-transition:  400ms cubic-bezier(0.4, 0, 0.2, 1);
+    --hero-font-display: 'Barlow Condensed', sans-serif;
+    --hero-font-accent:  'DM Serif Display', serif;
+    --hero-font-body:    'DM Sans', sans-serif;
+  }
+
+  /* ── Reset scoped to hero ───────────────────────────────────────────────── */
+  .hero-slider-container *,
+  .hero-slider-container *::before,
+  .hero-slider-container *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ── Container ──────────────────────────────────────────────────────────── */
+  .hero-slider-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    background: var(--hero-dark);
+    font-family: var(--hero-font-body);
+  }
+
+  /* ── Media Layer ────────────────────────────────────────────────────────── */
+  #hero-media-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  /* Each individual slide */
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--hero-transition);
+    will-change: opacity;
+  }
+  .hero-slide.is-active  { opacity: 1; }
+  .hero-slide.is-leaving { opacity: 0; }
+
+  /* Image slide */
+  .hero-slide__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    /* Slow Ken-Burns drift while active */
+    transform: scale(1.06);
+    transition: transform 8s ease-out;
+  }
+  .hero-slide.is-active .hero-slide__img {
+    transform: scale(1);
+  }
+
+  /* Video slide */
+  .hero-slide__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* ── Overlay ────────────────────────────────────────────────────────────── */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    /* Two-stop gradient: deep bottom vignette + flat semi-transparent center */
+    background:
+      linear-gradient(
+        to top,
+        rgba(10,10,10,0.82) 0%,
+        rgba(10,10,10,0.28) 45%,
+        rgba(10,10,10,0.48) 100%
+      );
+    pointer-events: none;
+  }
+
+  /* Decorative diagonal stripe */
+  .hero-overlay::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--hero-gold) 30%,
+      var(--hero-gold-light) 60%,
+      transparent 100%
+    );
+  }
+
+  /* ── Content Area ───────────────────────────────────────────────────────── */
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 clamp(1.5rem, 6vw, 6rem) clamp(3.5rem, 8vh, 6rem);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .hero-content__inner {
+    max-width: 760px;
+    /* Staggered fade-up for children via CSS animation */
+  }
+
+  /* ── Tag line ───────────────────────────────────────────────────────────── */
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--hero-font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--hero-gold);
+    margin-bottom: 1rem;
+
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroFadeUp 0.7s ease forwards 0.1s;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1.5px;
+    background: var(--hero-gold);
+    flex-shrink: 0;
+  }
+
+  /* ── Headline ───────────────────────────────────────────────────────────── */
+  .hero-headline {
+    font-family: var(--hero-font-display);
+    font-size: clamp(3rem, 7.5vw, 7rem);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--hero-text);
+    margin-bottom: 1.2rem;
+
+    opacity: 0;
+    transform: translateY(28px);
+    animation: heroFadeUp 0.75s ease forwards 0.25s;
+  }
+  .hero-headline em {
+    font-family: var(--hero-font-accent);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    color: var(--hero-gold-light);
+    font-size: 0.88em;
+    line-height: 1;
+  }
+
+  /* ── Sub-headline ───────────────────────────────────────────────────────── */
+  .hero-sub {
+    font-family: var(--hero-font-body);
+    font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--hero-text-muted);
+    max-width: 520px;
+    margin-bottom: 2.2rem;
+
+    opacity: 0;
+    transform: translateY(24px);
+    animation: heroFadeUp 0.75s ease forwards 0.4s;
+  }
+
+  /* ── CTA Buttons ────────────────────────────────────────────────────────── */
+  .hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroFadeUp 0.75s ease forwards 0.55s;
+  }
+
+  .hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.85rem 2rem;
+    font-family: var(--hero-font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.28s ease;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Primary: solid gold */
+  .hero-btn--primary {
+    background: var(--hero-gold);
+    color: var(--hero-dark);
+  }
+  .hero-btn--primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--hero-gold-light);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.32s ease;
+  }
+  .hero-btn--primary:hover::before { transform: scaleX(1); }
+  .hero-btn--primary span { position: relative; z-index: 1; }
+  .hero-btn--primary:hover { box-shadow: 0 8px 28px rgba(201,168,76,0.35); }
+
+  /* Secondary: outline */
+  .hero-btn--secondary {
+    background: transparent;
+    color: var(--hero-text);
+    border: 1.5px solid rgba(245,240,232,0.35);
+  }
+  .hero-btn--secondary:hover {
+    border-color: var(--hero-gold);
+    color: var(--hero-gold);
+    background: var(--hero-gold-dim);
+  }
+
+  /* Arrow icon inside buttons */
+  .hero-btn__arrow {
+    display: inline-block;
+    transition: transform 0.25s ease;
+    font-size: 1rem;
+  }
+  .hero-btn:hover .hero-btn__arrow { transform: translateX(4px); }
+
+  /* ── Slide Counter ──────────────────────────────────────────────────────── */
+  .hero-counter {
+    position: absolute;
+    bottom: clamp(3rem, 7vh, 5rem);
+    right: clamp(1.5rem, 4vw, 4rem);
+    z-index: 2;
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    font-family: var(--hero-font-display);
+    color: var(--hero-text-muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+  #hero-current-num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--hero-gold);
+    line-height: 1;
+  }
+  .hero-counter__sep {
+    width: 20px;
+    height: 1px;
+    background: var(--hero-text-muted);
+    align-self: center;
+    margin: 0 0.2rem;
+  }
+  #hero-total-num {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  /* ── Dot Navigation ─────────────────────────────────────────────────────── */
+  #hero-dots {
+    position: absolute;
+    bottom: clamp(1.5rem, 4vh, 2.5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+  .hero-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(245,240,232,0.35);
+    cursor: pointer;
+    transition: all 0.35s ease;
+    padding: 0;
+  }
+  .hero-dot.is-active {
+    background: var(--hero-gold);
+    width: 24px;
+    border-radius: 3px;
+  }
+  .hero-dot:hover:not(.is-active) {
+    background: rgba(245,240,232,0.65);
+  }
+
+  /* ── Arrow Controls ─────────────────────────────────────────────────────── */
+  .hero-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 48px;
+    height: 48px;
+    border: 1.5px solid rgba(245,240,232,0.25);
+    background: rgba(10,10,10,0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--hero-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    border-radius: 0;         /* sharp — matches industrial theme */
+  }
+  .hero-arrow:hover {
+    border-color: var(--hero-gold);
+    background: var(--hero-gold-dim);
+    color: var(--hero-gold);
+  }
+  .hero-arrow--prev { left: clamp(1rem, 3vw, 2.5rem); }
+  .hero-arrow--next { right: clamp(1rem, 3vw, 2.5rem); }
+
+  .hero-arrow svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ── Progress Bar ───────────────────────────────────────────────────────── */
+  #hero-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--hero-gold);
+    z-index: 3;
+    transition: none;
+  }
+  #hero-progress-bar.is-running {
+    transition: width linear;  /* duration set inline by JS */
+  }
+
+  /* ── Keyframes ──────────────────────────────────────────────────────────── */
+  @keyframes heroFadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Responsive Adjustments ─────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .hero-content {
+      align-items: center;
+      padding-bottom: 5rem;
+    }
+    .hero-arrow {
+      width: 38px;
+      height: 38px;
+    }
+    .hero-counter { display: none; }
+    .hero-buttons { flex-direction: column; }
+    .hero-btn { justify-content: center; }
+  }
+</style>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     STRUCTURE — populated entirely by hero-engine.js
+───────────────────────────────────────────────────────────────────────────── -->
+<section class="hero-slider-container" aria-label="Hero slideshow" role="region">
+
+  <!-- Layer 1: All media slides injected here -->
+  <div id="hero-media-layer" aria-hidden="true"></div>
+
+  <!-- Layer 2: Dark gradient overlay -->
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <!-- Layer 3: Text + CTA content injected here -->
+  <div class="hero-content">
+    <div class="hero-content__inner">
+      <p class="hero-tag"   id="hero-tag-text"></p>
+      <h1 class="hero-headline" id="hero-headline-text"></h1>
+      <p class="hero-sub"   id="hero-sub-text"></p>
+      <div class="hero-buttons" id="hero-buttons-container" role="navigation" aria-label="Page actions"></div>
+    </div>
+  </div>
+
+  <!-- Navigation arrows -->
+  <button class="hero-arrow hero-arrow--prev" id="hero-prev-btn" aria-label="Previous slide">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button class="hero-arrow hero-arrow--next" id="hero-next-btn" aria-label="Next slide">
+    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+
+  <!-- Dot indicators -->
+  <div id="hero-dots" role="tablist" aria-label="Slide indicators"></div>
+
+  <!-- Slide counter -->
+  <div class="hero-counter" aria-hidden="true">
+    <span id="hero-current-num">01</span>
+    <span class="hero-counter__sep"></span>
+    <span id="hero-total-num">01</span>
+  </div>
+
+  <!-- Auto-advance progress bar -->
+  <div id="hero-progress-bar" role="progressbar" aria-hidden="true"></div>
+
+</section>

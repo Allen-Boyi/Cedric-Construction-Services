@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>roofing — Cedric Construction Services</title>
+
+  <!--
+    THEME INIT — MUST be first, before any stylesheet.
+    about.html was MISSING this entirely — that's why dark mode
+    caused a white flash every time you navigated to this page.
+  -->
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Dark mode overrides for ALL page sections -->
+  <link rel="stylesheet" href="/assets/css/dark-mode.css">
+  <link rel="stylesheet" href="/assets/css/mobile-fixes.css">
+
+  <style>
+    #header-placeholder,
+    #footer-placeholder {
+      display: block;
+      width: 100%;
+    }
+  </style>
+
+  <script src="/assets/js/hero-engine.js"></script>
+  <script src="/assets/js/component.js" defer></script>
+</head>
+
+<body>
+  <div id="header-placeholder"></div>
+  <div id="hero-placeholder"></div>
+  <!-- <div id="hero-placeholder"></div> -->
+
+  <!--
+  ================================================================
+  CEDRIC CONSTRUCTION — ROOFING SERVICES SECTION
+  Paste between #hero-placeholder and the footer in roofing.html.
+  Dark mode: reacts to data-theme on <html> via CSS vars.
+  ================================================================
+-->
+
+  <style>
+    /* ── Inherit site vars + local fallbacks ─────────────────────── */
+    :root {
+      --rs-gold: #D4AF37;
+      --rs-gold-dark: #b8941e;
+      --rs-charcoal: #333333;
+      --rs-white: #FFFFFF;
+      --rs-light: #F8F9FA;
+      --rs-border: #E8ECF0;
+      --rs-orange: var(--orange, #FF5722);
+      --rs-navy: var(--navy, #0A192F);
+      --rs-navy-2: var(--navy-2, #002366);
+      --rs-font-main: var(--font-main, 'Poppins', sans-serif);
+      --rs-font-body: var(--font-body, 'DM Sans', sans-serif);
+      --rs-transition: var(--transition, 0.32s cubic-bezier(.4, 0, .2, 1));
+      /* Theme-aware surfaces */
+      --rs-surface: #FFFFFF;
+      --rs-text: #333333;
+      --rs-text-muted: #666666;
+      --rs-bg: #F8F9FA;
+      --rs-card-border: #E8ECF0;
+    }
+
+    [data-theme="dark"] {
+      --rs-surface: #0d1f36;
+      --rs-text: #E8ECF0;
+      --rs-text-muted: rgba(255, 255, 255, .55);
+      --rs-bg: #07111F;
+      --rs-card-border: #1E2D42;
+      --rs-light: #07111F;
+      --rs-border: #1E2D42;
+    }
+
+    /* ── INTRO STRIP ─────────────────────────────────────────────── */
+    .rs-intro {
+      background: var(--rs-surface);
+      padding: 72px 0 52px;
+      transition: background var(--rs-transition);
+    }
+
+    .rs-intro-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .rs-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--rs-font-main);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--rs-gold);
+      margin-bottom: 18px;
+    }
+
+    .rs-eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 3px;
+      background: var(--rs-gold);
+      border-radius: 2px;
+    }
+
+    .rs-intro-heading {
+      font-family: var(--rs-font-main);
+      font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--rs-text);
+      line-height: 1.12;
+      margin: 0 0 40px;
+      transition: color var(--rs-transition);
+    }
+
+    .rs-intro-heading em {
+      font-style: normal;
+      color: var(--rs-gold);
+    }
+
+    .rs-intro-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .rs-intro-card {
+      background: var(--rs-bg);
+      border: 1.5px solid var(--rs-card-border);
+      border-radius: 16px;
+      padding: 28px 30px;
+      position: relative;
+      overflow: hidden;
+      transition: background var(--rs-transition), border-color var(--rs-transition),
+        box-shadow var(--rs-transition);
+    }
+
+    .rs-intro-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--rs-gold);
+    }
+
+    .rs-intro-card:hover {
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .09);
+      border-color: var(--rs-gold);
+    }
+
+    .rs-intro-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(212, 175, 55, .12);
+      border: 1px solid rgba(212, 175, 55, .25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .rs-intro-card-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--rs-gold);
+    }
+
+    .rs-intro-card h3 {
+      font-family: var(--rs-font-main);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--rs-text);
+      margin: 0 0 10px;
+      transition: color var(--rs-transition);
+    }
+
+    .rs-intro-card p {
+      font-size: .9rem;
+      color: var(--rs-text-muted);
+      line-height: 1.75;
+      margin: 0;
+      transition: color var(--rs-transition);
+    }
+
+    /* ── SERVICE BLOCKS SECTION ──────────────────────────────────── */
+    .rs-section {
+      background: var(--rs-surface);
+      padding: 0 0 80px;
+      transition: background var(--rs-transition);
+    }
+
+    .rs-section-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── Individual service block ── */
+    .rs-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      padding: 72px 0;
+      border-bottom: 1px solid var(--rs-card-border);
+      /* Scroll-reveal initial state */
+      opacity: 0;
+      transform: translateY(40px);
+      transition:
+        opacity .65s ease,
+        transform .65s ease,
+        border-color var(--rs-transition);
+    }
+
+    .rs-block:last-child {
+      border-bottom: none;
+    }
+
+    .rs-block.rs-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Row 2: text left, image right */
+    .rs-block--flip .rs-block-img {
+      order: 2;
+    }
+
+    .rs-block--flip .rs-block-text {
+      order: 1;
+    }
+
+    /* ── IMAGE COLUMN ── */
+    .rs-block-img {
+      position: relative;
+    }
+
+    .rs-img-wrap {
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 16px 56px rgba(0, 0, 0, .13);
+      line-height: 0;
+      position: relative;
+      transition: transform .32s cubic-bezier(.4, 0, .2, 1),
+        box-shadow .32s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .rs-img-wrap:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 28px 72px rgba(0, 0, 0, .18);
+    }
+
+    .rs-img-wrap img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .rs-img-wrap:hover img {
+      transform: scale(1.04);
+    }
+
+    /* Gold corner mark */
+    .rs-img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, transparent 50%, rgba(212, 175, 55, .22) 50%);
+      border-radius: 0 0 18px 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Floating service badge */
+    .rs-img-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 2;
+      background: rgba(10, 25, 47, .78);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(212, 175, 55, .3);
+      border-radius: 10px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .rs-img-badge-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--rs-gold);
+      flex-shrink: 0;
+      animation: rsPulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes rsPulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: .4;
+        transform: scale(1.4);
+      }
+    }
+
+    .rs-img-badge span {
+      font-family: var(--rs-font-main);
+      font-size: .72rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .88);
+      letter-spacing: .04em;
+    }
+
+    /* ── TEXT COLUMN ── */
+    .rs-block-text {}
+
+    .rs-block-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--rs-font-main);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--rs-gold);
+      margin-bottom: 14px;
+    }
+
+    .rs-block-label svg {
+      width: 13px;
+      height: 13px;
+      fill: var(--rs-gold);
+    }
+
+    /* .gold-underline — as specified */
+    .gold-underline {
+      font-family: var(--rs-font-main);
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 800;
+      color: var(--rs-text);
+      line-height: 1.15;
+      margin: 0 0 20px;
+      padding-bottom: 16px;
+      position: relative;
+      transition: color var(--rs-transition);
+    }
+
+    .gold-underline::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 80px;
+      height: 3px;
+      background: var(--rs-gold);
+      border-radius: 2px;
+    }
+
+    .rs-block-desc {
+      font-size: .95rem;
+      color: var(--rs-text-muted);
+      line-height: 1.82;
+      margin: 0 0 28px;
+      transition: color var(--rs-transition);
+    }
+
+    /* Gold-checkmark list */
+    .rs-checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .rs-checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rs-card-border);
+      transition: border-color var(--rs-transition);
+    }
+
+    .rs-checklist li:last-child {
+      border-bottom: none;
+    }
+
+    .rs-check {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      background: rgba(212, 175, 55, .12);
+      border: 1.5px solid rgba(212, 175, 55, .3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+      transition: background var(--rs-transition), border-color var(--rs-transition);
+    }
+
+    .rs-checklist li:hover .rs-check {
+      background: var(--rs-gold);
+      border-color: var(--rs-gold);
+    }
+
+    .rs-check svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .rs-check svg path {
+      stroke: var(--rs-gold);
+      transition: stroke var(--rs-transition);
+    }
+
+    .rs-checklist li:hover .rs-check svg path {
+      stroke: #fff;
+    }
+
+    .rs-check-content {}
+
+    .rs-check-title {
+      font-family: var(--rs-font-main);
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--rs-text);
+      margin-bottom: 2px;
+      transition: color var(--rs-transition);
+    }
+
+    .rs-check-sub {
+      font-size: .82rem;
+      color: var(--rs-text-muted);
+      line-height: 1.55;
+      transition: color var(--rs-transition);
+    }
+
+    /* CTA Button — gold bg, charcoal on hover */
+    .rs-quote-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--rs-gold);
+      color: var(--rs-charcoal);
+      padding: 14px 30px;
+      border-radius: 10px;
+      font-family: var(--rs-font-main);
+      font-weight: 700;
+      font-size: .9rem;
+      border: 2px solid var(--rs-gold);
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(212, 175, 55, .30), 0 4px 0 rgba(100, 80, 0, .15);
+      transition: var(--rs-transition);
+      text-decoration: none;
+      letter-spacing: .01em;
+    }
+
+    .rs-quote-btn:hover {
+      background: var(--rs-charcoal);
+      color: var(--rs-gold);
+      border-color: var(--rs-charcoal);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .22), 0 8px 0 rgba(0, 0, 0, .1);
+      transform: translateY(-3px);
+    }
+
+    [data-theme="dark"] .rs-quote-btn:hover {
+      background: var(--rs-text);
+      color: var(--rs-gold);
+      border-color: var(--rs-text);
+    }
+
+    .rs-quote-btn:active {
+      transform: translateY(0);
+    }
+
+    .rs-quote-btn svg {
+      width: 17px;
+      height: 17px;
+      transition: fill var(--rs-transition);
+    }
+
+    /* ── MID-PAGE TRUST STRIP ────────────────────────────────────── */
+    .rs-trust-strip {
+      background: linear-gradient(135deg, var(--rs-navy-2) 0%, #0A192F 100%);
+      padding: 48px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rs-trust-strip::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    .rs-trust-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .rs-trust-item {
+      text-align: center;
+      padding: 8px 16px;
+      position: relative;
+    }
+
+    .rs-trust-item+.rs-trust-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10%;
+      bottom: 10%;
+      width: 1px;
+      background: rgba(255, 255, 255, .1);
+    }
+
+    .rs-trust-num {
+      display: block;
+      font-family: var(--rs-font-main);
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--rs-gold);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .rs-trust-label {
+      font-family: var(--rs-font-main);
+      font-size: .78rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, .65);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    /* ── FINAL CTA ───────────────────────────────────────────────── */
+    .t-cta {
+      background: var(--light-bg);
+      padding: 80px 0;
+    }
+
+    [data-theme="dark"] .t-cta {
+      background: #0d1f36;
+    }
+
+    .t-cta-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+      text-align: center;
+    }
+
+    .t-cta h2 {
+      font-family: var(--font-main);
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: var(--gray);
+      margin-bottom: 14px;
+      line-height: 1.18;
+    }
+
+    [data-theme="dark"] .t-cta h2 {
+      color: #fff;
+    }
+
+    .t-cta p {
+      font-size: .96rem;
+      color: #888;
+      line-height: 1.78;
+      margin-bottom: 36px;
+    }
+
+    .t-cta-btns {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .t-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      color: #fff;
+      padding: 15px 34px;
+      border-radius: 100px;
+      font-family: var(--font-main);
+      font-weight: 700;
+      font-size: .94rem;
+      box-shadow: 0 4px 24px rgba(255, 87, 34, .38), 0 6px 0 rgba(140, 30, 0, .22);
+      transition: var(--transition);
+    }
+
+    .t-btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(255, 87, 34, .5), 0 10px 0 rgba(140, 30, 0, .18);
+    }
+
+    .t-btn-primary svg {
+      width: 17px;
+      height: 17px;
+      fill: #fff;
+    }
+
+    .t-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: transparent;
+      color: var(--orange);
+      border: 2px solid var(--orange);
+      padding: 15px 34px;
+      border-radius: 100px;
+      font-family: var(--font-main);
+      font-weight: 700;
+      font-size: .94rem;
+      transition: var(--transition);
+    }
+
+    .t-btn-secondary:hover {
+      background: rgba(255, 87, 34, .07);
+      transform: translateY(-2px);
+    }
+
+    .t-btn-secondary svg {
+      width: 17px;
+      height: 17px;
+      fill: var(--orange);
+    }
+
+
+    /* ── RESPONSIVE ──────────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .rs-intro-cards {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .rs-block {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 52px 0;
+      }
+
+      .rs-block-img {
+        order: 0 !important;
+      }
+
+      .rs-block-text {
+        order: 1 !important;
+      }
+
+      .rs-img-wrap img {
+        height: 300px;
+      }
+
+      .rs-trust-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+
+      .rs-trust-item+.rs-trust-item::before {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .rs-intro {
+        padding: 48px 0 36px;
+      }
+
+      .rs-img-wrap img {
+        height: 240px;
+      }
+
+      .rs-final-cta-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .rs-trust-inner {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     INTRO SECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="rs-intro">
+    <div class="rs-intro-inner">
+      <div class="rs-eyebrow">Roofing Services</div>
+      <h2 class="rs-intro-heading">Built to <em>Last</em>. Built for Cape Town.</h2>
+      <div class="rs-intro-cards">
+
+        <div class="rs-intro-card">
+          <div class="rs-intro-card-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            </svg>
+          </div>
+          <h3>Essential Roof Installation</h3>
+          <p>Protect your legacy with our Essential Roof Installation. We provide reliable, high-quality roof
+            replacements focused on long-term durability and structural integrity.</p>
+        </div>
+
+        <div class="rs-intro-card">
+          <div class="rs-intro-card-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+            </svg>
+          </div>
+          <h3>Targeted Repair &amp; Maintenance</h3>
+          <p>Save time and money with Targeted Repair &amp; Maintenance. We specialise in extending the life of your
+            current roof by stopping small issues before they become disasters.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     TRUST STRIP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <div class="rs-trust-strip">
+    <div class="rs-trust-inner">
+      <div class="rs-trust-item">
+        <span class="rs-trust-num">20+</span>
+        <span class="rs-trust-label">Years Experience</span>
+      </div>
+      <div class="rs-trust-item">
+        <span class="rs-trust-num">500+</span>
+        <span class="rs-trust-label">Roofs Completed</span>
+      </div>
+      <div class="rs-trust-item">
+        <span class="rs-trust-num">100%</span>
+        <span class="rs-trust-label">Satisfaction Rate</span>
+      </div>
+      <div class="rs-trust-item">
+        <span class="rs-trust-num">24h</span>
+        <span class="rs-trust-label">Emergency Response</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     SERVICE BLOCKS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="rs-section">
+    <div class="rs-section-inner">
+
+      <!-- ── BLOCK A: Roof Installation — Image LEFT, Text RIGHT ── -->
+      <div class="rs-block" id="rs-block-install">
+        <div class="rs-block-img">
+          <div class="rs-img-wrap">
+            <img src="assets/images/new_roof.webp" alt="Roof Installation" loading="lazy"
+              onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23e0e5ec%22/><text x=%222%22 y=%221.8%22 font-size=%221%22 text-anchor=%22middle%22 fill=%22%23aaa%22 font-family=%22sans-serif%22>roof-installation.png</text></svg>'">
+          </div>
+          <div class="rs-img-badge">
+            <div class="rs-img-badge-dot"></div>
+            <span>New Installations</span>
+          </div>
+        </div>
+
+        <div class="rs-block-text">
+          <span class="rs-block-label">
+            <svg viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            </svg>
+            Service A
+          </span>
+          <h3 class="gold-underline">Essential Roof Installation</h3>
+          <p class="rs-block-desc">A complete, professionally managed roof replacement. We handle every phase from
+            structural assessment to final waterproofing, delivering a system engineered for the specific weather
+            conditions and architectural requirements of your property.</p>
+
+          <ul class="rs-checklist">
+            <li>
+              <div class="rs-check">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="rs-check-content">
+                <div class="rs-check-title">Full System Replacement</div>
+                <div class="rs-check-sub">Complete removal of old roofing and installation of a new, fully warranted
+                  system from decking to ridge cap.</div>
+              </div>
+            </li>
+            <li>
+              <div class="rs-check">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="rs-check-content">
+                <div class="rs-check-title">Deck Health Check</div>
+                <div class="rs-check-sub">Full inspection and repair of the underlying roof deck to ensure a solid,
+                  rot-free foundation before any new material is laid.</div>
+              </div>
+            </li>
+            <li>
+              <div class="rs-check">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="rs-check-content">
+                <div class="rs-check-title">Critical Waterproofing</div>
+                <div class="rs-check-sub">Professional-grade underlayment and flashing installation at every
+                  penetration, valley, and eave to create a watertight barrier.</div>
+              </div>
+            </li>
+            <li>
+              <div class="rs-check">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="rs-check-content">
+                <div class="rs-check-title">High-Quality Finishing</div>
+                <div class="rs-check-sub">Premium IBR sheeting, tiles, or thatch — whatever suits your home — installed
+                  with precision for lasting kerb appeal.</div>
+              </div>
+            </li>
+          </ul>
+          <a href="contact.html#contact-form">
+            <button class="t-btn-primary" onclick="rsInquiry('Essential Roof Installation')">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" fill="none" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+              Request a Quote
+            </button>
+          </a>
+        </div>
+      </div>
+
+      <!-- ── BLOCK B: Repair — Text LEFT, Image RIGHT ── -->
+      <div class="rs-block rs-block--flip" id="rs-block-repair">
+        <div class="rs-block-img">
+          <div class="rs-img-wrap">
+            <img src="assets/images/Roofing.webp" alt="Roof Repair &amp; Maintenance" loading="lazy"
+              onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23e0e5ec%22/><text x=%222%22 y=%221.8%22 font-size=%221%22 text-anchor=%22middle%22 fill=%22%23aaa%22 font-family=%22sans-serif%22>roof-repair.png</text></svg>'">
+          </div>
+          <div class="rs-img-badge">
+            <div class="rs-img-badge-dot"></div>
+            <span>Repairs &amp; Maintenance</span>
+          </div>
+        </div>
+
+        <div class="rs-block-text">
+          <span class="rs-block-label">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+            </svg>
+            Service B
+          </span>
+          <h3 class="gold-underline">Targeted Repair &amp; Maintenance</h3>
+          <p class="rs-block-desc">Don't replace when you can restore. Our repair team diagnoses the root cause of every
+            leak or failure and delivers a lasting fix — not a patch job. Regular maintenance contracts are available to
+            keep your roof performing year after year.</p>
+
+          <ul class="rs-checklist">
+            <li>
+              <div class="rs-check">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="rs-check-content">
+                <div class="rs-check-title">Precision Leak Repair</div>
+                <div class="rs-check-sub">Advanced diagnostics to find the true source of the leak — not just the
+                  symptom — and seal it permanently.</div>
+              </div>
+            </li>
+            <li>
+              <div class="rs-check">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="rs-check-content">
+                <div class="rs-check-title">Storm Damage Restoration</div>
+                <div class="rs-check-sub">Rapid assessment and repair of damage caused by high winds, hail, or fallen
+                  debris — with insurance report assistance available.</div>
+              </div>
+            </li>
+            <li>
+              <div class="rs-check">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="rs-check-content">
+                <div class="rs-check-title">Flashings &amp; Seals</div>
+                <div class="rs-check-sub">Re-sealing and replacement of failed metal flashings around chimneys,
+                  skylights, and vents — the most common source of leaks.</div>
+              </div>
+            </li>
+            <li>
+              <div class="rs-check">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="rs-check-content">
+                <div class="rs-check-title">Roof Tune-Up Service</div>
+                <div class="rs-check-sub">Annual or bi-annual inspection, gutter clearance, and minor repairs to keep
+                  your roof in peak condition and prevent costly failures.</div>
+              </div>
+            </li>
+            <li>
+              <div class="rs-check">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="rs-check-content">
+                <div class="rs-check-title">Emergency Tarping</div>
+                <div class="rs-check-sub">24-hour emergency tarping service to protect your interior from water damage
+                  while permanent repairs are being arranged.</div>
+              </div>
+            </li>
+          </ul>
+          <a href="contact.html#contact-form">
+            <button class="t-btn-primary" onclick="rsInquiry('Targeted Repair & Maintenance')">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" fill="none" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+              Request a Quote
+            </button>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      /* ══════════════════════════════════════════
+         SCROLL REVEAL — IntersectionObserver
+         Fade-in-up on each .rs-block as it enters
+         the viewport. Respects prefers-reduced-motion.
+      ══════════════════════════════════════════ */
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduced) {
+        document.querySelectorAll('.rs-block').forEach(el => el.classList.add('rs-visible'));
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('rs-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.rs-block').forEach(el => io.observe(el));
+      }
+
+
+      /* ══════════════════════════════════════════
+         THEME REACTIVITY
+         CSS vars handle all colour changes.
+         MutationObserver + themechange event
+         provided as extension hooks.
+      ══════════════════════════════════════════ */
+      new MutationObserver(() => {
+        void document.documentElement.getAttribute('data-theme');
+      }).observe(document.documentElement, { attributes: true });
+
+      document.addEventListener('themechange', (e) => { void e.detail.theme; });
+
+    })();
+  </script>
+
+  <!-- footer content -->
+  <style>
+    .cc-footer {
+      background: #0d1b2e;
+      color: #c8d8eb;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      padding: 64px 0 0;
+      margin-top: 0;
+    }
+
+    .cc-footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Grid */
+    .cc-footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1.1fr 1.3fr;
+      gap: 48px 32px;
+    }
+
+    @media(max-width:1024px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 40px 24px;
+      }
+
+      .cc-footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media(max-width:640px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px 20px;
+      }
+
+      .cc-footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      .cc-footer-hours {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media(max-width:420px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Brand */
+    .cc-footer-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 14px;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+    }
+
+    .cc-footer-logo span {
+      color: #e85d04;
+    }
+
+    .cc-footer-tagline {
+      font-size: 13.5px;
+      color: #8ba7c2;
+      line-height: 1.65;
+      margin: 0 0 22px;
+      max-width: 300px;
+    }
+
+    /* Social icons */
+    .cc-social-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .cc-social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      background: #e85d04;
+      border-radius: 7px;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+      flex-shrink: 0;
+    }
+
+    .cc-social-icon:hover {
+      background: #ff7a2a;
+      transform: translateY(-2px);
+    }
+
+    .cc-social-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+      display: block;
+    }
+
+    /* Column headings */
+    .cc-footer-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      margin: 0 0 6px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e85d04;
+      display: inline-block;
+    }
+
+    /* Column links */
+    .cc-footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 0;
+    }
+
+    .cc-footer-col ul li {
+      margin-bottom: 10px;
+      font-size: 13.5px;
+      color: #8ba7c2;
+      line-height: 1.5;
+    }
+
+    .cc-footer-col ul li a {
+      color: #8ba7c2;
+      text-decoration: none;
+      transition: color .18s;
+    }
+
+    .cc-footer-col ul li a:hover {
+      color: #e85d04;
+    }
+
+    /* Contact items */
+    .cc-contact-item {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 9px;
+    }
+
+    .cc-contact-item svg {
+      width: 14px;
+      height: 14px;
+      fill: #e85d04;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Business hours */
+    .cc-hours-table {
+      margin-top: 14px;
+      width: 100%;
+    }
+
+    .cc-hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .05);
+      font-size: 13px;
+    }
+
+    .cc-hours-row:last-child {
+      border-bottom: none;
+    }
+
+    .cc-hours-row:first-child {
+      border-top: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .cc-hours-day {
+      color: #c8d8eb;
+      font-weight: 400;
+      min-width: 90px;
+    }
+
+    .cc-hours-time {
+      color: #e85d04;
+      font-weight: 600;
+      font-size: 12.5px;
+      text-align: right;
+    }
+
+    /* Bottom bar */
+    .cc-footer-bottom {
+      margin-top: 52px;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      padding: 20px 0;
+    }
+
+    .cc-footer-bottom-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .cc-footer-bottom p {
+      font-size: 12.5px;
+      color: #556f88;
+      margin: 0;
+    }
+
+    .cc-footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+
+    .cc-footer-legal a {
+      font-size: 12.5px;
+      color: #556f88;
+      text-decoration: none;
+      transition: color .18s;
+    }
+
+    .cc-footer-legal a:hover {
+      color: #e85d04;
+    }
+  </style>
+
+  <footer class="cc-footer">
+    <div class="cc-footer-inner">
+      <div class="cc-footer-grid">
+
+        <!-- ── Brand ────────────────────────────────────────── -->
+        <div class="cc-footer-brand cc-footer-col">
+          <h3 class="cc-footer-logo">Cedric <span>Construction</span></h3>
+          <p class="cc-footer-tagline">Your trusted construction partner in Cape Town. We deliver quality building
+            services with professionalism, skill, and lasting dedication to every project.</p>
+
+          <div class="cc-social-row">
+            <!-- Facebook -->
+            <a class="cc-social-icon" href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C17.56 21.45 22 17.19 22 12z" />
+              </svg>
+            </a>
+            <!-- Twitter / X -->
+            <a class="cc-social-icon" href="#" aria-label="Twitter">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L2.25 2.25h6.928l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+            <!-- LinkedIn -->
+            <a class="cc-social-icon" href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+              </svg>
+            </a>
+            <!-- Instagram -->
+            <a class="cc-social-icon" href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.8v8.4C4 18.39 5.61 20 7.8 20h8.4a3.6 3.6 0 0 0 3.6-3.6V7.8C20 5.61 18.39 4 16.2 4H7.8m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
+              </svg>
+            </a>
+            <!-- WhatsApp -->
+            <a class="cc-social-icon" href="https://wa.me/27849614552" target="_blank" rel="noopener"
+              aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ── Services ──────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="tiling.html">Tiling &amp; Flooring</a></li>
+            <li><a href="roofing.html">Roofing</a></li>
+            <li><a href="painting.html#pp-block-article">Painting</a></li>
+            <li><a href="building.html">General Building</a></li>
+            <li><a href="painting.html#pp-services">Plastering</a></li>
+            <li><a href="building.html#gb-block-2">Renovations</a></li>
+          </ul>
+        </div>
+
+        <!-- ── Company ───────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="projects.html">Our Projects</a></li>
+            <li><a href="testimonials.html">Testimonials</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html#contact-form">Get a Quote</a></li>
+          </ul>
+        </div>
+
+        <!-- ── Contact ───────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+              </svg>
+              <span>Wallacedene, Kraaifontein<br>Cape Town, South Africa</span>
+            </li>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+              </svg>
+              <a href="tel:+27849614552">+27 84 961 4552</a>
+            </li>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+              </svg>
+              <a href="mailto:cedricconstructionservices@gmail.com"
+                style="word-break:break-all;">cedricconstructionservices@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- ── Business Hours ────────────────────────────────── -->
+        <div class="cc-footer-col cc-footer-hours">
+          <h4>Business Hours</h4>
+          <div class="cc-hours-table">
+            <div class="cc-hours-row"><span class="cc-hours-day">Monday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Tuesday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Wednesday</span><span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Thursday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Friday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Saturday</span> <span class="cc-hours-time">08:00 –
+                14:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Sunday</span> <span class="cc-hours-time">08:00 –
+                13:00</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="cc-footer-bottom">
+      <div class="cc-footer-bottom-inner">
+        <p>&copy; <span id="cc-year"></span> Cedric Construction Services. All rights reserved.</p>
+        <nav class="cc-footer-legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('cc-year').textContent = new Date().getFullYear();
+  </script>
+  <!-- ================================================================ -->
+  <!--
+    ┌─────────────────────────────────────────────────────────────┐
+    │  STEP 4 — Call loadHero() AFTER component.js               │
+    │                                                             │
+    │  We place this script LAST in <body> for two reasons:       │
+    │                                                             │
+    │   1. The #hero-placeholder div is guaranteed to exist in    │
+    │      the DOM by the time this script executes (top-down     │
+    │      parsing order).                                        │
+    │                                                             │
+    │   2. It runs after component.js so there are no race        │
+    │      conditions between your header loader and the hero.    │
+    │                                                             │
+    │  loadHero() takes 3 arguments:                              │
+    │   • "hero-placeholder" → the id of the div in Step 2        │
+    │   • "/assets/hero-template.html" → where the template lives │
+    │   • { ...config } → your page-specific content              │
+    │                                                             │
+    │  Internally loadHero() does this sequence automatically:    │
+    │   fetch(template) → inject HTML → requestAnimationFrame     │
+    │   → layoutHero(config)                                      │
+    │  You never need to call layoutHero() yourself.              │
+    └─────────────────────────────────────────────────────────────┘
+    -->
+  <script>
+    loadHero(
+      'hero-placeholder',             // must match the div id in Step 2
+      'hero-template.html',   // path to hero-template.html
+
+      {
+        // ── Eyebrow label (the small text above the headline) ──────
+        tag: 'COMMERCIAL & RESIDENTIAL ROOFING SOLUTIONS',
+
+        // ── Main headline ──────────────────────────────────────────
+        // Wrap one word in <em> for the gold italic accent font.
+        headline: 'Total protection from the <em>top</em> down.',
+
+        // ── Supporting paragraph ───────────────────────────────────
+        sub: 'From complete new roof installations to expert leak detection and waterproofing, we ensure your property stays safe and dry  . We specialize in various roofing materials and structural repairs, providing durable, weather-resistant solutions for homes and businesses throughout Cape Town',
+
+        // ── Auto-advance delay in milliseconds ─────────────────────
+        interval: 6000,
+
+        // ── Slides (images and/or videos) ──────────────────────────
+        // First slide should always be an image for fast page load.
+        slides: [
+          {
+            type: 'image',
+            src: '/assets/video/Roofing.webp',
+            alt: 'Our team on a construction site',
+          },
+          {
+            type: 'video',
+            src: '/assets/video/Roofing.webm',
+            alt: 'A recently completed residential build',
+          }
+        ],
+
+        // ── Call-to-action buttons ─────────────────────────────────
+        // variant 'primary'   → solid gold button
+        // variant 'secondary' → transparent outline button
+        buttons: [
+          {
+            label: 'Request a Roof Inspection',
+            href: 'contact.html#contact-form',
+            variant: 'primary',
+          },
+          {
+            label: 'Explore Roofing Options',
+            href: 'projects.html',
+            variant: 'secondary',
+          },
+        ],
+      }
+    );
+  </script>
+</body>
+
+</html>

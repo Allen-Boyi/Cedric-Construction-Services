@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║       CEDRIC CONSTRUCTION SERVICES — SUPPORT WIDGET             ║
+  ║  Standalone, theme-aware, injectable support panel              ║
+  ║                                                                  ║
+  ║  HOW TO USE (DRY — one snippet per page, at bottom of <body>):  ║
+  ║                                                                  ║
+  ║  <script>                                                        ║
+  ║  (function(){                                                    ║
+  ║    var r=document.createElement('div');                          ║
+  ║    r.id='cedric-support-root';                                   ║
+  ║    document.body.appendChild(r);                                 ║
+  ║    fetch('support-widget.html')                                  ║
+  ║      .then(function(res){return res.text();})                    ║
+  ║      .then(function(html){                                       ║
+  ║        r.innerHTML=html;                                         ║
+  ║        r.querySelectorAll('script:not([data-widget-meta])')      ║
+  ║          .forEach(function(s){                                   ║
+  ║            var n=document.createElement('script');               ║
+  ║            n.textContent=s.textContent;                          ║
+  ║            document.body.appendChild(n);                         ║
+  ║          });                                                      ║
+  ║        var css=r.querySelector('style');                         ║
+  ║        if(css){document.head.appendChild(css.cloneNode(true));}  ║
+  ║      });                                                         ║
+  ║  })();                                                           ║
+  ║  </script>                                                       ║
+  ║                                                                  ║
+  ║  OPTIONAL — pass page context (greeting + FAQ href):             ║
+  ║    window.CedricWidgetConfig = {                                 ║
+  ║      greeting: "Hi! How can Tatenda help you today?",            ║
+  ║      faqHref: "#faq",                                            ║
+  ║      agentRole: "Support Consultant"                             ║
+  ║    };                                                            ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cedric Construction Services — Support Widget Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     WIDGET STYLES  (injected into calling page's <head>)
+═══════════════════════════════════════════════════════════════ -->
+<style id="cedric-widget-styles">
+
+/* ── CSS custom properties — standalone fallbacks ── */
+.cedric-widget-root,
+.cedric-widget-root *{box-sizing:border-box;}
+:root{
+  --hw-orange:#FF5722;
+  --hw-orange-dark:#E4531B;
+  --hw-navy:#0A192F;
+  --hw-navy-2:#002366;
+  --hw-royal:#0047AB;
+  --hw-white:#FFFFFF;
+  --hw-gray:#333333;
+  --hw-light-bg:#F4F6F9;
+  --hw-border:#E4E9F0;
+  --hw-msg-bg:#EEF2F7;
+  --hw-msg-border:#DCE3EA;
+  --hw-popup-bg:#FFFFFF;
+  --hw-popup-text:#333333;
+  --hw-action-bg:#FFFFFF;
+  --hw-action-border:#E4E9F0;
+  --hw-input-bg:#FFFFFF;
+  --hw-input-border:#C8D6E5;
+  --hw-disclaimer-color:#B0BCC8;
+  --hw-transition:.3s cubic-bezier(.4,0,.2,1);
+  --hw-font:'Poppins','DM Sans',system-ui,sans-serif;
+}
+
+/* Dark theme — auto-synced via JS MutationObserver */
+[data-theme="dark"] {
+  --hw-popup-bg:#0D1F36;
+  --hw-popup-text:#E8ECF0;
+  --hw-light-bg:#07111F;
+  --hw-border:#1E2D42;
+  --hw-action-bg:#0D1F36;
+  --hw-action-border:#1E2D42;
+  --hw-input-bg:#0D1F36;
+  --hw-input-border:#1E2D42;
+  --hw-msg-bg:#111D2D;
+  --hw-msg-border:#1A2D42;
+  --hw-popup-text:#E8ECF0;
+  --hw-disclaimer-color:#6A7F94;
+}
+
+/* ─────────────────────────────────────────────────
+   SUPPORT TRIGGER BUTTON
+───────────────────────────────────────────────── */
+.hw-support-widget{
+  position:fixed;bottom:28px;left:24px;
+  z-index:99999;
+  display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+}
+
+.hw-support-btn{
+  width:54px;height:54px;
+  background:var(--hw-navy);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.32),0 0 0 2px rgba(255,255,255,.08);
+  cursor:pointer;position:relative;
+  transition:var(--hw-transition);border:none;
+  outline:none;
+}
+.hw-support-btn:hover{
+  background:var(--hw-royal);
+  transform:scale(1.1);
+  box-shadow:0 6px 28px rgba(0,71,171,.45),0 0 0 3px rgba(0,71,171,.2);
+}
+.hw-support-btn:focus-visible{
+  outline:3px solid var(--hw-orange);outline-offset:3px;
+}
+.hw-support-btn svg{width:24px;height:24px;}
+
+.hw-badge{
+  position:absolute;top:-5px;right:-5px;
+  width:20px;height:20px;
+  background:var(--hw-orange);
+  border-radius:50%;
+  font-size:.68rem;font-weight:700;
+  color:white;
+  font-family:var(--hw-font);
+  display:flex;align-items:center;justify-content:center;
+  border:2.5px solid var(--hw-white);
+  animation:hwBadgePulse 2.5s ease-in-out infinite;
+}
+@keyframes hwBadgePulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(255,87,34,.55);}
+  50%{box-shadow:0 0 0 6px rgba(255,87,34,0);}
+}
+
+/* ─────────────────────────────────────────────────
+   MAIN POPUP PANEL
+───────────────────────────────────────────────── */
+.hw-popup{
+  position:fixed;
+  bottom:92px;left:24px;
+  width:320px;
+  max-width:calc(100vw - 32px);
+  background:var(--hw-popup-bg);
+  border-radius:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.22),0 4px 20px rgba(0,0,0,.1);
+  border:1px solid var(--hw-border);
+  overflow:hidden;
+  display:none;
+  z-index:99998;
+  transform-origin:bottom left;
+}
+.hw-popup.hw-open{
+  display:block;
+  animation:hwPopIn .28s cubic-bezier(.22,1.6,.48,1) forwards;
+}
+.hw-popup.hw-closing{
+  animation:hwPopOut .2s ease forwards;
+}
+@keyframes hwPopIn{
+  from{opacity:0;transform:scale(.88) translateY(18px);}
+  to{opacity:1;transform:scale(1) translateY(0);}
+}
+@keyframes hwPopOut{
+  from{opacity:1;transform:scale(1) translateY(0);}
+  to{opacity:0;transform:scale(.9) translateY(12px);}
+}
+
+/* Popup header */
+.hw-popup-header{
+  background:linear-gradient(135deg,var(--hw-navy) 0%,var(--hw-royal) 100%);
+  padding:16px 16px 14px;
+  display:flex;align-items:center;gap:12px;
+  position:relative;
+  overflow:hidden;
+}
+.hw-popup-header::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 80% 0%,rgba(0,100,255,.18),transparent);
+  pointer-events:none;
+}
+.hw-popup-avatar{
+  width:42px;height:42px;
+  background:var(--hw-orange);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.25rem;
+  flex-shrink:0;
+  box-shadow:0 2px 12px rgba(255,87,34,.4);
+  border:2px solid rgba(255,255,255,.2);
+  position:relative;z-index:1;
+}
+.hw-popup-name-wrap{position:relative;z-index:1;flex:1;min-width:0;}
+.hw-popup-name{
+  font-family:var(--hw-font);font-size:.9rem;font-weight:700;
+  color:white;line-height:1.25;
+}
+.hw-popup-status{
+  font-size:.72rem;color:rgba(255,255,255,.7);
+  display:flex;align-items:center;gap:5px;margin-top:2px;
+}
+.hw-online-dot{
+  width:7px;height:7px;background:#22c55e;
+  border-radius:50%;flex-shrink:0;
+  box-shadow:0 0 6px #22c55e;
+  animation:hwBlink 1.8s ease-in-out infinite;
+}
+@keyframes hwBlink{0%,100%{opacity:1;}50%{opacity:.45;}}
+
+.hw-popup-close{
+  width:30px;height:30px;
+  background:rgba(255,255,255,.14);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;border:none;
+  transition:var(--hw-transition);
+  flex-shrink:0;position:relative;z-index:1;
+}
+.hw-popup-close:hover{background:rgba(255,255,255,.28);}
+.hw-popup-close svg{width:14px;height:14px;fill:white;}
+
+/* Popup body */
+.hw-popup-body{padding:16px;}
+
+.hw-greeting-bubble{
+  background:var(--hw-light-bg);
+  border:1px solid var(--hw-border);
+  border-radius:14px 14px 14px 4px;
+  padding:12px 14px;
+  font-size:.85rem;
+  color:var(--hw-popup-text);
+  line-height:1.65;
+  margin-bottom:14px;
+  font-family:var(--hw-font);
+}
+
+.hw-actions{display:flex;flex-direction:column;gap:8px;}
+
+/* Action buttons */
+.hw-action-btn{
+  display:flex;align-items:center;gap:11px;
+  padding:10px 11px;border-radius:11px;
+  border:1.5px solid var(--hw-action-border);
+  background:var(--hw-action-bg);
+  color:var(--hw-popup-text);
+  cursor:pointer;transition:var(--hw-transition);
+  font-family:var(--hw-font);text-align:left;
+  text-decoration:none;width:100%;
+  font-size:.82rem;
+}
+.hw-action-btn:hover{
+  border-color:var(--hw-orange);
+  background:rgba(255,87,34,.05);
+  transform:translateX(4px);
+  box-shadow:0 2px 12px rgba(255,87,34,.12);
+}
+.hw-action-btn:focus-visible{
+  outline:2px solid var(--hw-orange);outline-offset:2px;
+}
+.hw-action-icon-box{
+  width:36px;height:36px;flex-shrink:0;
+  background:rgba(255,87,34,.1);
+  border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  transition:var(--hw-transition);
+}
+.hw-action-btn:hover .hw-action-icon-box{background:var(--hw-orange);}
+.hw-action-icon-box svg{
+  width:15px;height:15px;fill:var(--hw-orange);
+  transition:var(--hw-transition);
+}
+.hw-action-btn:hover .hw-action-icon-box svg{fill:white;}
+.hw-action-text{display:flex;flex-direction:column;flex:1;min-width:0;}
+.hw-action-title{
+  font-size:.83rem;font-weight:700;
+  color:var(--hw-popup-text);line-height:1.25;
+}
+.hw-action-desc{
+  font-size:.71rem;color:#8A9BB0;
+  margin-top:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+[data-theme="dark"] .hw-action-desc{color:#5A7090;}
+
+/* Live chat action button — navy/blue style */
+.hw-live-btn{
+  background:linear-gradient(135deg,var(--hw-navy) 0%,var(--hw-royal) 100%) !important;
+  border-color:transparent !important;
+  position:relative;overflow:hidden;
+}
+.hw-live-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--hw-royal),#0066cc);
+  opacity:0;transition:opacity .3s;
+}
+.hw-live-btn:hover{transform:translateX(4px) !important;border-color:transparent !important;}
+.hw-live-btn:hover::before{opacity:1;}
+.hw-live-btn .hw-action-title{color:white;}
+.hw-live-btn .hw-action-desc{color:rgba(255,255,255,.62);}
+.hw-live-btn .hw-action-icon-box{background:rgba(255,255,255,.16) !important;}
+.hw-live-btn .hw-action-icon-box svg{fill:white !important;}
+.hw-live-btn>*{position:relative;z-index:1;}
+
+.hw-live-badge{
+  background:#22c55e;color:white;
+  font-size:.58rem;font-weight:800;
+  padding:2px 7px;border-radius:100px;
+  letter-spacing:.06em;font-family:var(--hw-font);
+  flex-shrink:0;margin-left:auto;
+  position:relative;z-index:1;
+  animation:hwLivePulse 2.2s infinite;
+}
+@keyframes hwLivePulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.55);}
+  50%{box-shadow:0 0 0 6px rgba(34,197,94,0);}
+}
+
+/* ─────────────────────────────────────────────────
+   LIVE CHAT PANEL
+───────────────────────────────────────────────── */
+.hw-chat-panel{
+  position:fixed;
+  bottom:92px;left:24px;
+  width:340px;
+  max-width:calc(100vw - 32px);
+  background:var(--hw-msg-bg);
+  border-radius:18px;
+  box-shadow:0 22px 64px rgba(0,0,0,.24),0 4px 20px rgba(0,0,0,.1);
+  border:1px solid var(--hw-msg-border);
+  display:none;flex-direction:column;
+  overflow:hidden;z-index:99998;
+  max-height:min(520px, calc(100vh - 110px));
+  pointer-events: auto;
+
+}
+.hw-chat-panel.hw-open{
+  display:flex;
+  animation:hwPopIn .28s cubic-bezier(.22,1.6,.48,1) forwards;
+}
+
+/* Chat header */
+.hw-chat-header{
+  background:white;
+  border-bottom:1px solid #E4E9F0;
+  padding:12px 14px;
+  display:flex;align-items:center;gap:10px;
+  flex-shrink:0;
+}
+[data-theme="dark"] .hw-chat-header{
+  background:#0D1F36;
+  border-color:#1E2D42;
+}
+.hw-chat-avatar{
+  width:38px;height:38px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--hw-royal),#0066cc);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.hw-chat-avatar svg{width:18px;height:18px;fill:white;}
+.hw-chat-title-wrap{flex:1;min-width:0;}
+.hw-chat-title{
+  font-family:var(--hw-font);font-size:.88rem;font-weight:700;
+  color:#1A1A2E;line-height:1.2;
+}
+[data-theme="dark"] .hw-chat-title{color:rgba(255,255,255,.92);}
+.hw-chat-online{
+  font-size:.68rem;color:#8A9BB0;
+  display:flex;align-items:center;gap:5px;margin-top:2px;
+}
+.hw-chat-dot{
+  width:6px;height:6px;background:#22c55e;
+  border-radius:50%;flex-shrink:0;
+  animation:hwBlink 1.8s ease-in-out infinite;
+}
+.hw-chat-actions-bar{display:flex;gap:3px;}
+.hw-chat-icon-btn{
+  width:28px;height:28px;border-radius:7px;
+  border:none;background:transparent;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:#8A9BB0;
+  transition:background .18s,color .18s;
+}
+.hw-chat-icon-btn:hover{
+  background:var(--hw-light-bg);
+  color:var(--hw-gray);
+}
+[data-theme="dark"] .hw-chat-icon-btn:hover{
+  background:rgba(255,255,255,.08);
+  color:rgba(255,255,255,.8);
+}
+.hw-chat-icon-btn svg{width:14px;height:14px;}
+
+/* Chat messages */
+.hw-chat-messages{
+  flex:1;overflow-y:auto;
+  padding:14px 13px 8px;
+  display:flex;flex-direction:column;gap:10px;
+  scroll-behavior:smooth;
+}
+.hw-chat-messages::-webkit-scrollbar{width:4px;}
+.hw-chat-messages::-webkit-scrollbar-track{background:transparent;}
+.hw-chat-messages::-webkit-scrollbar-thumb{
+  background:rgba(0,71,171,.2);border-radius:4px;
+}
+[data-theme="dark"] .hw-chat-messages::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,.1);
+}
+
+/* The Bubble itself */
+.hw-bot-msg {
+  background: white;
+  border: 1px solid #E4E9F0;
+  border-radius: 13px 13px 13px 3px;
+  padding: 11px 14px;
+  font-size: .84rem;
+  color: #2C3E50; /* Keep text dark for readability */
+  line-height: 1.65;
+  box-shadow: 0 1px 6px rgba(0,0,0,.07);
+  align-self: flex-start;
+  max-width: 92%;
+  display: inline-block;
+  white-space: pre-wrap; 
+  word-break: break-word;
+  margin-bottom: 12px;
+}
+
+/* The Clickable Link inside the bubble */
+.hw-bot-msg a {
+  color: #ff9800 !important; /* Your brand orange */
+  text-decoration: underline !important;
+  font-weight: 600;
+  cursor: pointer;
+}
+[data-theme="dark"] .hw-bot-msg{
+  background:#162638;
+  border-color:#1E3048;
+  color:rgba(255,255,255,.85);
+}
+.hw-user-msg{
+  background:linear-gradient(135deg,var(--hw-royal),#0066cc);
+  color:white;
+  border-radius:13px 13px 3px 13px;
+  padding:10px 13px;
+  font-size:.84rem;
+  line-height:1.58;
+  align-self:flex-end;
+  max-width:85%;
+  box-shadow:0 3px 12px rgba(0,71,171,.3);
+  font-family:var(--hw-font);
+}
+
+/* Typing indicator */
+.hw-typing-indicator{
+  display:flex;align-items:center;gap:5px;
+  padding:10px 14px;
+  background:white;border:1px solid #E4E9F0;
+  border-radius:13px 13px 13px 3px;
+  align-self:flex-start;max-width:80px;
+  box-shadow:0 1px 6px rgba(0,0,0,.07);
+}
+[data-theme="dark"] .hw-typing-indicator{
+  background:#162638;border-color:#1E3048;
+}
+.hw-typing-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--hw-royal);opacity:.5;
+  animation:hwTyping 1.2s ease-in-out infinite;
+}
+.hw-typing-dot:nth-child(2){animation-delay:.2s;}
+.hw-typing-dot:nth-child(3){animation-delay:.4s;}
+@keyframes hwTyping{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);opacity:1;}}
+
+/* Chat disclaimer */
+.hw-chat-disclaimer{
+  text-align:center;
+  font-size:.69rem;color:var(--hw-disclaimer-color);
+  padding:6px 14px 8px;
+  line-height:1.6;
+  flex-shrink:0;
+  font-family:var(--hw-font);
+}
+.hw-chat-disclaimer a{
+  color:var(--hw-royal);text-decoration:none;
+}
+.hw-chat-disclaimer a:hover{text-decoration:underline;}
+
+/* Chat input area */
+.hw-chat-input-area{
+  background:white;
+  border-top:1px solid #E4E9F0;
+  padding:10px 12px;
+  flex-shrink:0;
+}
+[data-theme="dark"] .hw-chat-input-area{
+  background:#0D1F36;
+  border-color:#1E2D42;
+}
+.hw-input-wrap{
+  border:2px solid var(--hw-input-border);
+  border-radius:11px;
+  background:var(--hw-input-bg);
+  transition:border-color .22s;
+}
+.hw-input-wrap:focus-within{border-color:var(--hw-royal);}
+.hw-textarea{
+  width:100%;border:none;outline:none;resize:none;
+  padding:9px 11px 4px;
+  font-size:.84rem;font-family:var(--hw-font);
+  color:var(--hw-popup-text);
+  background:transparent;
+  min-height:46px;max-height:100px;line-height:1.55;
+  cursor: text;
+}
+.hw-textarea::placeholder{color:#B0BEC5;font-size:.82rem;}
+.hw-input-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:3px 11px 8px;
+}
+.hw-char-count{
+  font-size:.67rem;color:#B0BEC5;
+  font-family:var(--hw-font);
+}
+.hw-send-btn{
+  width:30px;height:30px;
+  background:var(--hw-royal);
+  border:none;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:var(--hw-transition);
+}
+.hw-send-btn:hover:not(:disabled){
+  background:var(--hw-navy);
+  transform:scale(1.1);
+}
+.hw-send-btn:disabled{background:#C8D6E5;cursor:not-allowed;}
+.hw-send-btn svg{width:13px;height:13px;fill:white;}
+
+/* ─────────────────────────────────────────────────
+   WHATSAPP WIDGET (bottom-right)
+───────────────────────────────────────────────── */
+.hw-wa-widget{
+  position:fixed;bottom:28px;right:24px;
+  z-index:99999;
+  display:flex;flex-direction:column;align-items:flex-end;gap:10px;
+}
+.hw-wa-label{
+  background:var(--hw-popup-bg);
+  border:1px solid var(--hw-border);
+  border-radius:100px;
+  padding:7px 15px;
+  font-size:.78rem;font-weight:600;
+  color:var(--hw-popup-text);
+  box-shadow:0 4px 18px rgba(0,0,0,.14);
+  font-family:var(--hw-font);
+  white-space:nowrap;
+  animation:hwFadeInRight .4s .5s both;
+}
+@keyframes hwFadeInRight{
+  from{opacity:0;transform:translateX(12px);}
+  to{opacity:1;transform:translateX(0);}
+}
+.hw-wa-btn{
+  width:56px;height:56px;
+  background:#25D366;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 24px rgba(37,211,102,.5);
+  transition:var(--hw-transition);
+  border:none;text-decoration:none;position:relative;
+}
+.hw-wa-btn:hover{transform:scale(1.12);}
+.hw-wa-btn:focus-visible{outline:3px solid #25D366;outline-offset:3px;}
+.hw-wa-btn svg{width:28px;height:28px;fill:white;}
+.hw-wa-btn::before{
+  content:'';position:absolute;
+  width:56px;height:56px;
+  background:rgba(37,211,102,.28);
+  border-radius:50%;
+  animation:hwWaPulse 2.2s infinite;
+}
+@keyframes hwWaPulse{
+  0%{transform:scale(1);opacity:.7;}
+  100%{transform:scale(2.1);opacity:0;}
+}
+
+/* ─────────────────────────────────────────────────
+   RESPONSIVE OVERRIDES
+───────────────────────────────────────────────── */
+@media(max-width:480px){
+  .hw-popup,
+  .hw-chat-panel{
+    left:12px;right:12px;
+    width:auto;
+    max-width:calc(100vw - 24px);
+    bottom:86px;
+  }
+  .hw-support-widget{bottom:20px;left:14px;}
+  .hw-wa-widget{bottom:20px;right:14px;}
+  .hw-wa-btn{width:50px;height:50px;}
+  .hw-wa-btn::before{width:50px;height:50px;}
+  .hw-support-btn{width:48px;height:48px;}
+  .hw-chat-panel{max-height:calc(100vh - 106px);}
+}
+@media(max-width:360px){
+  .hw-popup,
+  .hw-chat-panel{
+    left:8px;right:8px;
+    max-width:calc(100vw - 16px);
+  }
+}
+
+/* Preview-page body (standalone open) */
+body.hw-preview-mode{
+  background:#F0F4F8;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+  font-family:'Poppins','DM Sans',system-ui,sans-serif;
+}
+.hw-preview-card{
+  background:white;border-radius:20px;
+  padding:40px;max-width:620px;width:100%;
+  box-shadow:0 8px 40px rgba(0,0,0,.1);
+  text-align:center;
+}
+.hw-preview-card h1{
+  font-size:1.5rem;font-weight:800;color:#0A192F;margin-bottom:8px;
+}
+.hw-preview-card h1 span{color:#FF5722;}
+.hw-preview-card p{font-size:.9rem;color:#666;line-height:1.7;margin-bottom:20px;}
+.hw-preview-code{
+  background:#F0F4F8;border:1px solid #E4E9F0;
+  border-radius:10px;padding:16px;
+  text-align:left;font-family:'Courier New',monospace;
+  font-size:.76rem;color:#1A1A2E;line-height:1.65;
+  overflow-x:auto;
+}
+.hw-preview-label{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(0,71,171,.08);color:#0047AB;
+  font-size:.75rem;font-weight:700;
+  padding:4px 12px;border-radius:100px;margin-bottom:16px;
+}
+</style>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     WIDGET HTML MARKUP
+═══════════════════════════════════════════════════════════════ -->
+
+<!-- Support trigger + popup -->
+<div class="hw-support-widget" id="hwSupportWidget" role="complementary" aria-label="Support widget">
+
+  <!-- Popup panel -->
+  <div class="hw-popup" id="hwPopup" role="dialog" aria-modal="true" aria-label="Cedric Construction Support">
+    <div class="hw-popup-header">
+      <div class="hw-popup-avatar" aria-hidden="true">👷</div>
+      <div class="hw-popup-name-wrap">
+        <div class="hw-popup-name">Tatenda · Cedric Construction</div>
+        <div class="hw-popup-status">
+          <span class="hw-online-dot" aria-hidden="true"></span>
+          Online — We reply instantly
+        </div>
+      </div>
+      <button class="hw-popup-close" id="hwPopupClose" aria-label="Close support popup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="hw-popup-body">
+      <div class="hw-greeting-bubble" id="hwGreeting">
+        👋 Hi! I'm Tatenda your Support Consultant at Cedric Construction Company. I can help you with exploring all our services (tiling, flooring, etc), pricing, timelines, and more. What can I do for you today?
+      </div>
+
+      <div class="hw-actions" role="list">
+
+        <!-- Email -->
+        <a href="mailto:cedricconstructionservices@gmail.com"
+           class="hw-action-btn"
+           role="listitem"
+           aria-label="Send us an email">
+          <div class="hw-action-icon-box" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <rect x="1" y="4" width="22" height="16" rx="2"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <div class="hw-action-text">
+            <span class="hw-action-title">Send us an Email</span>
+            <span class="hw-action-desc">cedricconstructionservices@gmail.com</span>
+          </div>
+        </a>
+
+        <!-- Phone -->
+        <a href="tel:+27849614552"
+           class="hw-action-btn"
+           role="listitem"
+           aria-label="Call us now">
+          <div class="hw-action-icon-box" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+            </svg>
+          </div>
+          <div class="hw-action-text">
+            <span class="hw-action-title">Call Us Now</span>
+            <span class="hw-action-desc">+27 84 961 4552 · Mon–Sun 7am–5pm</span>
+          </div>
+        </a>
+
+        <!-- FAQ -->
+        <a href="#faq"
+           class="hw-action-btn"
+           id="hwFaqBtn"
+           role="listitem"
+           aria-label="Browse FAQs">
+          <div class="hw-action-icon-box" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+            </svg>
+          </div>
+          <div class="hw-action-text">
+            <span class="hw-action-title">Browse FAQs</span>
+            <span class="hw-action-desc" id="hwFaqDesc">Construction services questions answered</span>
+          </div>
+        </a>
+
+        <!-- Live Chat -->
+        <button class="hw-action-btn hw-live-btn"
+                id="hwStartChat"
+                role="listitem"
+                aria-label="Start live chat"
+                type="button">
+          <div class="hw-action-icon-box" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="white">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            </svg>
+          </div>
+          <div class="hw-action-text">
+            <span class="hw-action-title">Start Live Chat</span>
+            <span class="hw-action-desc">Chat with a support agent now</span>
+          </div>
+          <span class="hw-live-badge" aria-label="Live support available">LIVE</span>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Trigger button -->
+  <button class="hw-support-btn" id="hwSupportBtn" aria-label="Open support panel" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" aria-hidden="true">
+      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+    </svg>
+    <span class="hw-badge" aria-label="1 unread message">1</span>
+  </button>
+
+</div>
+
+<!-- Live Chat Panel -->
+<div class="hw-chat-panel" id="hwChatPanel" role="dialog" aria-modal="true" aria-label="Live chat">
+
+  <div class="hw-chat-header">
+    <div class="hw-chat-avatar" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+      </svg>
+    </div>
+    <div class="hw-chat-title-wrap">
+      <div class="hw-chat-title" id="hwChatAgentTitle">Tatenda · Cedric Construction</div>
+      <div class="hw-chat-online">
+        <span class="hw-chat-dot" aria-hidden="true"></span>
+        Online · We reply instantly
+      </div>
+    </div>
+    <div class="hw-chat-actions-bar">
+      <button class="hw-chat-icon-btn" id="hwChatMinimise" title="Back to menu" aria-label="Minimise chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 12H4"/>
+        </svg>
+      </button>
+      <button class="hw-chat-icon-btn" id="hwChatClose" title="Close chat" aria-label="Close chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="hw-chat-messages" id="hwChatMessages" role="log" aria-live="polite" aria-relevant="additions">
+    <div class="hw-bot-msg" id="hwInitialBotMsg">
+      Hi! I'm <span id="hwAgentRole">Tatenda</span>, your Support Consultant at <strong>Cedric Construction Services</strong>. I can help you with exploring all our services (tiling, flooring, etc), pricing, timelines, and more. What can I do for you today?
+    </div>
+  </div>
+
+  <div class="hw-chat-disclaimer">
+    Our team is available Mon–Sun 7am–5pm.<br>
+    <a href="#">Terms of use</a> | <a href="#">Privacy</a> | <a href="#">FAQ</a>
+  </div>
+
+  <div class="hw-chat-input-area">
+    <div class="hw-input-wrap">
+      <textarea
+        class="hw-textarea"
+        id="hwTextarea"
+        placeholder="Type your message here..."
+        maxlength="500"
+        rows="2"
+        aria-label="Chat message input">
+      </textarea>
+      <div class="hw-input-footer">
+        <span class="hw-char-count" id="hwCharCount" aria-live="polite">0 / 500</span>
+        <button class="hw-send-btn" onclick={handleStartChat} id="hwSendBtn" disabled aria-label="Send message" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- WhatsApp Widget -->
+<div class="hw-wa-widget" id="hwWaWidget">
+  <div class="hw-wa-label">💬 Chat on WhatsApp</div>
+  <a href="https://wa.me/27849614552"
+     target="_blank"
+     rel="noopener noreferrer"
+     class="hw-wa-btn"
+     aria-label="Chat on WhatsApp with Cedric Construction Services">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+</div>
+
+<!-- Preview page content (only visible when opened directly) -->
+<div id="hwPreviewPage" style="display:none;">
+  <div class="hw-preview-card">
+    <span class="hw-preview-label">🧩 Standalone Component</span>
+    <h1>Cedric <span>Construction Widget</span></h1>
+    <p>This standalone widget auto-injects into any Cedric Construction Services page.<br>
+    Click the chat button at the <strong>bottom-left</strong> to preview it.</p>
+    <div class="hw-preview-code">
+&lt;!-- Add to bottom of any page's &lt;body&gt; --&gt;<br>
+&lt;script&gt;<br>
+(function(){<br>
+&nbsp;&nbsp;// Optional config (before loading):<br>
+&nbsp;&nbsp;window.CedricWidgetConfig = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;greeting: "Hi! Tatenda here, how can I help?",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;faqHref: "#faq",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;agentRole: "Support Consultant"<br>
+&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;var r = document.createElement('div');<br>
+&nbsp;&nbsp;r.id = 'cedric-support-root';<br>
+&nbsp;&nbsp;document.body.appendChild(r);<br>
+&nbsp;&nbsp;fetch('support-widget.html')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;.then(function(res){ return res.text(); })<br>
+&nbsp;&nbsp;&nbsp;&nbsp;.then(function(html){<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r.innerHTML = html;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r.querySelectorAll('script:not([data-widget-meta])')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.forEach(function(s){<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var n = document.createElement('script');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n.textContent = s.textContent;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.body.appendChild(n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var css = r.querySelector('#cedric-widget-styles');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(css){ document.head.appendChild(css.cloneNode(true)); }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;});<br>
+})();<br>
+&lt;/script&gt;
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     WIDGET JAVASCRIPT
+═══════════════════════════════════════════════════════════════ -->
+<script data-widget-meta="true">
+(function(){
+  'use strict';
+
+  /* ── Guard: prevent duplicate initialization ── */
+  if (window.__CedricWidgetInit) return;
+  window.__CedricWidgetInit = true;
+
+  /* ── Configuration (read from calling page or defaults) ── */
+  var cfg = window.CedricWidgetConfig || {};
+  var greeting   = cfg.greeting   || '👋 Hi! I\'m Tatenda your Support Consultant at Cedric Construction Company. I can help you with exploring all our services (tiling, flooring, etc), pricing, timelines, and more. What can I do for you today?';
+  var faqHref    = cfg.faqHref    || '#faq';
+  var agentRole  = cfg.agentRole  || 'Support Consultant';
+  var faqDesc    = cfg.faqDesc    || 'Construction services questions answered';
+
+  /* ── Apply config to DOM ── */
+  function applyConfig(){
+    var gEl = document.getElementById('hwGreeting');
+    var faqEl = document.getElementById('hwFaqBtn');
+    var faqDescEl = document.getElementById('hwFaqDesc');
+    var roleEl = document.getElementById('hwAgentRole');
+    var agentTitleEl = document.getElementById('hwChatAgentTitle');
+
+    if(gEl) gEl.textContent = greeting;
+    if(faqEl) faqEl.href = faqHref;
+    if(faqDescEl) faqDescEl.textContent = faqDesc;
+    if(roleEl) roleEl.textContent = agentRole;
+    if(agentTitleEl) agentTitleEl.textContent = 'Tatenda · Cedric Construction';
+  }
+
+  /* ── Element references ── */
+  function getEl(id){ return document.getElementById(id); }
+
+  var supportBtn    = getEl('hwSupportBtn');
+  var popup         = getEl('hwPopup');
+  var popupClose    = getEl('hwPopupClose');
+  var startChat     = getEl('hwStartChat');
+  var chatPanel     = getEl('hwChatPanel');
+  var chatMinimise  = getEl('hwChatMinimise');
+  var chatClose     = getEl('hwChatClose');
+  var textarea      = getEl('hwTextarea');
+  var charCount     = getEl('hwCharCount');
+  var sendBtn       = getEl('hwSendBtn');
+  var messages      = getEl('hwChatMessages');
+  var faqBtn        = getEl('hwFaqBtn');
+
+  if(!supportBtn){ return; } // Widget not yet in DOM
+
+  /* ── Theme sync ── */
+  function syncTheme(){
+    var theme = document.documentElement.getAttribute('data-theme') || 'light';
+    // CSS vars do the heavy lifting via [data-theme="dark"] selector
+    // This is a no-op hook for future JS-specific theme logic
+  }
+
+  // Watch parent page theme changes
+  if(window.MutationObserver){
+    var themeObserver = new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        if(m.attributeName === 'data-theme') syncTheme();
+      });
+    });
+    themeObserver.observe(document.documentElement, { attributes: true });
+  }
+  syncTheme();
+
+  /* ── Popup open/close ── */
+  var popupOpen = false;
+  var chatOpen  = false;
+
+  function openPopup(){
+    popup.classList.remove('hw-closing');
+    popup.classList.add('hw-open');
+    popup.removeAttribute('hidden');
+    supportBtn.setAttribute('aria-expanded','true');
+    popupOpen = true;
+    // Dismiss badge
+    var badge = supportBtn.querySelector('.hw-badge');
+    if(badge){ badge.style.display = 'none'; }
+  }
+
+  function closePopup(animate){
+    if(animate){
+      popup.classList.add('hw-closing');
+      setTimeout(function(){ popup.classList.remove('hw-open','hw-closing'); },200);
+    } else {
+      popup.classList.remove('hw-open','hw-closing');
+    }
+    supportBtn.setAttribute('aria-expanded','false');
+    popupOpen = false;
+  }
+
+  function openChat(){
+  chatPanel.style.display = 'flex'; // Force display before focus
+  chatPanel.classList.add('hw-open');
+  chatOpen = true;
+  setTimeout(function(){ 
+    if(textarea) {
+      textarea.focus(); 
+      console.log("Textarea focused"); // Check console to see if this runs
+    }
+  }, 250);
+}
+
+  function closeChat(){
+    chatPanel.classList.remove('hw-open');
+    chatOpen = false;
+  }
+
+  /* ── Support button click ── */
+  supportBtn.addEventListener('click', function(){
+    if(chatOpen){ closeChat(); return; }
+    if(popupOpen){ closePopup(true); }
+    else { openPopup(); }
+  });
+
+  /* ── Popup close button ── */
+  popupClose.addEventListener('click', function(){ closePopup(true); });
+
+  /* ── FAQ button ── */
+  if(faqBtn){
+    faqBtn.addEventListener('click', function(e){
+      closePopup(false);
+      var targetId = faqHref.replace('#','');
+      var target = document.getElementById(targetId);
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({ behavior:'smooth', block:'start' });
+      }
+    });
+  }
+
+  /* ── Start live chat ── */
+  startChat.addEventListener('click', function(){
+    closePopup(false);
+    openChat();
+  });
+
+  /* ── Chat minimise → back to popup ── */
+  chatMinimise.addEventListener('click', function(){
+    closeChat();
+    openPopup();
+  });
+
+  /* ── Chat close ── */
+  chatClose.addEventListener('click', function(){ closeChat(); });
+
+  /* ── Close on outside click ── */
+  document.addEventListener('click', function(e){
+    if(!getEl('hwSupportWidget').contains(e.target) &&
+       !getEl('hwChatPanel').contains(e.target)){
+      if(popupOpen) closePopup(true);
+    }
+  });
+
+  /* ── Close on Escape ── */
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      if(chatOpen)  closeChat();
+      if(popupOpen) closePopup(true);
+    }
+  });
+
+  /* ── Textarea char counter & send button ── */
+  textarea.addEventListener('input', function(){
+    var len = textarea.value.length;
+    charCount.textContent = len + ' / 500';
+    sendBtn.disabled = len === 0;
+  });
+  function linkify(text) {
+  var urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+  return text.replace(urlPattern, function(url) {
+    return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
+  });
+}
+ /* ── Send message to API ── */
+  async function sendMessage() {
+    var text = textarea.value.trim();
+    if (!text) return;
+
+    // 1. Add User bubble to UI
+    var userBubble = document.createElement('div');
+    userBubble.className = 'hw-user-msg';
+    userBubble.textContent = text;
+    messages.appendChild(userBubble);
+
+    // Reset input field
+    textarea.value = '';
+    charCount.textContent = '0 / 500';
+    sendBtn.disabled = true;
+    // messages.scrollTop = messages.scrollHeight;
+
+    // 2. Add Typing indicator
+    var typing = document.createElement('div');
+    typing.className = 'hw-typing-indicator';
+    typing.setAttribute('aria-label', 'Agent is typing');
+    typing.innerHTML =
+      '<div class="hw-typing-dot"></div>' +
+      '<div class="hw-typing-dot"></div>' +
+      '<div class="hw-typing-dot"></div>';
+    messages.appendChild(typing);
+    messages.scrollTop = messages.scrollHeight;
+
+    // 3. API Call
+    const baseurl = "http://192.168.100.100:8000/chat";
+    
+    try {
+      const response = await fetch(baseurl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text })
+      });
+
+      typing.remove(); // Remove indicator once data arrives
+
+      if (!response.ok) {
+        throw new Error("Server error: " + response.status);
+      }
+
+      const data = await response.json();
+      
+      // 4. Display API Response
+      var reply = document.createElement('div');
+      reply.className = 'hw-bot-msg';
+      let botText=await data.response||"";
+      // 2. Convert URLs to links and handle line breaks
+      let formattedText = linkify(botText).replace(/\n/g, '<br>');
+
+      // 3. Set the content
+      reply.innerHTML = formattedText;
+      messages.appendChild(reply);
+
+    } catch (error) {
+      console.error("API Failure:", error);
+      if (typing) typing.remove(); // Stop the dots from bouncing
+
+      var errorMsg = document.createElement('div');
+      errorMsg.className = 'hw-bot-msg';
+
+      // This text only appears if the API is completely unreachable
+      let fallbackText = "I'm having a connection issue, but our team at Cedric Construction is ready to help! " +
+                        "Please reach out on WhatsApp: https://wa.me/27849614552 " +
+                        "or call us on +27 84 961 4552.";
+
+      // linkify makes the WhatsApp URL clickable automatically
+      errorMsg.innerHTML = linkify(fallbackText);
+      messages.appendChild(errorMsg);
+    }
+    
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  sendBtn.addEventListener('click', sendMessage);
+  textarea.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  /* ── Preview page detection ── */
+  (function(){
+    var isStandalone = (
+      document.body.classList.contains('hw-preview-mode') ||
+      window.location.pathname.indexOf('support-widget') !== -1
+    );
+    if(isStandalone){
+      document.body.classList.add('hw-preview-mode');
+      var previewPage = getEl('hwPreviewPage');
+      if(previewPage) previewPage.style.display = 'block';
+    }
+  })();
+
+  /* ── Apply config ── */
+  applyConfig();
+
+  /* ── Expose public API ── */
+  window.CedricWidget = {
+    open:         openPopup,
+    close:        closePopup,
+    openChat:     openChat,
+    closeChat:    closeChat,
+    setGreeting:  function(g){ greeting=g; applyConfig(); },
+    setAgentRole: function(r){ agentRole=r; applyConfig(); },
+    setFaqHref:   function(h){ faqHref=h; applyConfig(); }
+  };
+
+})();
+</script>
+
+</body>
+</html>

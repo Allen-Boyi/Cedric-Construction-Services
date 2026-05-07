@@ -1,0 +1,377 @@
+/*
+ * mobile-fixes.css — Cedric Construction Services
+ * ─────────────────────────────────────────────────────────────────
+ * HOW TO USE:
+ *   Add ONE line inside the <head> of every HTML page, AFTER your
+ *   existing stylesheet links:
+ *
+ *   <link rel="stylesheet" href="/assets/css/mobile-fixes.css">
+ *
+ * This file only ADDS and OVERRIDES — it never breaks your desktop.
+ * ─────────────────────────────────────────────────────────────────
+ */
+
+
+/* ══════════════════════════════════════════════════════════════════
+   0. MEGA MENU STACKING FIX
+   ─────────────────────────────────────────────────────────────────
+   WHY THIS LIVES HERE AND NOT IN header.html:
+   header.html is loaded dynamically via fetch() — its <style> tags
+   arrive AFTER the browser has already painted the hero section.
+   By the time those styles apply, the stacking order is set.
+   This file loads synchronously in <head>, so these rules are
+   active before a single pixel is painted.
+
+   THE PROBLEM:
+   #header-placeholder has no position or z-index, so it creates
+   no stacking context. The .mega-menu is a grandchild — its
+   z-index is trapped inside a context with no priority, and the
+   hero section (position:relative + overflow:hidden) paints on top.
+
+   THE FIX — two rules, three lines:
+   1. Give #header-placeholder its own stacking context at z:9000
+   2. Explicitly push the hero DOWN to z:1 so there is no ambiguity
+══════════════════════════════════════════════════════════════════ */
+
+/* The wrapper that contains the injected header must participate
+   in stacking — without this the mega-menu is trapped inside a
+   context with no z-index priority                               */
+#header-placeholder {
+  position: relative;
+  z-index: 9000;
+}
+
+/* Explicitly set hero below the header — removes all ambiguity */
+#hero-placeholder,
+.hero-slider-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* The nav bar itself — sticky so it stays at top when scrolling */
+.main-nav {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9000 !important;
+}
+
+/* Mega menu must be above the nav bar that contains it */
+.mega-menu {
+  z-index: 9100 !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   1. GLOBAL OVERFLOW FIX
+   overflow-x: hidden on html or body BREAKS position:sticky —
+   the browser silently degrades sticky to relative, which is why
+   the mega menu was hiding behind the hero despite correct z-indexes.
+
+   The fix: remove overflow-x from html/body entirely.
+   Use overflow-x: clip on everything below the header instead.
+   `clip` stops horizontal bleeding but does NOT create a scroll
+   container, so sticky keeps working perfectly.
+══════════════════════════════════════════════════════════════════ */
+html,
+body {
+  /*
+   * overflow-x: clip stops horizontal scroll WITHOUT creating a
+   * scroll container — so position:fixed and position:sticky both
+   * keep working perfectly. This is the safe replacement for
+   * overflow-x: hidden which broke sticky/fixed positioning.
+   */
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Contain horizontal overflow safely on elements below the header */
+main,
+section,
+footer,
+.cc-section,
+.ab-section,
+.cc-about,
+.cc-services,
+.ab-profile,
+.ab-mv,
+.ab-fullcircle,
+.ab-values,
+.ab-why {
+  overflow-x: clip;   /* stops side-scroll without breaking sticky */
+  max-width: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;   /* padding/border never add to width */
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   2. IMAGES & MEDIA
+   Prevents any img/video/iframe from ever exceeding its container.
+══════════════════════════════════════════════════════════════════ */
+img,
+video,
+iframe,
+embed,
+object {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   3. CONTAINERS
+   Any element used as a page-width wrapper must be fluid.
+   Covers common class names — add yours if different.
+══════════════════════════════════════════════════════════════════ */
+.container,
+.cc-container,
+.ab-container,
+.inner,
+.wrapper,
+section,
+header,
+footer,
+nav,
+main {
+  width: 100%;
+  max-width: 100%;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   4. HERO SECTION
+   The hero uses 100vh which is fine, but its CHILDREN must not
+   overflow on small screens.
+══════════════════════════════════════════════════════════════════ */
+.hero-slider-container {
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+/* Hero content text — prevent it from pushing past screen edge */
+.hero-content {
+  width: 100%;
+  padding-left:  clamp(1rem, 5vw, 6rem);
+  padding-right: clamp(1rem, 5vw, 6rem);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   5. NAVBAR / HEADER
+   No overflow on nav or header — overflow:hidden on nav clips the
+   mega menu dropdown and causes mobile content to get cut off.
+══════════════════════════════════════════════════════════════════ */
+header,
+.site-header,
+.cc-header,
+nav {
+  width: 100%;
+  max-width: 100%;
+  /* overflow: hidden  ← REMOVED — was clipping mega menu and mobile content */
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   6. GRID & FLEX LAYOUTS — MOBILE BREAKPOINT
+   Every multi-column grid stacks to a single column on small screens.
+   Covers the about sections, services, values, why-choose-us, footer.
+══════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── Generic: any CSS Grid collapses to 1 col ─────────────────── */
+  [style*="grid-template-columns"],
+  .cc-about__grid,
+  .cc-services__grid,
+  .ab-mv__grid,
+  .ab-values__grid,
+  .ab-why__grid,
+  .ab-service-list,
+  .cc-footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── Generic: any Flexbox row wraps ──────────────────────────── */
+  .cc-social-row,
+  .hero-buttons,
+  .cc-about__stats {
+    flex-wrap: wrap;
+  }
+
+  /* ── About image mosaic: remove the stagger offset ───────────── */
+  .cc-about__img-wrap:nth-child(2),
+  .cc-about__img-wrap:nth-child(4),
+  .ab-about__img-wrap:nth-child(2),
+  .ab-about__img-wrap:nth-child(4) {
+    margin-top: 0 !important;
+  }
+
+  /* ── Footer brand always full-width ──────────────────────────── */
+  .cc-footer-brand {
+    grid-column: 1 / -1 !important;
+  }
+
+  /* ── Hero text sizing ─────────────────────────────────────────── */
+  .hero-headline {
+    font-size: clamp(2.2rem, 10vw, 3.5rem) !important;
+    line-height: 1.05 !important;
+  }
+
+  .hero-sub {
+    font-size: 0.95rem !important;
+  }
+
+  /* ── Hero buttons: full-width stack ──────────────────────────── */
+  .hero-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .hero-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ── About section images: 2-col grid instead of stagger ─────── */
+  .cc-about__images,
+  .ab-about__images {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px;
+  }
+
+  /* ── Section padding: tighter on mobile ──────────────────────── */
+  .cc-about,
+  .cc-services,
+  .ab-profile,
+  .ab-mv,
+  .ab-fullcircle,
+  .ab-values,
+  .ab-why {
+    padding-top:    clamp(3rem, 8vw, 4rem) !important;
+    padding-bottom: clamp(3rem, 8vw, 4rem) !important;
+  }
+
+  /* ── Headings: scale down on small screens ───────────────────── */
+  .ab-heading,
+  .cc-about__heading,
+  .cc-services__heading {
+    font-size: clamp(1.6rem, 7vw, 2.2rem) !important;
+  }
+
+  /* ── Mission/Vision cards: equal padding ─────────────────────── */
+  .ab-mv__card {
+    padding: 1.5rem !important;
+  }
+
+  /* ── Value cards: 2-col on medium phones ─────────────────────── */
+  .ab-values__grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* ── Why-choose-us dark banner ────────────────────────────────── */
+  .ab-why__grid {
+    max-width: 100% !important;
+  }
+
+  /* ── Service item links: full width ──────────────────────────── */
+  .ab-service-item {
+    width: 100%;
+  }
+
+  /* ── Stats strip in about section ────────────────────────────── */
+  .cc-about__stats {
+    gap: 1.5rem;
+  }
+
+  /* ── Footer grid: 2-col on tablet, 1-col below ───────────────── */
+  .cc-footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 2rem 1.5rem !important;
+  }
+
+  .cc-footer-hours {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   7. SMALL PHONES (max 480px)
+   Extra reductions for the smallest screens (iPhone SE etc.)
+══════════════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+
+  /* ── Values: 1-col on very small phones ──────────────────────── */
+  .ab-values__grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── About images: stack fully ───────────────────────────────── */
+  .cc-about__images,
+  .ab-about__images {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── Footer: fully single column ─────────────────────────────── */
+  .cc-footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── Hero counter: hide on very small screens ────────────────── */
+  .hero-counter {
+    display: none !important;
+  }
+
+  /* ── Hero arrows: smaller touch targets ──────────────────────── */
+  .hero-arrow {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  /* ── Why cards: remove the numbered decoration ───────────────── */
+  .ab-why-card__num {
+    font-size: 1.5rem !important;
+  }
+
+  /* ── Container side padding: tighter ─────────────────────────── */
+  .ab-container,
+  .cc-container {
+    padding-left:  1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   8. FIXED-WIDTH ELEMENT SAFETY NET
+   Any element with a hardcoded px width that exceeds the viewport
+   will be capped to 100%.
+   This catches elements you may have missed.
+══════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  * {
+    max-width: 100% !important; /* nuclear option — stops any element bleeding */
+    min-width: 0 !important;    /* allows flex/grid children to shrink below content size */
+  }
+
+  /*
+   * Re-allow specific elements that NEED a larger max-width to function:
+   * Without these exceptions the nuclear rule above could break things.
+   */
+  html,
+  body,
+  .hero-slider-container,
+  .hero-slide,
+  .hero-slide__img,
+  .hero-slide__video {
+    max-width: 100vw !important;
+  }
+}

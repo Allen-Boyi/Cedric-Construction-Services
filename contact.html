@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <style>
+        #header-placeholder,
+        #hero-placeholder {
+            display: block;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/css/mobile-fixes.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <!--
+  ================================================================
+  CEDRIC CONSTRUCTION — CONTACT PAGE
+  Paste this entire block into your contact.html between
+  #header-placeholder and the footer.
+  Uses your existing CSS vars: --orange, --orange-dark, --navy,
+  --navy-2, --white, --gray, --light-bg, --border, --transition,
+  --font-main, --font-body
+  ================================================================
+-->
+
+<style>
+/* ── Contact page extras (scoped, no conflicts) ── */
+.cc-contact-page { overflow-x: hidden; }
+
+/* ─── HERO STRIP ─────────────────────────────── */
+.cc-hero-strip {
+  background: linear-gradient(135deg, var(--navy-2) 0%, #0A192F 60%, #001a4d 100%);
+  padding: 96px 0 72px;
+  position: relative;
+  overflow: hidden;
+}
+.cc-hero-strip::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+/* Glowing orbs */
+.cc-hero-strip::after {
+  content: '';
+  position: absolute;
+  width: 560px; height: 560px;
+  background: radial-gradient(circle, rgba(255,87,34,.18) 0%, transparent 70%);
+  top: -140px; right: -100px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.cc-hero-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 24px;
+  position: relative; z-index: 2;
+}
+.cc-hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,87,34,.15);
+  border: 1px solid rgba(255,87,34,.3);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-family: var(--font-main);
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 20px;
+}
+.cc-hero-eyebrow::before {
+  content: ''; width: 6px; height: 6px;
+  background: var(--orange); border-radius: 50%;
+  animation: ccPulse 1.6s ease-in-out infinite;
+}
+@keyframes ccPulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .4; transform: scale(1.5); }
+}
+.cc-hero-title {
+  font-family: var(--font-main);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 800; color: #fff;
+  line-height: 1.12; margin: 0 0 18px;
+  max-width: 680px;
+}
+.cc-hero-title em {
+  font-style: normal; color: var(--orange);
+  position: relative;
+}
+.cc-hero-sub {
+  font-size: 1rem; color: rgba(255,255,255,.68);
+  line-height: 1.75; max-width: 540px; margin: 0 0 36px;
+}
+.cc-hero-pills {
+  display: flex; flex-wrap: wrap; gap: 10px;
+}
+.cc-hero-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-family: var(--font-main);
+  font-size: .78rem; font-weight: 600; color: rgba(255,255,255,.82);
+  backdrop-filter: blur(6px);
+}
+.cc-hero-pill svg { width: 14px; height: 14px; fill: var(--orange); flex-shrink: 0; }
+
+/* ─── CONTACT SECTION ────────────────────────── */
+.cc-contact-section { padding: 88px 0; background: var(--white); }
+[data-theme="dark"] .cc-contact-section { background: #07111F; }
+
+.cc-contact-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+.cc-contact-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 52px; align-items: start;
+}
+
+/* ── LEFT: Form card ── */
+.cc-form-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 22px;
+  padding: 48px 44px;
+  box-shadow: 0 8px 48px rgba(0,0,0,.08);
+  position: relative; overflow: hidden;
+  transition: var(--transition);
+}
+[data-theme="dark"] .cc-form-card { background: #0d1f36; border-color: #1E2D42; }
+.cc-form-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--orange), var(--orange-dark), #ff9a3c, var(--orange));
+  background-size: 300% 100%;
+  animation: ccShimmer 3s linear infinite;
+}
+@keyframes ccShimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 300% center; }
+}
+
+.cc-form-heading {
+  font-family: var(--font-main);
+  font-size: 1.5rem; font-weight: 800; color: var(--gray); margin: 0 0 6px;
+}
+[data-theme="dark"] .cc-form-heading { color: #fff; }
+.cc-form-sub {
+  font-size: .88rem; color: #888; margin: 0 0 32px; line-height: 1.65;
+}
+
+/* Row */
+.cc-form-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; margin-bottom: 16px;
+}
+.cc-form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
+.cc-form-group:last-of-type { margin-bottom: 0; }
+
+.cc-form-label {
+  font-family: var(--font-main);
+  font-size: .76rem; font-weight: 700;
+  color: var(--gray); letter-spacing: .04em;
+  text-transform: uppercase;
+}
+[data-theme="dark"] .cc-form-label { color: rgba(255,255,255,.75); }
+
+.cc-form-input, .cc-form-select, .cc-form-textarea {
+  width: 100%;
+  background: var(--light-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-family: var(--font-body);
+  font-size: .9rem; color: var(--gray);
+  outline: none; appearance: none;
+  transition: var(--transition);
+  box-sizing: border-box;
+}
+[data-theme="dark"] .cc-form-input,
+[data-theme="dark"] .cc-form-select,
+[data-theme="dark"] .cc-form-textarea {
+  background: rgba(255,255,255,.06);
+  border-color: #1E2D42;
+  color: rgba(255,255,255,.85);
+}
+.cc-form-input::placeholder, .cc-form-textarea::placeholder { color: #bbb; font-size: .88rem; }
+.cc-form-input:focus, .cc-form-select:focus, .cc-form-textarea:focus {
+  border-color: var(--orange);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(255,87,34,.10);
+}
+[data-theme="dark"] .cc-form-input:focus,
+[data-theme="dark"] .cc-form-textarea:focus {
+  background: rgba(255,255,255,.08);
+}
+.cc-form-textarea { resize: vertical; min-height: 130px; line-height: 1.65; }
+
+/* Service tags */
+.cc-service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cc-service-tag {
+  cursor: pointer;
+  padding: 10px 18px;
+  border-radius: 999px;        /* pill shape — always */
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  color: #94a3b8;
+  font-size: 0.875rem;
+  white-space: nowrap;         /* prevents text wrapping inside tag */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  user-select: none;
+  line-height: 1;              /* prevents height jumping */
+  box-sizing: border-box;
+}
+
+.cc-service-tag:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #cbd5e1;
+}
+
+.cc-service-tag.active {
+  background: #f97316;
+  border-color: #f97316;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 0 14px rgba(249, 115, 22, 0.4);
+  /* NO transform scale — it causes layout shifts */
+}
+/* Submit button */
+.cc-submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+  color: #fff; padding: 15px 32px;
+  border-radius: 100px;
+  font-family: var(--font-main); font-weight: 700; font-size: 1rem;
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  box-shadow: 0 4px 24px rgba(255,87,34,.38), 0 6px 0 rgba(140,30,0,.25);
+  margin-top: 28px;
+  transition: var(--transition);
+  position: relative; overflow: hidden;
+}
+.cc-submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(255,87,34,.55), 0 10px 0 rgba(140,30,0,.2);
+}
+.cc-submit-btn:active { transform: translateY(1px); }
+.cc-submit-btn:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+.cc-submit-btn svg { width: 18px; height: 18px; fill: #fff; flex-shrink: 0; }
+/* WhatsApp variant */
+.cc-submit-btn.cc-wa {
+  background: linear-gradient(135deg, #25D366, #1da851);
+  box-shadow: 0 4px 24px rgba(37,211,102,.35), 0 6px 0 rgba(10,90,30,.25);
+}
+.cc-submit-btn.cc-wa:hover {
+  box-shadow: 0 8px 32px rgba(37,211,102,.5), 0 10px 0 rgba(10,90,30,.2);
+}
+/* Spinner */
+.cc-spinner {
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ccSpin .7s linear infinite;
+  display: none; flex-shrink: 0;
+}
+@keyframes ccSpin { to { transform: rotate(360deg); } }
+.cc-submit-btn.cc-loading .cc-btn-text { display: none; }
+.cc-submit-btn.cc-loading .cc-spinner   { display: block; }
+
+/* ── RIGHT: Details ── */
+.cc-details-col { display: flex; flex-direction: column; gap: 22px; }
+
+/* Info card */
+.cc-info-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 22px; padding: 38px 34px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.07);
+  transition: var(--transition);
+}
+[data-theme="dark"] .cc-info-card { background: #0d1f36; border-color: #1E2D42; }
+.cc-info-card:hover { box-shadow: 0 16px 56px rgba(0,0,0,.12); }
+.cc-info-card-title {
+  font-family: var(--font-main);
+  font-size: 1.25rem; font-weight: 800; color: var(--gray); margin: 0 0 5px;
+}
+[data-theme="dark"] .cc-info-card-title { color: #fff; }
+.cc-info-card-sub { font-size: .87rem; color: #888; margin: 0 0 26px; line-height: 1.6; }
+
+/* Contact rows */
+.cc-contact-row {
+  display: flex; align-items: flex-start; gap: 15px;
+  padding: 15px 0; border-bottom: 1px solid var(--border);
+}
+.cc-contact-row:last-of-type { border-bottom: none; }
+.cc-contact-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: rgba(255,87,34,.10);
+  border: 1px solid rgba(255,87,34,.22);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 2px; transition: var(--transition);
+}
+.cc-contact-row:hover .cc-contact-icon { background: var(--orange); }
+.cc-contact-icon svg {
+  width: 18px; height: 18px; fill: var(--orange); transition: var(--transition);
+}
+.cc-contact-row:hover .cc-contact-icon svg { fill: #fff; }
+.cc-contact-label {
+  font-family: var(--font-main); font-size: .7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em;
+  color: #aaa; margin-bottom: 4px;
+}
+.cc-contact-value {
+  font-family: var(--font-main); font-size: .92rem; font-weight: 600;
+  color: var(--gray); line-height: 1.5;
+}
+[data-theme="dark"] .cc-contact-value { color: rgba(255,255,255,.85); }
+.cc-contact-value a { color: var(--orange); text-decoration: none; transition: color .2s; }
+.cc-contact-value a:hover { color: var(--orange-dark); }
+.cc-contact-value .cc-wa-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: .78rem; color: #25D366; font-weight: 500;
+}
+
+/* Social row */
+.cc-social-row { display: flex; gap: 10px; margin-top: 22px; }
+.cc-soc-btn {
+  width: 38px; height: 38px;
+  background: var(--orange); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition); text-decoration: none;
+}
+.cc-soc-btn:hover { transform: translateY(-3px); box-shadow: 0 4px 14px rgba(255,87,34,.45); }
+.cc-soc-btn svg { width: 16px; height: 16px; fill: #fff; }
+
+/* Hours strip */
+.cc-hours-strip {
+  background: var(--light-bg); border-radius: 14px;
+  padding: 18px 20px; margin-top: 18px;
+  border: 1px solid var(--border);
+}
+[data-theme="dark"] .cc-hours-strip { background: rgba(255,255,255,.04); border-color: #1E2D42; }
+.cc-hours-heading {
+  font-family: var(--font-main); font-size: .72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--orange); margin-bottom: 12px;
+}
+.cc-hours-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: .82rem; padding: 5px 0; color: #777;
+  border-bottom: 1px solid rgba(0,0,0,.05);
+}
+.cc-hours-row:last-child { border-bottom: none; }
+[data-theme="dark"] .cc-hours-row { color: rgba(255,255,255,.55); border-color: rgba(255,255,255,.05); }
+.cc-hours-day { font-family: var(--font-main); font-weight: 600; color: var(--gray); }
+[data-theme="dark"] .cc-hours-day { color: rgba(255,255,255,.8); }
+.cc-open-badge {
+  background: rgba(255,87,34,.12); color: var(--orange);
+  font-family: var(--font-main); font-size: .67rem; font-weight: 700;
+  padding: 2px 9px; border-radius: 100px;
+}
+.cc-closed-badge {
+  background: rgba(200,200,200,.15); color: #aaa;
+  font-family: var(--font-main); font-size: .67rem; font-weight: 700;
+  padding: 2px 9px; border-radius: 100px;
+}
+
+/* Map card */
+.cc-map-card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 22px; overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,.07);
+  transition: var(--transition);
+}
+[data-theme="dark"] .cc-map-card { background: #0d1f36; border-color: #1E2D42; }
+.cc-map-card:hover { box-shadow: 0 16px 56px rgba(0,0,0,.12); }
+.cc-map-header {
+  padding: 16px 22px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.cc-map-title {
+  font-family: var(--font-main); font-size: .87rem; font-weight: 700;
+  color: var(--gray);
+  display: flex; align-items: center; gap: 8px;
+}
+[data-theme="dark"] .cc-map-title { color: rgba(255,255,255,.85); }
+.cc-map-title::before {
+  content: ''; width: 8px; height: 8px;
+  background: var(--orange); border-radius: 50%; flex-shrink: 0;
+  animation: ccPulse 1.6s infinite;
+}
+.cc-map-frame {
+  width: 100%; height: 240px;
+  background: linear-gradient(145deg, #1a2a40 0%, #0d1b30 100%);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+/* CSS city grid */
+.cc-map-canvas {
+  position: absolute; inset: 0;
+  background-color: #0e1c30;
+}
+.cc-map-canvas::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,200,80,.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,200,80,.1) 1px, transparent 1px),
+    linear-gradient(rgba(255,200,80,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,200,80,.05) 1px, transparent 1px);
+  background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px;
+}
+.cc-map-canvas::after {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 30px  40px,  rgba(0,150,255,.25) 0%, transparent 100%),
+    radial-gradient(2px 2px at 90px  80px,  rgba(0,150,255,.2)  0%, transparent 100%),
+    radial-gradient(2px 2px at 160px 40px,  rgba(0,150,255,.2)  0%, transparent 100%),
+    radial-gradient(2px 2px at 220px 100px, rgba(255,87,34,.3)  0%, transparent 100%),
+    radial-gradient(2px 2px at 280px 50px,  rgba(0,150,255,.2)  0%, transparent 100%);
+  background-size: 320px 140px;
+}
+.cc-map-pin {
+  position: relative; z-index: 5;
+  display: flex; flex-direction: column; align-items: center;
+  animation: ccPinBounce 2.2s ease-in-out infinite;
+}
+@keyframes ccPinBounce {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+.cc-map-pin-dot {
+  width: 46px; height: 46px;
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+  border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+  box-shadow: 0 4px 20px rgba(255,87,34,.65);
+  display: flex; align-items: center; justify-content: center;
+  border: 3px solid #fff;
+}
+.cc-map-pin-dot svg { transform: rotate(45deg); width: 18px; height: 18px; fill: #fff; }
+.cc-map-pin-line { width: 2px; height: 14px; background: rgba(255,87,34,.5); margin-top: 2px; }
+.cc-map-pin-pulse {
+  position: absolute; bottom: -8px;
+  width: 52px; height: 14px;
+  background: radial-gradient(ellipse 52% 7px at 50% 100%, rgba(255,87,34,.35), transparent);
+  border-radius: 50%;
+}
+.cc-map-badge {
+  position: absolute; top: 14px; right: 14px;
+  background: rgba(0,0,0,.55);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 8px; padding: 6px 12px;
+  font-family: var(--font-main); font-size: .72rem; font-weight: 700;
+  color: rgba(255,255,255,.85); backdrop-filter: blur(8px); z-index: 6;
+}
+.cc-map-footer {
+  padding: 14px 22px 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.cc-map-addr { font-size: .8rem; color: #888; font-family: var(--font-main); }
+.cc-map-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--orange); color: #fff;
+  padding: 7px 16px; border-radius: 8px;
+  font-family: var(--font-main); font-size: .75rem; font-weight: 700;
+  transition: var(--transition); text-decoration: none;
+}
+.cc-map-btn:hover { background: var(--orange-dark); transform: translateY(-1px); }
+.cc-map-btn svg { width: 12px; height: 12px; fill: #fff; }
+
+/* ─── WHY US ─────────────────────────────────── */
+.cc-trust-section { padding: 84px 0; background: var(--light-bg); }
+[data-theme="dark"] .cc-trust-section { background: #07111F; }
+.cc-section-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+.cc-section-eyebrow {
+  display: block; text-align: center;
+  font-family: var(--font-main); font-size: .72rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 12px;
+}
+.cc-section-title {
+  text-align: center; font-family: var(--font-main);
+  font-size: clamp(1.75rem,4vw,2.5rem); font-weight: 800;
+  color: var(--gray); line-height: 1.2; margin: 0 0 14px;
+}
+[data-theme="dark"] .cc-section-title { color: #fff; }
+.cc-section-sub {
+  text-align: center; font-size: 1rem; color: #888;
+  max-width: 540px; margin: 0 auto 52px; line-height: 1.75;
+}
+.cc-trust-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 24px;
+}
+.cc-trust-card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 18px; padding: 36px 28px; text-align: center;
+  transition: var(--transition);
+  box-shadow: 0 2px 16px rgba(0,0,0,.06);
+  position: relative; overflow: hidden;
+}
+[data-theme="dark"] .cc-trust-card { background: #0d1f36; border-color: #1E2D42; }
+.cc-trust-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--orange); transform: scaleX(0); transition: var(--transition);
+}
+.cc-trust-card:hover {
+  transform: translateY(-8px); border-color: var(--orange);
+  box-shadow: 0 20px 50px rgba(0,0,0,.11);
+}
+.cc-trust-card:hover::before { transform: scaleX(1); }
+.cc-trust-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  border: 2px solid var(--orange);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; transition: var(--transition);
+}
+.cc-trust-card:hover .cc-trust-icon { background: var(--orange); }
+.cc-trust-icon svg {
+  width: 28px; height: 28px; fill: none;
+  stroke: var(--orange); stroke-width: 1.8; transition: var(--transition);
+}
+.cc-trust-card:hover .cc-trust-icon svg { stroke: #fff; }
+.cc-trust-title {
+  font-family: var(--font-main); font-size: 1rem; font-weight: 700;
+  color: var(--gray); margin-bottom: 10px;
+}
+[data-theme="dark"] .cc-trust-title { color: #fff; }
+.cc-trust-desc { font-size: .85rem; color: #777; line-height: 1.7; }
+
+/* ─── ACTION BANNER ──────────────────────────── */
+.cc-banner {
+  background: linear-gradient(135deg, var(--navy-2) 0%, #001a4d 100%);
+  padding: 52px 0; position: relative; overflow: hidden;
+}
+.cc-banner::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+.cc-banner-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 32px; flex-wrap: wrap; position: relative; z-index: 2;
+}
+.cc-banner-headline {
+  font-family: var(--font-main);
+  font-size: clamp(1.4rem,3vw,2.1rem); font-weight: 800;
+  color: #fff; margin-bottom: 8px;
+}
+.cc-banner-sub {
+  font-size: .9rem; color: rgba(255,255,255,.62);
+  max-width: 500px; line-height: 1.65;
+}
+.cc-banner-btn {
+  background: var(--orange-dark); color: #fff;
+  padding: 15px 34px; border-radius: 10px;
+  font-family: var(--font-main); font-weight: 700; font-size: .94rem;
+  flex-shrink: 0; transition: var(--transition);
+  box-shadow: 0 6px 0 rgba(0,0,0,.22), 0 8px 24px rgba(0,0,0,.22),
+              inset 0 1px 0 rgba(255,255,255,.14);
+  display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+}
+.cc-banner-btn:hover { background: var(--orange); transform: translateY(-3px); }
+.cc-banner-btn svg { width: 18px; height: 18px; fill: #fff; }
+
+/* ─── SUCCESS TOAST ──────────────────────────── */
+.cc-toast {
+  position: fixed; bottom: 36px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--navy); color: #fff;
+  padding: 14px 24px; border-radius: 12px;
+  font-family: var(--font-main); font-size: .88rem; font-weight: 600;
+  box-shadow: 0 8px 30px rgba(0,0,0,.25); z-index: 9999;
+  opacity: 0; transition: opacity .4s, transform .4s;
+  pointer-events: none;
+  display: flex; align-items: center; gap: 10px;
+}
+.cc-toast.cc-visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+.cc-toast svg { width: 18px; height: 18px; fill: #4CAF50; }
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 1024px) {
+  .cc-contact-grid { grid-template-columns: 1fr; gap: 36px; }
+  .cc-trust-grid   { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .cc-form-card    { padding: 32px 22px; }
+  .cc-form-row     { grid-template-columns: 1fr; }
+  .cc-trust-grid   { grid-template-columns: 1fr; }
+  .cc-banner-inner { flex-direction: column; text-align: center; }
+  .cc-hero-pills   { justify-content: center; }
+}
+</style>
+
+<!-- ── HERO STRIP ────────────────────────────────────────────────── -->
+<div class="cc-contact-page">
+<section class="cc-hero-strip">
+  <div class="cc-hero-inner">
+    <div class="cc-hero-eyebrow">Get in Touch</div>
+    <h1 class="cc-hero-title">Let's Build Something <em>Great</em> Together</h1>
+    <p class="cc-hero-sub">
+      From a single quote to a full construction project — our team is ready to listen,
+      plan, and deliver quality workmanship across Cape Town and beyond.
+    </p>
+    <div class="cc-hero-pills">
+      <span class="cc-hero-pill">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+        Cape Town, SA
+      </span>
+      <span class="cc-hero-pill">
+        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        +27 84 961 4552
+      </span>
+      <span class="cc-hero-pill">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        WhatsApp Available
+      </span>
+      <span class="cc-hero-pill">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Reply Within 1 Hour
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT SECTION ────────────────────────────────────────────── -->
+<section class="cc-contact-section" id="contact-form">
+  <div class="cc-contact-inner">
+    <div class="cc-contact-grid">
+
+      <!-- LEFT: Form -->
+      <div class="cc-form-card">
+        <div class="cc-form-heading">Request a Free Quote</div>
+        <p class="cc-form-sub">Tell us about your project and we'll get back to you within 1 business hour with a detailed quote.</p>
+
+        <form id="ccContactForm" novalidate>
+
+          <!-- Name + Email -->
+          <div class="cc-form-row">
+            <div class="cc-form-group" style="margin-bottom:0">
+              <label class="cc-form-label" for="cc-name">Your Name *</label>
+              <input class="cc-form-input" type="text" id="cc-name" name="name" placeholder="e.g. John Smith" required>
+            </div>
+            <div class="cc-form-group" style="margin-bottom:0">
+              <label class="cc-form-label" for="cc-email">Email Address</label>
+              <input class="cc-form-input" type="email" id="cc-email" name="email" placeholder="you@email.com">
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="cc-form-group">
+            <label class="cc-form-label" for="cc-phone">Phone / WhatsApp *</label>
+            <input class="cc-form-input" type="tel" id="cc-phone" name="phone" placeholder="+27 8XX XXX XXXX" required>
+          </div>
+
+                    <!-- Service tags — now the primary selector (required) -->
+          <div class="cc-form-group">
+            <label class="cc-form-label">Service Required * <span id="cc-tag-error" style="color:#ef4444;font-size:0.8rem;margin-left:8px;display:none;">Please select at least one service</span></label>
+            <div class="cc-service-tags">
+              <span class="cc-service-tag" onclick="ccToggleTag(this)" data-service="Tiling">🧱 Tiling</span>
+              <span class="cc-service-tag" onclick="ccToggleTag(this)" data-service="Roofing">🏠 Roofing</span>
+              <span class="cc-service-tag" onclick="ccToggleTag(this)" data-service="Painting">🎨 Painting</span>
+              <span class="cc-service-tag" onclick="ccToggleTag(this)" data-service="Building">🏗️ Building</span>
+              <span class="cc-service-tag" onclick="ccToggleTag(this)" data-service="Renovations">🔨 Renovations</span>
+              <span class="cc-service-tag" onclick="ccToggleTag(this)" data-service="Plastering">🪟 Plastering</span>
+            </div>
+            <!-- Hidden input so EmailJS picks up the selected services -->
+            <input type="hidden" id="cc-service" name="service" value="">
+          </div>
+
+          <!-- Message -->
+          <div class="cc-form-group">
+            <label class="cc-form-label" for="cc-message">Tell Us About Your Project *</label>
+            <textarea class="cc-form-textarea" id="cc-message" name="message" 
+              placeholder="Describe your project — location, size, timeline, or any specific requirements. The more detail, the better we can quote."
+              required></textarea>
+          </div>
+
+          <!-- Two buttons: email + WhatsApp -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:24px;">
+            <button class="cc-submit-btn" type="submit" id="ccEmailBtn">
+              <span class="cc-btn-text" style="display:flex;align-items:center;gap:8px;">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Send Message
+              </span>
+              <span class="cc-spinner"></span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+      <!-- 1. Load the EmailJS SDK -->
+<!-- 1. Corrected Load Link -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+      <script type="text/javascript">
+        function ccToggleTag(el) {
+            el.classList.toggle('active');
+
+            // Add/remove checkmark prefix
+            const service = el.getAttribute('data-service');
+            const emoji = el.textContent.trim().split(' ')[0]; // keep original emoji
+            if (el.classList.contains('active')) {
+              el.textContent = `✅ ${service}`;
+            } else {
+              // Restore original emoji from data attribute
+              const emojiMap = {
+                Tiling: '🧱', Roofing: '🏠', Painting: '🎨',
+                Building: '🏗️', Renovations: '🔨', Plastering: '🪟'
+              };
+              el.textContent = `${emojiMap[service]} ${service}`;
+            }
+
+            // Update hidden input
+            const active = document.querySelectorAll('.cc-service-tag.active');
+            const values = Array.from(active).map(t => t.getAttribute('data-service'));
+            document.getElementById('cc-service').value = values.join(', ');
+
+            if (values.length > 0) {
+              document.getElementById('cc-tag-error').style.display = 'none';
+            }
+          }
+
+        // Initialize EmailJS
+        (function() {
+          emailjs.init("ZBqrzB8Ya0uzjQW6C");
+        })();
+
+        document.addEventListener('DOMContentLoaded', function() {
+          const form = document.getElementById('ccContactForm');
+
+          if (form) {
+            form.addEventListener('submit', function(event) {
+              event.preventDefault();
+
+              // Validate tags
+              const serviceValue = document.getElementById('cc-service').value;
+              if (!serviceValue) {
+                document.getElementById('cc-tag-error').style.display = 'inline';
+                return;
+              }
+
+              const btn = document.getElementById('ccEmailBtn');
+              const originalHTML = btn.innerHTML;
+              btn.innerHTML = "Sending...";
+              btn.disabled = true;
+
+              // Send lead notification to Cedric Construction
+              emailjs.sendForm('service_vetyj2b', 'template_xamkrbm', this)
+                .then(() => {
+                  console.log('Internal notification sent.');
+                  // Send auto-reply to client
+                  return emailjs.sendForm("service_vetyj2b", "template_xzzm8ar", this);
+                })
+                .then(() => {
+                  alert('Success! We will contact you within 1 hour.');
+                  form.reset();
+                  // Also clear active tags and hidden input manually
+                  document.querySelectorAll('.cc-service-tag.active')
+                    .forEach(t => t.classList.remove('active'));
+                  document.getElementById('cc-service').value = '';
+                  btn.innerHTML = originalHTML;
+                  btn.disabled = false;
+                })
+                .catch((error) => {
+                  alert('Failed to send... Please try again later.');
+                  console.error('FAILED...', error);
+                  btn.innerHTML = originalHTML;
+                  btn.disabled = false;
+                });
+            });
+          }
+        });
+      </script>
+      
+      <!-- RIGHT: Details + Map -->
+      <div class="cc-details-col">
+
+        <div class="cc-info-card">
+          <div class="cc-info-card-title">Contact Details</div>
+          <p class="cc-info-card-sub">Reach us through any channel. We're a Cape Town-based team with fast, friendly response times.</p>
+
+          <div class="cc-contact-row">
+            <div class="cc-contact-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <div>
+              <div class="cc-contact-label">Location</div>
+              <div class="cc-contact-value">
+                Wallacedene, Kraaifontein<br>
+                <span style="font-size:.8rem;color:#aaa;font-weight:400;">Cape Town, South Africa</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cc-contact-row">
+            <div class="cc-contact-icon">
+              <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </div>
+            <div>
+              <div class="cc-contact-label">Phone / WhatsApp</div>
+              <div class="cc-contact-value">
+                <a href="tel:+27849614552">+27 84 961 4552</a><br>
+                <a href="https://wa.me/27849614552" target="_blank" class="cc-wa-badge">
+                  <svg style="width:13px;height:13px;fill:#25D366;" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                  WhatsApp us anytime
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="cc-contact-row">
+            <div class="cc-contact-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="cc-contact-label">Email</div>
+              <div class="cc-contact-value">
+                <a href="mailto:cedricconstructionservices@gmail.com">cedricconstructionservices@gmail.com</a><br>
+                <span style="font-size:.8rem;color:#aaa;font-weight:400;">Replies within 1 business hour</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Socials -->
+          <div class="cc-social-row">
+            <a class="cc-soc-btn" href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C17.56 21.45 22 17.19 22 12z"/></svg>
+            </a>
+            <a class="cc-soc-btn" href="#" aria-label="Twitter">
+              <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L2.25 2.25h6.928l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a class="cc-soc-btn" href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            </a>
+            <a class="cc-soc-btn" href="https://wa.me/27849614552" target="_blank" aria-label="WhatsApp"
+               style="background:#25D366;">
+              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+            </a>
+          </div>
+
+          <!-- Hours -->
+          <div class="cc-hours-strip">
+            <div class="cc-hours-heading">🕐 Business Hours</div>
+            <div class="cc-hours-row">
+              <span class="cc-hours-day">Monday – Friday</span>
+              <span>07:00 – 17:00 <span class="cc-open-badge">Open</span></span>
+            </div>
+            <div class="cc-hours-row">
+              <span class="cc-hours-day">Saturday</span>
+              <span>08:00 – 14:00 <span class="cc-open-badge">Open</span></span>
+            </div>
+            <div class="cc-hours-row">
+              <span class="cc-hours-day">Sunday</span>
+              <span>08:00 – 13:00 <span class="cc-open-badge">Open</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="cc-map-card">
+          <div class="cc-map-header">
+            <div class="cc-map-title">Cedric Construction — Cape Town, SA</div>
+          </div>
+          <div class="cc-map-frame">
+            <div class="cc-map-canvas"></div>
+            <div class="cc-map-badge">📍 Wallacedene, Kraaifontein</div>
+            <div class="cc-map-pin">
+              <div class="cc-map-pin-dot">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+              </div>
+              <div class="cc-map-pin-line"></div>
+              <div class="cc-map-pin-pulse"></div>
+            </div>
+          </div>
+          <div class="cc-map-footer">
+            <span class="cc-map-addr">📍 Wallacedene, Kraaifontein, Cape Town</span>
+            <a href="https://maps.google.com/?q=Wallacedene,Kraaifontein,Cape+Town,South+Africa"
+               target="_blank" rel="noopener" class="cc-map-btn">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+              Open in Maps
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /details-col -->
+    </div><!-- /contact-grid -->
+  </div>
+</section>
+
+<!-- ── WHY US ─────────────────────────────────────────────────────── -->
+<section class="cc-trust-section">
+  <div class="cc-section-inner">
+    <span class="cc-section-eyebrow">Why Choose Us</span>
+    <h2 class="cc-section-title">Why Cape Town Homeowners<br>Trust Cedric Construction</h2>
+    <p class="cc-section-sub">More than a contractor — a reliable partner who shows up, does the job right, and stands behind every project.</p>
+    <div class="cc-trust-grid">
+
+      <div class="cc-trust-card">
+        <div class="cc-trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="cc-trust-title">20+ Years Experience</div>
+        <p class="cc-trust-desc">Two decades of hands-on construction experience across residential, commercial, and renovation projects in the Western Cape.</p>
+      </div>
+
+      <div class="cc-trust-card">
+        <div class="cc-trust-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="cc-trust-title">Quality Guaranteed</div>
+        <p class="cc-trust-desc">We use only premium materials and skilled craftsmen. Every project is inspected before handover — we don't cut corners.</p>
+      </div>
+
+      <div class="cc-trust-card">
+        <div class="cc-trust-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div class="cc-trust-title">On-Time Delivery</div>
+        <p class="cc-trust-desc">We set realistic timelines and stick to them. Your project won't drag on — we respect your time and your property.</p>
+      </div>
+
+      <div class="cc-trust-card">
+        <div class="cc-trust-icon">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="cc-trust-title">Transparent Pricing</div>
+        <p class="cc-trust-desc">No hidden costs, no surprise invoices. We provide a clear, itemised quote upfront so you always know exactly what you're paying for.</p>
+      </div>
+
+      <div class="cc-trust-card">
+        <div class="cc-trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="cc-trust-title">Local Cape Town Team</div>
+        <p class="cc-trust-desc">We're based right here in Kraaifontein. Fast to respond, easy to reach, and we know the local building regulations inside out.</p>
+      </div>
+
+      <div class="cc-trust-card">
+        <div class="cc-trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.9 12a19.79 19.79 0 01-3-8.61A2 2 0 012.88 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div class="cc-trust-title">Always Reachable</div>
+        <p class="cc-trust-desc">Call or WhatsApp us anytime on +27 84 961 4552. We respond fast and keep you updated throughout your project.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── ACTION BANNER ──────────────────────────────────────────────── -->
+<div class="cc-banner">
+  <div class="cc-banner-inner">
+    <div>
+      <div class="cc-banner-headline">Ready to Get Started?</div>
+      <div class="cc-banner-sub">Don't wait — get your free quote today. Our team is ready to visit your site, assess your project, and give you an honest price.</div>
+    </div>
+    <a href="tel:+27849614552" class="cc-banner-btn">
+      <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      Call Us Now
+    </a>
+  </div>
+</div>
+
+<!-- ── SUCCESS TOAST ──────────────────────────────────────────────── -->
+<div class="cc-toast" id="ccToast">
+  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  Message sent! We'll be in touch within 1 hour.
+</div>
+
+</div><!-- /cc-contact-page -->
+
+<script>
+(function () {
+  // ── Tag toggle ───────────────────────────────────────────────
+  window.ccToggleTag = function (el) {
+    el.classList.toggle('cc-selected');
+  };
+
+  // ── Form helpers ─────────────────────────────────────────────
+  const form      = document.getElementById('ccContactForm');
+  const emailBtn  = document.getElementById('ccEmailBtn');
+  const waBtn     = document.getElementById('ccWaBtn');
+  const toast     = document.getElementById('ccToast');
+
+  function showToast(msg) {
+    toast.childNodes[2].textContent = ' ' + msg;
+    toast.classList.add('cc-visible');
+    setTimeout(() => toast.classList.remove('cc-visible'), 4500);
+  }
+
+  function highlightEmpty(ids) {
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (!el.value.trim()) {
+        el.style.borderColor = 'var(--orange)';
+        el.style.boxShadow   = '0 0 0 3px rgba(255,87,34,.18)';
+        setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2500);
+      }
+    });
+  }
+
+  // Auto-clear error styles
+  document.querySelectorAll('.cc-form-input,.cc-form-textarea,.cc-form-select')
+    .forEach(el => el.addEventListener('input', () => {
+      el.style.borderColor = '';
+      el.style.boxShadow   = '';
+    }));
+
+  // ── Email submit (simulated — wire to backend as needed) ─────
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name    = document.getElementById('cc-name').value.trim();
+    const phone   = document.getElementById('cc-phone').value.trim();
+    const service = document.getElementById('cc-service').value;
+    const message = document.getElementById('cc-message').value.trim();
+
+    if (!name || !phone || !service || !message) {
+      highlightEmpty(['cc-name','cc-phone','cc-service','cc-message']);
+      return;
+    }
+
+    emailBtn.classList.add('cc-loading');
+    emailBtn.disabled = true;
+
+    setTimeout(() => {
+      emailBtn.classList.remove('cc-loading');
+      emailBtn.disabled = false;
+      form.reset();
+      document.querySelectorAll('.cc-service-tag.cc-selected')
+        .forEach(t => t.classList.remove('cc-selected'));
+      showToast("Message sent! We'll be in touch within 1 hour.");
+    }, 1800);
+  });
+
+}
+</script>
+
+<!-- footer content -->
+<style>
+  .cc-footer{background:#0d1b2e;color:#c8d8eb;font-family:'Segoe UI',Arial,sans-serif;padding:64px 0 0;margin-top:0;}
+  .cc-footer-inner{max-width:1200px;margin:0 auto;padding:0 24px;}
+
+  /* Grid */
+  .cc-footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.1fr 1.3fr;gap:48px 32px;}
+  @media(max-width:1024px){
+    .cc-footer-grid{grid-template-columns:1fr 1fr 1fr;gap:40px 24px;}
+    .cc-footer-brand{grid-column:1 / -1;}
+  }
+  @media(max-width:640px){
+    .cc-footer-grid{grid-template-columns:1fr 1fr;gap:32px 20px;}
+    .cc-footer-brand{grid-column:1 / -1;}
+    .cc-footer-hours{grid-column:1 / -1;}
+  }
+  @media(max-width:420px){
+    .cc-footer-grid{grid-template-columns:1fr;}
+  }
+
+  /* Brand */
+  .cc-footer-logo{font-size:20px;font-weight:700;color:#fff;margin:0 0 14px;letter-spacing:-0.3px;line-height:1.2;}
+  .cc-footer-logo span{color:#e85d04;}
+  .cc-footer-tagline{font-size:13.5px;color:#8ba7c2;line-height:1.65;margin:0 0 22px;max-width:300px;}
+
+  /* Social icons */
+  .cc-social-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .cc-social-icon{display:flex;align-items:center;justify-content:center;width:38px;height:38px;background:#e85d04;border-radius:7px;text-decoration:none;transition:background .2s,transform .15s;flex-shrink:0;}
+  .cc-social-icon:hover{background:#ff7a2a;transform:translateY(-2px);}
+  .cc-social-icon svg{width:18px;height:18px;fill:#fff;display:block;}
+
+  /* Column headings */
+  .cc-footer-col h4{font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.09em;margin:0 0 6px;padding-bottom:10px;border-bottom:2px solid #e85d04;display:inline-block;}
+
+  /* Column links */
+  .cc-footer-col ul{list-style:none;padding:0;margin:14px 0 0;}
+  .cc-footer-col ul li{margin-bottom:10px;font-size:13.5px;color:#8ba7c2;line-height:1.5;}
+  .cc-footer-col ul li a{color:#8ba7c2;text-decoration:none;transition:color .18s;}
+  .cc-footer-col ul li a:hover{color:#e85d04;}
+
+  /* Contact items */
+  .cc-contact-item{display:flex !important;align-items:flex-start;gap:9px;}
+  .cc-contact-item svg{width:14px;height:14px;fill:#e85d04;flex-shrink:0;margin-top:2px;}
+
+  /* Business hours */
+  .cc-hours-table{margin-top:14px;width:100%;}
+  .cc-hours-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;}
+  .cc-hours-row:last-child{border-bottom:none;}
+  .cc-hours-row:first-child{border-top:1px solid rgba(255,255,255,.05);}
+  .cc-hours-day{color:#c8d8eb;font-weight:400;min-width:90px;}
+  .cc-hours-time{color:#e85d04;font-weight:600;font-size:12.5px;text-align:right;}
+
+  /* Bottom bar */
+  .cc-footer-bottom{margin-top:52px;border-top:1px solid rgba(255,255,255,.08);padding:20px 0;}
+  .cc-footer-bottom-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+  .cc-footer-bottom p{font-size:12.5px;color:#556f88;margin:0;}
+  .cc-footer-legal{display:flex;gap:20px;}
+  .cc-footer-legal a{font-size:12.5px;color:#556f88;text-decoration:none;transition:color .18s;}
+  .cc-footer-legal a:hover{color:#e85d04;}
+</style>
+
+<footer class="cc-footer">
+  <div class="cc-footer-inner">
+    <div class="cc-footer-grid">
+
+      <!-- ── Brand ────────────────────────────────────────── -->
+      <div class="cc-footer-brand cc-footer-col">
+        <h3 class="cc-footer-logo">Cedric <span>Construction</span></h3>
+        <p class="cc-footer-tagline">Your trusted construction partner in Cape Town. We deliver quality building services with professionalism, skill, and lasting dedication to every project.</p>
+
+        <div class="cc-social-row">
+          <!-- Facebook -->
+          <a class="cc-social-icon" href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C17.56 21.45 22 17.19 22 12z"/></svg>
+          </a>
+          <!-- Twitter / X -->
+          <a class="cc-social-icon" href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L2.25 2.25h6.928l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <!-- LinkedIn -->
+          <a class="cc-social-icon" href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+          </a>
+          <!-- Instagram -->
+          <a class="cc-social-icon" href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.8v8.4C4 18.39 5.61 20 7.8 20h8.4a3.6 3.6 0 0 0 3.6-3.6V7.8C20 5.61 18.39 4 16.2 4H7.8m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+          </a>
+          <!-- WhatsApp -->
+          <a class="cc-social-icon" href="https://wa.me/27849614552" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- ── Services ──────────────────────────────────────── -->
+      <div class="cc-footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="tiling.html">Tiling &amp; Flooring</a></li>
+          <li><a href="roofing.html">Roofing</a></li>
+          <li><a href="painting.html#pp-block-article">Painting</a></li>
+          <li><a href="building.html">General Building</a></li>
+          <li><a href="painting.html#pp-services">Plastering</a></li>
+          <li><a href="building.html#gb-block-2">Renovations</a></li>
+        </ul>
+      </div>
+
+      <!-- ── Company ───────────────────────────────────────── -->
+      <div class="cc-footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="projects.html">Our Projects</a></li>
+          <li><a href="testimonials.html">Testimonials</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html#contact-form">Get a Quote</a></li>
+        </ul>
+      </div>
+
+      <!-- ── Contact ───────────────────────────────────────── -->
+      <div class="cc-footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li class="cc-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>Wallacedene, Kraaifontein<br>Cape Town, South Africa</span>
+          </li>
+          <li class="cc-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <a href="tel:+27849614552">+27 84 961 4552</a>
+          </li>
+          <li class="cc-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <a href="mailto:cedricconstructionservices@gmail.com" style="word-break:break-all;">cedricconstructionservices@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ── Business Hours ────────────────────────────────── -->
+      <div class="cc-footer-col cc-footer-hours">
+        <h4>Business Hours</h4>
+        <div class="cc-hours-table">
+          <div class="cc-hours-row"><span class="cc-hours-day">Monday</span>   <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Tuesday</span>  <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Wednesday</span><span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Thursday</span> <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Friday</span>   <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Saturday</span> <span class="cc-hours-time">08:00 – 14:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Sunday</span>   <span class="cc-hours-time">08:00 – 13:00</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="cc-footer-bottom">
+    <div class="cc-footer-bottom-inner">
+      <p>&copy; <span id="cc-year"></span> Cedric Construction Services. All rights reserved.</p>
+      <nav class="cc-footer-legal">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('cc-year').textContent = new Date().getFullYear();
+</script>     
+
+    <script src="/assets/js/component.js"></script>
+   
+</body>
+</html>

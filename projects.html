@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/mobile-fixes.css">
+</head>
+<body>
+    <div id="header-placeholder"></div><!--
+  ================================================================
+  CEDRIC CONSTRUCTION — PROJECTS GALLERY
+  Paste this entire block between #header-placeholder and the
+  footer in projects.html.
+
+  Theme toggle: listens to the 'themechange' custom event fired
+  by component.js v2, AND to direct data-theme attribute changes
+  via MutationObserver — works with both paths.
+
+  Images: place your files in assets/images/
+  Update the src values in the projects array in the <script>
+  at the bottom of this file.
+  ================================================================
+-->
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+  /* ── Re-declare vars for dark mode reactivity ──────────────
+     The header sets data-theme on <html>. These rules mirror
+     the header's own variable sets so this section reacts
+     automatically whenever the attribute changes.               */
+  :root {
+    --gal-orange:      #FF5722;
+    --gal-orange-dark: #E4531B;
+    --gal-navy:        #0A192F;
+    --gal-navy-2:      #002366;
+    --gal-white:       #FFFFFF;
+    --gal-gray:        #333333;
+    --gal-light-bg:    #F8F9FA;
+    --gal-border:      #E8ECF0;
+    --gal-transition:  0.32s cubic-bezier(.4,0,.2,1);
+    --gal-font-main:   'Poppins', sans-serif;
+    --gal-font-body:   'DM Sans', sans-serif;
+  }
+  [data-theme="dark"] {
+    --gal-white:    #0A192F;
+    --gal-gray:     #E8ECF0;
+    --gal-light-bg: #07111F;
+    --gal-border:   #1E2D42;
+  }
+
+  /* ── HERO STRIP ───────────────────────────────────────────── */
+  .gal-hero {
+    background: linear-gradient(135deg, var(--gal-navy-2) 0%, #0A192F 55%, #001a4d 100%);
+    padding: 96px 0 76px;
+    position: relative; overflow: hidden;
+  }
+  .gal-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+    background-size: 52px 52px;
+  }
+  /* Glowing orb top-right */
+  .gal-hero::after {
+    content: '';
+    position: absolute;
+    width: 480px; height: 480px;
+    background: radial-gradient(circle, rgba(255,87,34,.16) 0%, transparent 68%);
+    top: -160px; right: -80px; border-radius: 50%;
+    pointer-events: none;
+  }
+  .gal-hero-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 32px;
+  }
+  .gal-hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,87,34,.14);
+    border: 1px solid rgba(255,87,34,.28);
+    border-radius: 100px; padding: 6px 16px;
+    font-family: var(--gal-font-main);
+    font-size: .72rem; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--gal-orange); margin-bottom: 18px;
+  }
+  .gal-hero-eyebrow::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--gal-orange); border-radius: 50%;
+    animation: galPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes galPulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:.4; transform:scale(1.5); }
+  }
+  .gal-hero h1 {
+    font-family: var(--gal-font-main);
+    font-size: clamp(2rem,5vw,3.4rem);
+    font-weight: 800; color: #fff;
+    line-height: 1.1; margin: 0 0 18px;
+    max-width: 640px;
+  }
+  .gal-hero h1 em { font-style: normal; color: var(--gal-orange); }
+  .gal-hero p {
+    font-size: 1rem; color: rgba(255,255,255,.66);
+    line-height: 1.78; max-width: 520px; margin: 0;
+  }
+  /* Project count badge */
+  .gal-count-badge {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 16px; padding: 20px 28px;
+    text-align: center; backdrop-filter: blur(8px);
+    flex-shrink: 0; align-self: center;
+  }
+  .gal-count-badge strong {
+    display: block;
+    font-family: var(--gal-font-main);
+    font-size: 2.6rem; font-weight: 800; color: var(--gal-orange);
+    line-height: 1;
+  }
+  .gal-count-badge span {
+    font-size: .78rem; color: rgba(255,255,255,.6);
+    font-family: var(--gal-font-main); font-weight: 500;
+    text-transform: uppercase; letter-spacing: .08em;
+    display: block; margin-top: 4px;
+  }
+
+  /* ── FILTER BAR ────────────────────────────────────────────── */
+  .gal-filter-bar {
+    position: sticky; top: 72px; z-index: 40;
+    background: var(--gal-white);
+    border-bottom: 1px solid var(--gal-border);
+    transition: background var(--gal-transition), border-color var(--gal-transition);
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  }
+  .gal-filter-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center;
+    gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; padding-top: 14px; padding-bottom: 14px;
+  }
+  .gal-filter-inner::-webkit-scrollbar { display: none; }
+  .gal-filter-btn {
+    padding: 8px 20px; border-radius: 100px;
+    font-family: var(--gal-font-main); font-size: .8rem; font-weight: 600;
+    border: 1.5px solid var(--gal-border);
+    background: transparent; color: #888;
+    cursor: pointer; white-space: nowrap;
+    transition: var(--gal-transition);
+    flex-shrink: 0;
+  }
+  .gal-filter-btn:hover {
+    border-color: var(--gal-orange); color: var(--gal-orange);
+    background: rgba(255,87,34,.05);
+  }
+  .gal-filter-btn.gal-active {
+    background: var(--gal-orange); border-color: var(--gal-orange);
+    color: #fff;
+    box-shadow: 0 3px 12px rgba(255,87,34,.35);
+  }
+  /* Result count */
+  .gal-result-count {
+    margin-left: auto; flex-shrink: 0;
+    font-family: var(--gal-font-main); font-size: .76rem; font-weight: 600;
+    color: #aaa; white-space: nowrap;
+  }
+
+  /* ── GALLERY SECTION ───────────────────────────────────────── */
+  .gal-section {
+    padding: 52px 0 88px;
+    background: var(--gal-light-bg);
+    transition: background var(--gal-transition);
+    min-height: 60vh;
+  }
+  .gal-section-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+  }
+
+  /* Masonry-feel grid — 4 cols desktop, responsive down */
+  .gal-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  /* Individual project card */
+  .gal-card {
+    position: relative; overflow: hidden;
+    border-radius: 14px;
+    cursor: pointer;
+    background: var(--gal-border);
+    /* tall cards every 5th item for visual rhythm */
+    aspect-ratio: 1 / 1;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    transition: transform .28s cubic-bezier(.4,0,.2,1),
+                box-shadow .28s cubic-bezier(.4,0,.2,1);
+    /* staggered fade-in */
+    opacity: 0;
+    animation: galCardIn .45s ease forwards;
+  }
+  .gal-card:nth-child(5n+1) { grid-column: span 2; aspect-ratio: 2/1; }
+
+  .gal-card:nth-child(1)  { animation-delay: .04s; }
+  .gal-card:nth-child(2)  { animation-delay: .09s; }
+  .gal-card:nth-child(3)  { animation-delay: .14s; }
+  .gal-card:nth-child(4)  { animation-delay: .19s; }
+  .gal-card:nth-child(5)  { animation-delay: .24s; }
+  .gal-card:nth-child(6)  { animation-delay: .29s; }
+  .gal-card:nth-child(7)  { animation-delay: .34s; }
+  .gal-card:nth-child(8)  { animation-delay: .39s; }
+  .gal-card:nth-child(9)  { animation-delay: .44s; }
+  .gal-card:nth-child(10) { animation-delay: .49s; }
+  .gal-card:nth-child(n+11) { animation-delay: .54s; }
+
+  @keyframes galCardIn {
+    from { opacity:0; transform:scale(.96) translateY(14px); }
+    to   { opacity:1; transform:scale(1)   translateY(0); }
+  }
+
+  .gal-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 16px 40px rgba(0,0,0,.18);
+    z-index: 2;
+  }
+
+  .gal-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform .5s cubic-bezier(.4,0,.2,1);
+    display: block;
+  }
+  .gal-card:hover img { transform: scale(1.08); }
+
+  /* Hover overlay */
+  .gal-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.2) 50%, transparent 100%);
+    opacity: 0; transition: opacity .28s ease;
+    display: flex; align-items: flex-end;
+    padding: 18px;
+  }
+  .gal-card:hover .gal-card-overlay { opacity: 1; }
+  .gal-card-info { width: 100%; }
+  .gal-card-cat {
+    font-family: var(--gal-font-main);
+    font-size: .68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--gal-orange); margin-bottom: 4px; display: block;
+  }
+  .gal-card-title {
+    font-family: var(--gal-font-main);
+    font-size: .88rem; font-weight: 700;
+    color: #fff; line-height: 1.3;
+  }
+  /* Zoom icon */
+  .gal-card-zoom {
+    position: absolute; top: 12px; right: 12px;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,.15); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,.25);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .22s ease, transform .22s ease;
+    transform: scale(.8);
+  }
+  .gal-card:hover .gal-card-zoom { opacity: 1; transform: scale(1); }
+  .gal-card-zoom svg { width: 16px; height: 16px; fill: #fff; }
+
+  /* Empty state */
+  .gal-empty {
+    grid-column: 1 / -1;
+    text-align: center; padding: 80px 24px;
+  }
+  .gal-empty svg { width: 48px; height: 48px; fill: #ccc; margin-bottom: 16px; }
+  .gal-empty p {
+    font-family: var(--gal-font-main); font-size: 1rem;
+    color: #aaa; font-weight: 500;
+  }
+
+  /* ── LIGHTBOX ──────────────────────────────────────────────── */
+  .gal-lightbox {
+    position: fixed; inset: 0; z-index: 9000;
+    background: rgba(0,0,0,.92); backdrop-filter: blur(10px);
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+    animation: galLbIn .22s ease both;
+  }
+  .gal-lightbox.gal-lb-open { display: flex; }
+  @keyframes galLbIn {
+    from { opacity:0; }
+    to   { opacity:1; }
+  }
+  .gal-lb-wrap {
+    position: relative; max-width: 1100px; width: 100%;
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+  }
+  .gal-lb-img-wrap {
+    position: relative; width: 100%;
+    max-height: calc(100vh - 160px);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .gal-lb-img {
+    max-width: 100%; max-height: calc(100vh - 160px);
+    border-radius: 12px;
+    box-shadow: 0 24px 80px rgba(0,0,0,.7);
+    object-fit: contain;
+    animation: galLbImgIn .28s cubic-bezier(.4,0,.2,1) both;
+  }
+  @keyframes galLbImgIn {
+    from { opacity:0; transform:scale(.95); }
+    to   { opacity:1; transform:scale(1); }
+  }
+  /* Nav arrows */
+  .gal-lb-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background .18s ease;
+    color: #fff;
+  }
+  .gal-lb-arrow:hover { background: rgba(255,87,34,.55); border-color: var(--gal-orange); }
+  .gal-lb-arrow svg { width: 20px; height: 20px; fill: #fff; }
+  .gal-lb-prev { left: -62px; }
+  .gal-lb-next { right: -62px; }
+  /* Close */
+  .gal-lb-close {
+    position: absolute; top: -14px; right: 0;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background .18s ease;
+  }
+  .gal-lb-close:hover { background: rgba(255,87,34,.55); }
+  .gal-lb-close svg { width: 18px; height: 18px; fill: #fff; }
+  /* Caption */
+  .gal-lb-caption {
+    text-align: center;
+  }
+  .gal-lb-cat {
+    font-family: var(--gal-font-main); font-size: .7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .12em;
+    color: var(--gal-orange); margin-bottom: 4px; display: block;
+  }
+  .gal-lb-title {
+    font-family: var(--gal-font-main); font-size: 1rem; font-weight: 600;
+    color: rgba(255,255,255,.9);
+  }
+  .gal-lb-counter {
+    font-family: var(--gal-font-main); font-size: .78rem; font-weight: 500;
+    color: rgba(255,255,255,.45); margin-top: 6px; display: block;
+  }
+
+  /* ── CTA SECTION ───────────────────────────────────────────── */
+  .gal-cta {
+    background: linear-gradient(135deg, var(--gal-navy-2) 0%, #001a4d 100%);
+    padding: 80px 0; position: relative; overflow: hidden;
+  }
+  .gal-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  .gal-cta-inner {
+    max-width: 720px; margin: 0 auto; padding: 0 24px;
+    text-align: center; position: relative; z-index: 2;
+  }
+  .gal-cta h2 {
+    font-family: var(--gal-font-main);
+    font-size: clamp(1.8rem,4vw,2.6rem); font-weight: 800;
+    color: #fff; line-height: 1.15; margin-bottom: 16px;
+  }
+  .gal-cta h2 em { font-style: normal; color: var(--gal-orange); }
+  .gal-cta p {
+    font-size: .98rem; color: rgba(255,255,255,.64);
+    line-height: 1.78; margin-bottom: 36px;
+  }
+  .gal-cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  .gal-btn-primary {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: linear-gradient(135deg, var(--gal-orange), var(--gal-orange-dark));
+    color: #fff; padding: 15px 36px; border-radius: 100px;
+    font-family: var(--gal-font-main); font-weight: 700; font-size: .94rem;
+    box-shadow: 0 4px 24px rgba(255,87,34,.38), 0 6px 0 rgba(140,30,0,.22);
+    transition: var(--gal-transition); text-decoration: none;
+  }
+  .gal-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(255,87,34,.5), 0 10px 0 rgba(140,30,0,.18);
+  }
+  .gal-btn-primary svg { width: 17px; height: 17px; fill: #fff; }
+
+  .gal-btn-outline {
+    display: inline-flex; align-items: center; gap: 9px;
+    border: 2px solid rgba(255,255,255,.35); color: rgba(255,255,255,.85);
+    padding: 15px 36px; border-radius: 100px;
+    font-family: var(--gal-font-main); font-weight: 700; font-size: .94rem;
+    transition: var(--gal-transition); text-decoration: none;
+  }
+  .gal-btn-outline:hover {
+    border-color: var(--gal-orange); color: var(--gal-orange);
+    transform: translateY(-2px);
+  }
+  .gal-btn-outline svg { width: 17px; height: 17px; }
+
+  /* ── RESPONSIVE ─────────────────────────────────────────────── */
+  @media (max-width: 1100px) {
+    .gal-lb-prev { left: -48px; }
+    .gal-lb-next { right: -48px; }
+  }
+  @media (max-width: 960px) {
+    .gal-grid { grid-template-columns: repeat(3, 1fr); }
+    .gal-lb-prev, .gal-lb-next {
+      position: fixed; top: auto; bottom: 24px;
+      transform: none;
+    }
+    .gal-lb-prev { left: calc(50% - 58px); }
+    .gal-lb-next { right: calc(50% - 58px); }
+  }
+  @media (max-width: 640px) {
+    .gal-grid { grid-template-columns: repeat(2, 1fr); }
+    .gal-card:nth-child(5n+1) { grid-column: span 2; aspect-ratio: 16/9; }
+    .gal-hero-inner { grid-template-columns: 1fr; }
+    .gal-count-badge { display: none; }
+    .gal-cta-btns { flex-direction: column; align-items: center; }
+  }
+  @media (max-width: 420px) {
+    .gal-grid { grid-template-columns: 1fr; }
+    .gal-card:nth-child(5n+1) { grid-column: span 1; aspect-ratio: 4/3; }
+  }
+</style>
+
+<!-- ═══════════════════════════════════════════════
+     HERO STRIP
+════════════════════════════════════════════════ -->
+<section class="gal-hero">
+  <div class="gal-hero-inner">
+    <div>
+      <div class="gal-hero-eyebrow">Our Portfolio</div>
+      <h1>Showcasing Our <em>Finest</em> Work</h1>
+      <p>Browse through our portfolio of completed projects and see the quality craftsmanship we bring to every home and commercial space across Cape Town.</p>
+    </div>
+    <div class="gal-count-badge">
+      <strong id="galTotalCount">24</strong>
+      <span>Projects<br>Completed</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FILTER BAR
+════════════════════════════════════════════════ -->
+<div class="gal-filter-bar">
+  <div class="gal-filter-inner" id="galFilterInner">
+    <!-- Buttons injected by JS -->
+    <span class="gal-result-count" id="galResultCount"></span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     GALLERY GRID
+════════════════════════════════════════════════ -->
+<section class="gal-section">
+  <div class="gal-section-inner">
+    <div class="gal-grid" id="galGrid">
+      <!-- Cards injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     LIGHTBOX
+════════════════════════════════════════════════ -->
+<div class="gal-lightbox" id="galLightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+  <div class="gal-lb-wrap">
+    <button class="gal-lb-close" id="galLbClose" aria-label="Close">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18" stroke="white" stroke-width="2.2" stroke-linecap="round"/><line x1="6" y1="6" x2="18" y2="18" stroke="white" stroke-width="2.2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="gal-lb-img-wrap">
+      <button class="gal-lb-arrow gal-lb-prev" id="galLbPrev" aria-label="Previous">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <img class="gal-lb-img" id="galLbImg" src="" alt="">
+      <button class="gal-lb-arrow gal-lb-next" id="galLbNext" aria-label="Next">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="gal-lb-caption">
+      <span class="gal-lb-cat" id="galLbCat"></span>
+      <span class="gal-lb-title" id="galLbTitle"></span>
+      <span class="gal-lb-counter" id="galLbCounter"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     CTA SECTION
+════════════════════════════════════════════════ -->
+<section class="gal-cta">
+  <div class="gal-cta-inner">
+    <h2>Like What You <em>See?</em></h2>
+    <p>Let us transform your space with the same quality and attention to detail. Contact us today for a free, no-obligation consultation and quote.</p>
+    <div class="gal-cta-btns">
+      <a href="contact.html#contact-form" class="gal-btn-primary">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Get a Free Quote
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  /* ════════════════════════════════════════════════════
+     1. PROJECT DATA
+     ─────────────────────────────────────────────────
+     Add/remove entries here.
+     src: path relative to this HTML file.
+     title & category: shown in overlay + lightbox.
+  ════════════════════════════════════════════════════ */
+  const PROJECTS = [
+    { src: 'assets/images/KitchenTiling.webp',    title: 'Modern Kitchen Tiling',       category: 'Tiling'     },
+    { src: 'assets/images/BathroomFloor.webp',    title: 'Bathroom Floor Finish',        category: 'Tiling'     },
+    { src: 'assets/images/tiling.webp',    title: 'Living Room Porcelain',        category: 'Tiling'     },
+    { src: 'assets/images/RoofRepair.webp',   title: 'Residential Roof Repair',      category: 'Roofing'    },
+    { src: 'assets/images/IBRSheetInstallation.webp',   title: 'IBR Sheet Installation',       category: 'Roofing'    },
+    { src: 'assets/images/in_painting.webp', title: 'Interior Repaint',             category: 'Painting'   },
+    { src: 'assets/images/ext_painting2.webp',  title: 'Exterior Weathercoat',         category: 'Painting'   },
+    { src: 'assets/images/renovations5.webp',  title: 'Feature Wall Accent',          category: 'Painting'   },
+    { src: 'assets/images/GarageConversion.webp',  title: 'Home Extension',               category: 'Building'   },
+    { src: 'assets/images/Garage.webp',  title: 'Garage Conversion',            category: 'Building'   },
+    { src: 'assets/images/ceramic.webp',      title: 'Full Kitchen Renovation',      category: 'Renovations'},
+    { src: 'assets/images/BathroomFloor.webp',      title: 'Bathroom Remodel',             category: 'Renovations'},
+    { src: 'assets/images/SmoothPlasterFinish.webp',   title: 'Smooth Plaster Finish',        category: 'Plastering' },
+    { src: 'assets/images/paving4.webp',    title: 'Outdoor Patio Tiles',          category: 'Tiling'     },
+    { src: 'assets/images/FlatRoofWaterproofing.webp',   title: 'Flat Roof Waterproofing',      category: 'Roofing'    },
+    { src: 'assets/images/boundarywall.webp',  title: 'Boundary Wall',                category: 'Building'   },
+    { src: 'assets/images/ext_painting3.webp',  title: 'Commercial Repaint',           category: 'Painting'   },
+    { src: 'assets/images/extensions.webp',      title: 'Open Plan Living Reno',        category: 'Renovations'},
+    { src: 'assets/images/ShowerEnclosureTiling.webp',    title: 'Shower Enclosure Tiling',      category: 'Tiling'     },
+    { src: 'assets/images/coating.webp',   title: 'Tanga Stone Plastering',     category: 'Plastering' },
+    { src: 'assets/images/paving3.webp',  title: 'Patio & Entertainment Area',   category: 'Building'   },
+    { src: 'assets/images/GutterReplacement.webp',   title: 'Gutter Replacement',           category: 'Roofing'    },
+    { src: 'assets/images/Officerenovations.webp',      title: 'Office Fit-Out',               category: 'Renovations'},
+    { src: 'assets/images/Interiorpainting.webp',  title: 'Ceiling Repaint & Coving',     category: 'Painting'   },
+    {src:"assets/images/CornicePlasterRepair.webp",title:'Plastering',category:"Plastering"},
+  ];
+
+  /* ── Derived data ── */
+  const ALL_LABEL  = 'All Projects';
+  const categories = [ALL_LABEL, ...new Set(PROJECTS.map(p => p.category))];
+
+  let activeCategory   = ALL_LABEL;
+  let filtered         = [...PROJECTS];
+  let lightboxIndex    = null;
+
+  /* ── DOM refs ── */
+  const grid        = document.getElementById('galGrid');
+  const filterInner = document.getElementById('galFilterInner');
+  const resultCount = document.getElementById('galResultCount');
+  const totalCount  = document.getElementById('galTotalCount');
+  const lightbox    = document.getElementById('galLightbox');
+  const lbImg       = document.getElementById('galLbImg');
+  const lbCat       = document.getElementById('galLbCat');
+  const lbTitle     = document.getElementById('galLbTitle');
+  const lbCounter   = document.getElementById('galLbCounter');
+  const lbClose     = document.getElementById('galLbClose');
+  const lbPrev      = document.getElementById('galLbPrev');
+  const lbNext      = document.getElementById('galLbNext');
+
+  /* ════════════════════════════════════════════════════
+     2. BUILD FILTER BUTTONS
+  ════════════════════════════════════════════════════ */
+  function buildFilters() {
+    // Remove old buttons (keep the result count span)
+    filterInner.querySelectorAll('.gal-filter-btn').forEach(b => b.remove());
+
+    categories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'gal-filter-btn' + (cat === activeCategory ? ' gal-active' : '');
+      btn.textContent = cat;
+      btn.addEventListener('click', () => {
+        activeCategory = cat;
+        filtered = cat === ALL_LABEL ? [...PROJECTS] : PROJECTS.filter(p => p.category === cat);
+        buildFilters();
+        renderGrid();
+      });
+      filterInner.insertBefore(btn, resultCount);
+    });
+  }
+
+  /* ════════════════════════════════════════════════════
+     3. RENDER GRID
+  ════════════════════════════════════════════════════ */
+  function renderGrid() {
+    grid.innerHTML = '';
+    resultCount.textContent = filtered.length + ' project' + (filtered.length !== 1 ? 's' : '');
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `
+        <div class="gal-empty">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+          <p>No projects in this category yet.</p>
+        </div>`;
+      return;
+    }
+
+    filtered.forEach((project, i) => {
+      const card = document.createElement('div');
+      card.className = 'gal-card';
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', project.title);
+      card.innerHTML = `
+        <img src="${project.src}" alt="${project.title}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23e0e5ec%22/><text x=%222%22 y=%222%22 font-size=%221%22 text-anchor=%22middle%22 fill=%22%23aaa%22>📷</text></svg>'">
+        <div class="gal-card-overlay">
+          <div class="gal-card-info">
+            <span class="gal-card-cat">${project.category}</span>
+            <div class="gal-card-title">${project.title}</div>
+          </div>
+        </div>
+        <div class="gal-card-zoom">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="8" x2="11" y2="14" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="11" x2="14" y2="11" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>`;
+
+      card.addEventListener('click', () => openLightbox(i));
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(i); }
+      });
+      grid.appendChild(card);
+    });
+
+    // Update hero count
+    totalCount.textContent = PROJECTS.length;
+  }
+
+  /* ════════════════════════════════════════════════════
+     4. LIGHTBOX
+  ════════════════════════════════════════════════════ */
+  function openLightbox(index) {
+    lightboxIndex = index;
+    updateLightbox();
+    lightbox.classList.add('gal-lb-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('gal-lb-open');
+    document.body.style.overflow = '';
+    lightboxIndex = null;
+  }
+
+  function updateLightbox() {
+    const p = filtered[lightboxIndex];
+    // Re-trigger animation
+    lbImg.style.animation = 'none';
+    lbImg.offsetHeight; // reflow
+    lbImg.style.animation = '';
+
+    lbImg.src   = p.src;
+    lbImg.alt   = p.title;
+    lbCat.textContent     = p.category;
+    lbTitle.textContent   = p.title;
+    lbCounter.textContent = (lightboxIndex + 1) + ' / ' + filtered.length;
+  }
+
+  function prevImage() {
+    lightboxIndex = (lightboxIndex - 1 + filtered.length) % filtered.length;
+    updateLightbox();
+  }
+
+  function nextImage() {
+    lightboxIndex = (lightboxIndex + 1) % filtered.length;
+    updateLightbox();
+  }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click',  prevImage);
+  lbNext.addEventListener('click',  nextImage);
+
+  // Close on overlay click
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Keyboard nav
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('gal-lb-open')) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  prevImage();
+    if (e.key === 'ArrowRight') nextImage();
+  });
+
+  /* ════════════════════════════════════════════════════
+     5. THEME REACTIVITY
+     ─────────────────────────────────────────────────
+     Two paths:
+     A) component.js v2 fires a custom 'themechange' event
+     B) MutationObserver watches data-theme on <html>
+        (fallback for any other toggle mechanism)
+
+     Both paths call applyTheme() which updates CSS variables
+     on the filter bar (the only element with a bg that needs
+     explicit sync — everything else uses the CSS vars directly
+     via [data-theme] selectors in the <style> block above).
+  ════════════════════════════════════════════════════ */
+  function applyTheme(theme) {
+    // The CSS [data-theme="dark"] selectors in our <style> block
+    // handle color changes automatically via var(). Nothing extra
+    // needed — but this hook is here if you need JS-driven changes.
+    // Example: swap a canvas background, update a chart colour, etc.
+    // console.log('[gallery] theme changed to:', theme);
+  }
+
+  // Path A — custom event from component.js v2
+  document.addEventListener('themechange', e => {
+    applyTheme(e.detail.theme);
+  });
+
+  // Path B — MutationObserver (belt-and-suspenders)
+  const themeObserver = new MutationObserver(mutations => {
+    mutations.forEach(m => {
+      if (m.attributeName === 'data-theme') {
+        applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
+      }
+    });
+  });
+  themeObserver.observe(document.documentElement, { attributes: true });
+
+  /* ════════════════════════════════════════════════════
+     6. INIT
+  ════════════════════════════════════════════════════ */
+  buildFilters();
+  renderGrid();
+
+})();
+</script>
+
+<!-- footer content -->
+<style>
+  .cc-footer{background:#0d1b2e;color:#c8d8eb;font-family:'Segoe UI',Arial,sans-serif;padding:64px 0 0;margin-top:0;}
+  .cc-footer-inner{max-width:1200px;margin:0 auto;padding:0 24px;}
+
+  /* Grid */
+  .cc-footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.1fr 1.3fr;gap:48px 32px;}
+  @media(max-width:1024px){
+    .cc-footer-grid{grid-template-columns:1fr 1fr 1fr;gap:40px 24px;}
+    .cc-footer-brand{grid-column:1 / -1;}
+  }
+  @media(max-width:640px){
+    .cc-footer-grid{grid-template-columns:1fr 1fr;gap:32px 20px;}
+    .cc-footer-brand{grid-column:1 / -1;}
+    .cc-footer-hours{grid-column:1 / -1;}
+  }
+  @media(max-width:420px){
+    .cc-footer-grid{grid-template-columns:1fr;}
+  }
+
+  /* Brand */
+  .cc-footer-logo{font-size:20px;font-weight:700;color:#fff;margin:0 0 14px;letter-spacing:-0.3px;line-height:1.2;}
+  .cc-footer-logo span{color:#e85d04;}
+  .cc-footer-tagline{font-size:13.5px;color:#8ba7c2;line-height:1.65;margin:0 0 22px;max-width:300px;}
+
+  /* Social icons */
+  .cc-social-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .cc-social-icon{display:flex;align-items:center;justify-content:center;width:38px;height:38px;background:#e85d04;border-radius:7px;text-decoration:none;transition:background .2s,transform .15s;flex-shrink:0;}
+  .cc-social-icon:hover{background:#ff7a2a;transform:translateY(-2px);}
+  .cc-social-icon svg{width:18px;height:18px;fill:#fff;display:block;}
+
+  /* Column headings */
+  .cc-footer-col h4{font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.09em;margin:0 0 6px;padding-bottom:10px;border-bottom:2px solid #e85d04;display:inline-block;}
+
+  /* Column links */
+  .cc-footer-col ul{list-style:none;padding:0;margin:14px 0 0;}
+  .cc-footer-col ul li{margin-bottom:10px;font-size:13.5px;color:#8ba7c2;line-height:1.5;}
+  .cc-footer-col ul li a{color:#8ba7c2;text-decoration:none;transition:color .18s;}
+  .cc-footer-col ul li a:hover{color:#e85d04;}
+
+  /* Contact items */
+  .cc-contact-item{display:flex !important;align-items:flex-start;gap:9px;}
+  .cc-contact-item svg{width:14px;height:14px;fill:#e85d04;flex-shrink:0;margin-top:2px;}
+
+  /* Business hours */
+  .cc-hours-table{margin-top:14px;width:100%;}
+  .cc-hours-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;}
+  .cc-hours-row:last-child{border-bottom:none;}
+  .cc-hours-row:first-child{border-top:1px solid rgba(255,255,255,.05);}
+  .cc-hours-day{color:#c8d8eb;font-weight:400;min-width:90px;}
+  .cc-hours-time{color:#e85d04;font-weight:600;font-size:12.5px;text-align:right;}
+
+  /* Bottom bar */
+  .cc-footer-bottom{margin-top:52px;border-top:1px solid rgba(255,255,255,.08);padding:20px 0;}
+  .cc-footer-bottom-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+  .cc-footer-bottom p{font-size:12.5px;color:#556f88;margin:0;}
+  .cc-footer-legal{display:flex;gap:20px;}
+  .cc-footer-legal a{font-size:12.5px;color:#556f88;text-decoration:none;transition:color .18s;}
+  .cc-footer-legal a:hover{color:#e85d04;}
+</style>
+
+<footer class="cc-footer">
+  <div class="cc-footer-inner">
+    <div class="cc-footer-grid">
+
+      <!-- ── Brand ────────────────────────────────────────── -->
+      <div class="cc-footer-brand cc-footer-col">
+        <h3 class="cc-footer-logo">Cedric <span>Construction</span></h3>
+        <p class="cc-footer-tagline">Your trusted construction partner in Cape Town. We deliver quality building services with professionalism, skill, and lasting dedication to every project.</p>
+
+        <div class="cc-social-row">
+          <!-- Facebook -->
+          <a class="cc-social-icon" href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C17.56 21.45 22 17.19 22 12z"/></svg>
+          </a>
+          <!-- Twitter / X -->
+          <a class="cc-social-icon" href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L2.25 2.25h6.928l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <!-- LinkedIn -->
+          <a class="cc-social-icon" href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+          </a>
+          <!-- Instagram -->
+          <a class="cc-social-icon" href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.8v8.4C4 18.39 5.61 20 7.8 20h8.4a3.6 3.6 0 0 0 3.6-3.6V7.8C20 5.61 18.39 4 16.2 4H7.8m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+          </a>
+          <!-- WhatsApp -->
+          <a class="cc-social-icon" href="https://wa.me/27849614552" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- ── Services ──────────────────────────────────────── -->
+      <div class="cc-footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="tiling.html">Tiling &amp; Flooring</a></li>
+          <li><a href="roofing.html">Roofing</a></li>
+          <li><a href="painting.html#pp-block-article">Painting</a></li>
+          <li><a href="building.html">General Building</a></li>
+          <li><a href="painting.html#pp-services">Plastering</a></li>
+          <li><a href="building.html#gb-block-2">Renovations</a></li>
+        </ul>
+      </div>
+
+      <!-- ── Company ───────────────────────────────────────── -->
+      <div class="cc-footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="projects.html">Our Projects</a></li>
+          <li><a href="testimonials.html">Testimonials</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html#contact-form">Get a Quote</a></li>
+        </ul>
+      </div>
+
+      <!-- ── Contact ───────────────────────────────────────── -->
+      <div class="cc-footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li class="cc-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>Wallacedene, Kraaifontein<br>Cape Town, South Africa</span>
+          </li>
+          <li class="cc-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <a href="tel:+27849614552">+27 84 961 4552</a>
+          </li>
+          <li class="cc-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <a href="mailto:cedricconstructionservices@gmail.com" style="word-break:break-all;">cedricconstructionservices@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ── Business Hours ────────────────────────────────── -->
+      <div class="cc-footer-col cc-footer-hours">
+        <h4>Business Hours</h4>
+        <div class="cc-hours-table">
+          <div class="cc-hours-row"><span class="cc-hours-day">Monday</span>   <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Tuesday</span>  <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Wednesday</span><span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Thursday</span> <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Friday</span>   <span class="cc-hours-time">07:00 – 17:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Saturday</span> <span class="cc-hours-time">08:00 – 14:00</span></div>
+          <div class="cc-hours-row"><span class="cc-hours-day">Sunday</span>   <span class="cc-hours-time">08:00 – 13:00</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="cc-footer-bottom">
+    <div class="cc-footer-bottom-inner">
+      <p>&copy; <span id="cc-year"></span> Cedric Construction Services. All rights reserved.</p>
+      <nav class="cc-footer-legal">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('cc-year').textContent = new Date().getFullYear();
+</script>
+<!-- ================================================================ -->
+   <script src="/assets/js/component.js"></script>
+</body>
+</html>

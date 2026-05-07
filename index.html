@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cedric Construction Services</title>
+
+  <!--
+    THEME INIT — MUST be first, before any stylesheet.
+    Reads localStorage and sets data-theme before first paint.
+    Prevents white flash on dark-mode page load.
+  -->
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    }());
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Dark mode overrides for ALL page sections -->
+  <link rel="stylesheet" href="/assets/css/dark-mode.css">
+  <link rel="stylesheet" href="/assets/css/mobile-fixes.css">
+  <script src="/assets/js/hero-engine.js"></script>
+  <script src="/assets/js/component.js" defer></script>
+
+
+</head>
+
+<body>
+
+  <!-- Header Placeholder -->
+  <div id="header-placeholder"></div>
+
+  <div id="hero-placeholder"></div>
+  <!--
+    ┌─────────────────────────────────────────────────────────────┐
+    │  STEP 2 — Add the injection target div                      │
+    │                                                             │
+    │  This empty div is the "socket" the engine writes into.     │
+    │  It must sit ABOVE your page content so the hero renders    │
+    │  at the very top of the page, directly under the header.    │
+    │                                                             │
+    │  Rules:                                                     │
+    │   • The id must exactly match the first argument you pass   │
+    │     to loadHero() in Step 4 below.                          │
+    │   • Do NOT put anything inside this div — the engine        │
+    │     will overwrite it completely with hero-template.html.   │
+    └─────────────────────────────────────────────────────────────┘
+    -->
+  <!-- Services Section -->
+  <!-- ================================================================
+  CEDRIC CONSTRUCTION — ABOUT PREVIEW + SERVICES SECTIONS
+  Drop these two blocks directly into your index.html after
+  the #hero-placeholder div.
+
+  Images expected in /assets/images/ — update filenames to match
+  your actual files.
+================================================================ -->
+
+  <style>
+    /* ── Shared tokens (match your existing site palette) ──────── */
+    :root {
+      --cc-gold: #C9A84C;
+      --cc-gold-light: #E8C96A;
+      --cc-orange: #e85d04;
+      --cc-dark: #0d1b2e;
+      --cc-slate: #1e2d3d;
+      --cc-text: #1a1a2e;
+      --cc-muted: #5a6a7a;
+      --cc-bg: #f8f7f4;
+      --cc-bg-alt: #f0ede8;
+      --cc-white: #ffffff;
+      --cc-font-display: 'Poppins', sans-serif;
+      --cc-font-body: 'DM Sans', sans-serif;
+      --cc-radius: 12px;
+      --cc-shadow: 0 4px 24px rgba(13, 27, 46, 0.10);
+      --cc-shadow-hover: 0 12px 40px rgba(13, 27, 46, 0.18);
+    }
+
+    /* ── Utility resets scoped to our sections ──────────────────── */
+    .cc-section *,
+    .cc-section *::before,
+    .cc-section *::after {
+      box-sizing: border-box;
+    }
+
+    /* ── Section base ────────────────────────────────────────────── */
+    .cc-section {
+      font-family: var(--cc-font-body);
+      color: var(--cc-text);
+      width: 100%;
+    }
+
+    .cc-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(1.25rem, 5vw, 3rem);
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+     ABOUT SECTION
+  ══════════════════════════════════════════════════════════════ */
+    .cc-about {
+      background: var(--cc-bg-alt);
+      padding: clamp(4rem, 8vw, 7rem) 0;
+    }
+
+    .cc-about__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2.5rem, 5vw, 5rem);
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .cc-about__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cc-about__images {
+        order: -1;
+      }
+    }
+
+    /* ── About: Text side ───────────────────────────────────────── */
+    .cc-about__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--cc-font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cc-orange);
+      margin-bottom: 1.1rem;
+    }
+
+    .cc-about__eyebrow::before {
+      content: '';
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--cc-orange);
+      flex-shrink: 0;
+    }
+
+    .cc-about__heading {
+      font-family: var(--cc-font-display);
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--cc-dark);
+      margin: 0 0 0.6rem;
+      position: relative;
+      padding-bottom: 1.1rem;
+    }
+
+    /* Gold underline accent */
+    .cc-about__heading::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 56px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--cc-gold), var(--cc-gold-light));
+      border-radius: 2px;
+    }
+
+    .cc-about__body {
+      font-size: clamp(0.9rem, 1.4vw, 1rem);
+      line-height: 1.8;
+      color: var(--cc-muted);
+      margin: 1.4rem 0 1rem;
+    }
+
+    .cc-about__body+.cc-about__body {
+      margin-top: 0;
+      margin-bottom: 2rem;
+    }
+
+    .cc-about__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      background: var(--cc-dark);
+      color: var(--cc-white);
+      font-family: var(--cc-font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      border-radius: 4px;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cc-about__btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--cc-orange);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .cc-about__btn:hover::before {
+      transform: scaleX(1);
+    }
+
+    .cc-about__btn span,
+    .cc-about__btn svg {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cc-about__btn:hover {
+      box-shadow: 0 6px 20px rgba(232, 93, 4, 0.35);
+    }
+
+    .cc-about__btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.2s;
+    }
+
+    .cc-about__btn:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* ── About: Image grid side ─────────────────────────────────── */
+    .cc-about__images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 14px;
+    }
+
+    .cc-about__img-wrap {
+      border-radius: var(--cc-radius);
+      overflow: hidden;
+      box-shadow: var(--cc-shadow);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      line-height: 0;
+    }
+
+    .cc-about__img-wrap:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--cc-shadow-hover);
+    }
+
+    /* Stagger: 2nd and 4th images drop down for the mosaic effect */
+    .cc-about__img-wrap:nth-child(2),
+    .cc-about__img-wrap:nth-child(4) {
+      margin-top: 28px;
+    }
+
+    .cc-about__img-wrap img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .cc-about__img-wrap:hover img {
+      transform: scale(1.05);
+    }
+
+    /* ── About: Stats strip ─────────────────────────────────────── */
+    .cc-about__stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(13, 27, 46, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .cc-stat__number {
+      font-family: var(--cc-font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--cc-orange);
+      line-height: 1;
+      display: block;
+    }
+
+    .cc-stat__label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--cc-muted);
+      margin-top: 0.3rem;
+      display: block;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+     SERVICES SECTION
+  ══════════════════════════════════════════════════════════════ */
+    .cc-services {
+      background: var(--cc-white);
+      padding: clamp(4rem, 8vw, 7rem) 0;
+    }
+
+    .cc-services__header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+    }
+
+    .cc-services__eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cc-orange);
+      margin-bottom: 0.9rem;
+    }
+
+    .cc-services__heading {
+      font-family: var(--cc-font-display);
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      color: var(--cc-dark);
+      line-height: 1.15;
+      margin: 0 0 1rem;
+    }
+
+    .cc-services__intro {
+      font-size: 0.97rem;
+      line-height: 1.75;
+      color: var(--cc-muted);
+      margin: 0;
+    }
+
+    /* ── Service cards grid ─────────────────────────────────────── */
+    .cc-services__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .cc-services__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .cc-services__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── Single card ─────────────────────────────────────────────── */
+    .cc-card {
+      background: var(--cc-white);
+      border-radius: var(--cc-radius);
+      overflow: hidden;
+      box-shadow: var(--cc-shadow);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(13, 27, 46, 0.06);
+    }
+
+    .cc-card:hover {
+      transform: translateY(-7px);
+      box-shadow: var(--cc-shadow-hover);
+    }
+
+    /* Card image area */
+    .cc-card__img-wrap {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .cc-card__img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .cc-card:hover .cc-card__img-wrap img {
+      transform: scale(1.08);
+    }
+
+    /* Gradient overlay on the image */
+    .cc-card__img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top,
+          rgba(13, 27, 46, 0.75) 0%,
+          rgba(13, 27, 46, 0.1) 55%,
+          transparent 100%);
+    }
+
+    /* Icon badge at bottom-left of image */
+    .cc-card__icon {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      z-index: 1;
+      width: 44px;
+      height: 44px;
+      background: var(--cc-orange);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s;
+    }
+
+    .cc-card:hover .cc-card__icon {
+      background: var(--cc-gold);
+    }
+
+    .cc-card__icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Card body */
+    .cc-card__body {
+      padding: 1.3rem 1.4rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cc-card__title {
+      font-family: var(--cc-font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--cc-dark);
+      margin: 0 0 0.5rem;
+      line-height: 1.3;
+    }
+
+    .cc-card__desc {
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--cc-muted);
+      margin: 0 0 1.1rem;
+      flex: 1;
+    }
+
+    .cc-card__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--cc-orange);
+      text-decoration: none;
+      transition: gap 0.2s, color 0.2s;
+    }
+
+    .cc-card__link:hover {
+      gap: 0.6rem;
+      color: var(--cc-dark);
+    }
+
+    .cc-card__link svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── View All button ─────────────────────────────────────────── */
+    .cc-services__footer {
+      text-align: center;
+      margin-top: clamp(2rem, 4vw, 3rem);
+    }
+
+    .cc-btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2.2rem;
+      border: 2px solid var(--cc-dark);
+      background: transparent;
+      color: var(--cc-dark);
+      font-family: var(--cc-font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cc-btn-outline::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--cc-dark);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: 0;
+    }
+
+    .cc-btn-outline:hover::before {
+      transform: scaleX(1);
+    }
+
+    .cc-btn-outline:hover {
+      color: var(--cc-white);
+      border-color: var(--cc-dark);
+    }
+
+    .cc-btn-outline span,
+    .cc-btn-outline svg {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cc-btn-outline svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.2s;
+    }
+
+    .cc-btn-outline:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* ── Scroll reveal animation ─────────────────────────────────── */
+    .cc-reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .cc-reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cc-reveal-delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .cc-reveal-delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .cc-reveal-delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    .cc-reveal-delay-4 {
+      transition-delay: 0.4s;
+    }
+  </style>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+     SECTION 1 — ABOUT PREVIEW
+════════════════════════════════════════════════════════════ -->
+  <section class="cc-section cc-about">
+    <div class="cc-container">
+      <div class="cc-about__grid">
+
+        <!-- Text column -->
+        <div class="cc-about__text cc-reveal">
+          <span class="cc-about__eyebrow">About Us</span>
+          <h2 class="cc-about__heading">Building Excellence Since Day One</h2>
+
+          <p class="cc-about__body">
+            Cedric Construction Services is a trusted construction and interior finishing company
+            providing expert tiling, fixtures, fittings, and renovation services across Cape Town.
+            We focus on delivering durable, modern, and high-quality finishes tailored to each
+            client's unique style and needs.
+          </p>
+          <p class="cc-about__body">
+            With years of hands-on experience and many completed projects, we transform homes and
+            commercial spaces with precision and professionalism.
+          </p>
+
+          <a href="about.html" class="cc-about__btn">
+            <span>Learn More</span>
+            <svg viewBox="0 0 24 24">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+
+          <!-- Stats strip -->
+          <div class="cc-about__stats">
+            <div>
+              <span class="cc-stat__number">200+</span>
+              <span class="cc-stat__label">Projects Completed</span>
+            </div>
+            <div>
+              <span class="cc-stat__number">10+</span>
+              <span class="cc-stat__label">Years Experience</span>
+            </div>
+            <div>
+              <span class="cc-stat__number">100%</span>
+              <span class="cc-stat__label">Client Satisfaction</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image mosaic column -->
+        <!--
+        Replace the src values below with your actual image filenames.
+        Recommended image size: 800×600px, JPEG/WebP.
+        All images should be in /assets/images/
+      -->
+        <div class="cc-about__images cc-reveal cc-reveal-delay-2">
+
+          <div class="cc-about__img-wrap">
+            <img src="assets/images/new_roof.webp" alt="Professional marble flooring installation" loading="lazy">
+          </div>
+
+          <div class="cc-about__img-wrap">
+            <img src="assets/images/ext_painting4.webp" alt="Modern bathroom renovation" loading="lazy">
+          </div>
+
+          <div class="cc-about__img-wrap">
+            <img src="assets/images/ext_painting3.webp" alt="Kitchen tile renovation" loading="lazy">
+          </div>
+
+          <div class="cc-about__img-wrap">
+            <img src="assets/images/paving6.webp" alt="Outdoor patio construction" loading="lazy">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+     SECTION 2 — SERVICES
+════════════════════════════════════════════════════════════ -->
+  <section class="cc-section cc-services">
+    <div class="cc-container">
+
+      <!-- Section header -->
+      <div class="cc-services__header cc-reveal">
+        <span class="cc-services__eyebrow">Our Services</span>
+        <h2 class="cc-services__heading">Complete Construction Solutions</h2>
+        <p class="cc-services__intro">
+          From expert tiling to full renovations, we provide comprehensive services to transform
+          your space with quality craftsmanship.
+        </p>
+      </div>
+
+      <!-- Cards grid -->
+      <!--
+      Each card:
+        data-href  → the page this card links to
+        img src    → replace with your real image in assets/images/
+      Add or remove <div class="cc-card"> blocks to match your services.
+    -->
+      <div class="cc-services__grid">
+
+        <!-- Card 1: Tiling & Flooring -->
+        <div class="cc-card cc-reveal cc-reveal-delay-1">
+          <div class="cc-card__img-wrap">
+            <img src="assets/images/In_tiling.webp" alt="Tiling and flooring service" loading="lazy">
+            <div class="cc-card__icon">
+              <!-- Grid / tile icon -->
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+              </svg>
+            </div>
+          </div>
+          <div class="cc-card__body">
+            <h3 class="cc-card__title">Tiling &amp; Flooring</h3>
+            <p class="cc-card__desc">Premium tile installation for floors, walls, and bathrooms. We work with porcelain,
+              ceramic, marble, and natural stone.</p>
+            <a href="tiling.html" class="cc-card__link">
+              Learn More
+              <svg viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 2: Roofing -->
+        <div class="cc-card cc-reveal cc-reveal-delay-2">
+          <div class="cc-card__img-wrap">
+            <img src="assets/images/roofing.webp" alt="Roofing service" loading="lazy">
+            <div class="cc-card__icon">
+              <!-- Home / roof icon -->
+              <svg viewBox="0 0 24 24">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+            </div>
+          </div>
+          <div class="cc-card__body">
+            <h3 class="cc-card__title">Roofing</h3>
+            <p class="cc-card__desc">New roof installations, repairs, and waterproofing using quality materials built to
+              withstand Cape Town's weather.</p>
+            <a href="roofing.html" class="cc-card__link">
+              Learn More
+              <svg viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 3: Painting -->
+        <div class="cc-card cc-reveal cc-reveal-delay-3">
+          <div class="cc-card__img-wrap">
+            <img src="assets/images/ext_painting4.webp" alt="Painting service" loading="lazy">
+            <div class="cc-card__icon">
+              <!-- Paint brush icon -->
+              <svg viewBox="0 0 24 24">
+                <path d="M18 3a3 3 0 0 1 0 6H4a1 1 0 0 1 0-6z" />
+                <path d="M4 9v6a2 2 0 0 0 2 2h1v3a1 1 0 0 0 2 0v-3h1a2 2 0 0 0 2-2V9" />
+              </svg>
+            </div>
+          </div>
+          <div class="cc-card__body">
+            <h3 class="cc-card__title">Painting</h3>
+            <p class="cc-card__desc">Interior and exterior painting with flawless finishes. We prepare surfaces properly
+              and use premium paints that last.</p>
+            <a href="painting.html" class="cc-card__link">
+              Learn More
+              <svg viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 4: Renovations -->
+        <div class="cc-card cc-reveal cc-reveal-delay-4">
+          <div class="cc-card__img-wrap">
+            <img src="assets/images/renovations5.webp" alt="Renovation service" loading="lazy">
+            <div class="cc-card__icon">
+              <!-- Tool / wrench icon -->
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+              </svg>
+            </div>
+          </div>
+          <div class="cc-card__body">
+            <h3 class="cc-card__title">Renovations</h3>
+            <p class="cc-card__desc">Full home and commercial renovations from concept to completion — kitchens,
+              bathrooms, and open-plan transformations.</p>
+            <a href="renovations.html" class="cc-card__link">
+              Learn More
+              <svg viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- View all button -->
+      <div class="cc-services__footer cc-reveal">
+        <a href="roofing.html" class="cc-btn-outline">
+          <span>View All Services</span>
+          <svg viewBox="0 0 24 24">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================================================================
+  SCROLL REVEAL — lightweight IntersectionObserver
+  Watches every .cc-reveal element and adds .is-visible when it
+  enters the viewport. No external library needed.
+================================================================ -->
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.cc-reveal');
+      if (!els.length) return;
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);   // fire once only
+          }
+        });
+      }, { threshold: 0.12 });
+
+      els.forEach(function (el) { observer.observe(el); });
+    }());
+  </script>
+  <!-- footer content -->
+  <style>
+    .cc-footer {
+      background: #0d1b2e;
+      color: #c8d8eb;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      padding: 64px 0 0;
+      margin-top: 0;
+    }
+
+    .cc-footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Grid */
+    .cc-footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1.1fr 1.3fr;
+      gap: 48px 32px;
+    }
+
+    @media(max-width:1024px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 40px 24px;
+      }
+
+      .cc-footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media(max-width:640px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px 20px;
+      }
+
+      .cc-footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      .cc-footer-hours {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media(max-width:420px) {
+      .cc-footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Brand */
+    .cc-footer-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 14px;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+    }
+
+    .cc-footer-logo span {
+      color: #e85d04;
+    }
+
+    .cc-footer-tagline {
+      font-size: 13.5px;
+      color: #8ba7c2;
+      line-height: 1.65;
+      margin: 0 0 22px;
+      max-width: 300px;
+    }
+
+    /* Social icons */
+    .cc-social-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .cc-social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      background: #e85d04;
+      border-radius: 7px;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+      flex-shrink: 0;
+    }
+
+    .cc-social-icon:hover {
+      background: #ff7a2a;
+      transform: translateY(-2px);
+    }
+
+    .cc-social-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+      display: block;
+    }
+
+    /* Column headings */
+    .cc-footer-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      margin: 0 0 6px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e85d04;
+      display: inline-block;
+    }
+
+    /* Column links */
+    .cc-footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 0;
+    }
+
+    .cc-footer-col ul li {
+      margin-bottom: 10px;
+      font-size: 13.5px;
+      color: #8ba7c2;
+      line-height: 1.5;
+    }
+
+    .cc-footer-col ul li a {
+      color: #8ba7c2;
+      text-decoration: none;
+      transition: color .18s;
+    }
+
+    .cc-footer-col ul li a:hover {
+      color: #e85d04;
+    }
+
+    /* Contact items */
+    .cc-contact-item {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 9px;
+    }
+
+    .cc-contact-item svg {
+      width: 14px;
+      height: 14px;
+      fill: #e85d04;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Business hours */
+    .cc-hours-table {
+      margin-top: 14px;
+      width: 100%;
+    }
+
+    .cc-hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .05);
+      font-size: 13px;
+    }
+
+    .cc-hours-row:last-child {
+      border-bottom: none;
+    }
+
+    .cc-hours-row:first-child {
+      border-top: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .cc-hours-day {
+      color: #c8d8eb;
+      font-weight: 400;
+      min-width: 90px;
+    }
+
+    .cc-hours-time {
+      color: #e85d04;
+      font-weight: 600;
+      font-size: 12.5px;
+      text-align: right;
+    }
+
+    /* Bottom bar */
+    .cc-footer-bottom {
+      margin-top: 52px;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      padding: 20px 0;
+    }
+
+    .cc-footer-bottom-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .cc-footer-bottom p {
+      font-size: 12.5px;
+      color: #556f88;
+      margin: 0;
+    }
+
+    .cc-footer-legal {
+      display: flex;
+      gap: 20px;
+    }
+
+    .cc-footer-legal a {
+      font-size: 12.5px;
+      color: #556f88;
+      text-decoration: none;
+      transition: color .18s;
+    }
+
+    .cc-footer-legal a:hover {
+      color: #e85d04;
+    }
+  </style>
+
+  <footer class="cc-footer">
+    <div class="cc-footer-inner">
+      <div class="cc-footer-grid">
+
+        <!-- ── Brand ────────────────────────────────────────── -->
+        <div class="cc-footer-brand cc-footer-col">
+          <h3 class="cc-footer-logo">Cedric <span>Construction</span></h3>
+          <p class="cc-footer-tagline">Your trusted construction partner in Cape Town. We deliver quality building
+            services with professionalism, skill, and lasting dedication to every project.</p>
+
+          <div class="cc-social-row">
+            <!-- Facebook -->
+            <a class="cc-social-icon" href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C17.56 21.45 22 17.19 22 12z" />
+              </svg>
+            </a>
+            <!-- Twitter / X -->
+            <a class="cc-social-icon" href="#" aria-label="Twitter">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.734l7.73-8.835L2.25 2.25h6.928l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+            <!-- LinkedIn -->
+            <a class="cc-social-icon" href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+              </svg>
+            </a>
+            <!-- Instagram -->
+            <a class="cc-social-icon" href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.8v8.4C4 18.39 5.61 20 7.8 20h8.4a3.6 3.6 0 0 0 3.6-3.6V7.8C20 5.61 18.39 4 16.2 4H7.8m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
+              </svg>
+            </a>
+            <!-- WhatsApp -->
+            <a class="cc-social-icon" href="https://wa.me/27849614552" target="_blank" rel="noopener"
+              aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ── Services ──────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="tiling.html">Tiling &amp; Flooring</a></li>
+            <li><a href="roofing.html">Roofing</a></li>
+            <li><a href="painting.html#pp-block-article">Painting</a></li>
+            <li><a href="building.html">General Building</a></li>
+            <li><a href="painting.html#pp-services">Plastering</a></li>
+            <li><a href="building.html#gb-block-2">Renovations</a></li>
+          </ul>
+        </div>
+
+        <!-- ── Company ───────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="projects.html">Our Projects</a></li>
+            <li><a href="testimonials.html">Testimonials</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html#contact-form">Get a Quote</a></li>
+          </ul>
+        </div>
+
+        <!-- ── Contact ───────────────────────────────────────── -->
+        <div class="cc-footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+              </svg>
+              <span>Wallacedene, Kraaifontein<br>Cape Town, South Africa</span>
+            </li>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+              </svg>
+              <a href="tel:+27849614552">+27 84 961 4552</a>
+            </li>
+            <li class="cc-contact-item">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+              </svg>
+              <a href="mailto:cedricconstructionservices@gmail.com"
+                style="word-break:break-all;">cedricconstructionservices@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- ── Business Hours ────────────────────────────────── -->
+        <div class="cc-footer-col cc-footer-hours">
+          <h4>Business Hours</h4>
+          <div class="cc-hours-table">
+            <div class="cc-hours-row"><span class="cc-hours-day">Monday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Tuesday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Wednesday</span><span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Thursday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Friday</span> <span class="cc-hours-time">07:00 –
+                17:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Saturday</span> <span class="cc-hours-time">08:00 –
+                14:00</span></div>
+            <div class="cc-hours-row"><span class="cc-hours-day">Sunday</span> <span class="cc-hours-time">08:00 –
+                13:00</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="cc-footer-bottom">
+      <div class="cc-footer-bottom-inner">
+        <p>&copy; <span id="cc-year"></span> Cedric Construction Services. All rights reserved.</p>
+        <nav class="cc-footer-legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('cc-year').textContent = new Date().getFullYear();
+  </script>
+  <!-- ================================================================ -->
+
+
+  <!--
+    ┌─────────────────────────────────────────────────────────────┐
+    │  STEP 4 — Call loadHero() AFTER component.js               │
+    │                                                             │
+    │  We place this script LAST in <body> for two reasons:       │
+    │                                                             │
+    │   1. The #hero-placeholder div is guaranteed to exist in    │
+    │      the DOM by the time this script executes (top-down     │
+    │      parsing order).                                        │
+    │                                                             │
+    │   2. It runs after component.js so there are no race        │
+    │      conditions between your header loader and the hero.    │
+    │                                                             │
+    │  loadHero() takes 3 arguments:                              │
+    │   • "hero-placeholder" → the id of the div in Step 2        │
+    │   • "/assets/hero-template.html" → where the template lives │
+    │   • { ...config } → your page-specific content              │
+    │                                                             │
+    │  Internally loadHero() does this sequence automatically:    │
+    │   fetch(template) → inject HTML → requestAnimationFrame     │
+    │   → layoutHero(config)                                      │
+    │  You never need to call layoutHero() yourself.              │
+    └─────────────────────────────────────────────────────────────┘
+    -->
+  <script>
+    loadHero(
+      'hero-placeholder',             // must match the div id in Step 2
+      'hero-template.html',   // path to hero-template.html
+
+      {
+        // ── Eyebrow label (the small text above the headline) ──────
+        tag: 'PREMIUM TILING & RENOVATION SPECIALISTS',
+
+        // ── Main headline ──────────────────────────────────────────
+        // Wrap one word in <em> for the gold italic accent font.
+        headline: 'Building your vision with <em>uncompromising</em> quality. ',
+
+        // ── Supporting paragraph ───────────────────────────────────
+        sub: 'Specializing in professional tiling, paving, and modern architectural renovations. From luxury flooring to full-scale building repairs, we bring master-level craftsmanship to residential and commercial projects across Cape Town and surrounding areas.',
+
+        // ── Auto-advance delay in milliseconds ─────────────────────
+        interval: 6000,
+
+        // ── Slides (images and/or videos) ──────────────────────────
+        // First slide should always be an image for fast page load.
+        slides: [
+          {
+            type: 'image',
+            src: '/assets/images/ext_painting2.webp',
+            alt: 'Our team on a construction site',
+          },
+          {
+            type: 'video',
+            src: '/assets/video/hero-video-2.webm',
+            alt: 'A recently completed residential build',
+          },
+
+        ],
+
+        // ── Call-to-action buttons ─────────────────────────────────
+        // variant 'primary'   → solid gold button
+        // variant 'secondary' → transparent outline button
+        buttons: [
+          {
+            label: 'Get a Free Quote',
+            href: 'contact.html#contact-form',
+            variant: 'primary',
+          },
+          {
+            label: 'Our Portfolio',
+            href: 'projects.html',
+            variant: 'secondary',
+          },
+        ],
+      }
+    );
+  </script>
+</body>
+
+</html>

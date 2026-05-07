@@ -1,0 +1,215 @@
+/*
+ * dark-mode.css — Cedric Construction Services
+ * ─────────────────────────────────────────────────────────────────
+ * HOW TO USE — add ONE line to <head> of every page:
+ *   <link rel="stylesheet" href="/assets/css/dark-mode.css">
+ *
+ * ALSO REQUIRED — paste this as the very FIRST script in <head>
+ * (before any <link> tags) to prevent white flash on page load:
+ *
+ *   <script>
+ *     (function(){
+ *       var t = localStorage.getItem('theme') || 'light';
+ *       document.documentElement.setAttribute('data-theme', t);
+ *     }());
+ *   </script>
+ *
+ * WHY SECTIONS STAYED WHITE:
+ *   Page sections define CSS variables like --cc-bg, --ab-bg etc.
+ *   in :root. When the toggle sets data-theme="dark" on <html>,
+ *   nothing remapped those variables — this file fixes that.
+ * ─────────────────────────────────────────────────────────────────
+ */
+
+
+/* ══════════════════════════════════════════════════════════════════
+   SMOOTH TRANSITION — colour properties only
+   (not all properties — that would break scroll/hover animations)
+══════════════════════════════════════════════════════════════════ */
+body,
+.cc-section, .cc-about, .cc-services,
+.cc-card, .cc-about__img-wrap,
+.ab-section, .ab-profile, .ab-mv, .ab-fullcircle, .ab-values, .ab-why,
+.ab-card, .ab-service-item, .ab-profile__highlight, .ab-profile__local,
+.ab-icon-badge {
+  transition:
+    background-color 0.35s ease,
+    border-color     0.35s ease,
+    color            0.35s ease,
+    box-shadow       0.35s ease;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   REMAP ALL CSS VARIABLES FOR DARK MODE
+   Both --cc-* (index.html) and --ab-* (about.html) token sets
+   live in the same :root block so ONE rule remaps everything.
+══════════════════════════════════════════════════════════════════ */
+[data-theme="dark"] {
+
+  /* ── index.html tokens ──────────────────────────────────────── */
+  --cc-gold:         #C9A84C;
+  --cc-gold-light:   #E8C96A;
+  --cc-orange:       #ff7043;
+  --cc-dark:         #e8edf2;
+  --cc-slate:        #c8d4e0;
+  --cc-text:         #dce6f0;
+  --cc-muted:        #8ba7c2;
+  --cc-bg:           #0a1628;
+  --cc-bg-alt:       #0d1f36;
+  --cc-white:        #0d1f36;
+  --cc-shadow:       0 4px 24px rgba(0,0,0,0.35);
+  --cc-shadow-hover: 0 12px 40px rgba(0,0,0,0.55);
+
+  /* ── about.html tokens ──────────────────────────────────────── */
+  --ab-gold:         #C9A84C;
+  --ab-gold-light:   #E8C96A;
+  --ab-orange:       #ff7043;
+  --ab-dark:         #e8edf2;
+  --ab-slate:        #c8d4e0;
+  --ab-text:         #dce6f0;
+  --ab-muted:        #8ba7c2;
+  --ab-bg:           #0a1628;
+  --ab-bg-alt:       #0d1f36;
+  --ab-card:         #0d1f36;
+  --ab-border:       rgba(255,255,255,0.08);
+  --ab-shadow:       0 4px 24px rgba(0,0,0,0.35);
+  --ab-shadow-hover: 0 14px 40px rgba(0,0,0,0.55);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   INDEX.HTML SECTIONS
+   Section backgrounds, headings, cards, buttons
+══════════════════════════════════════════════════════════════════ */
+
+[data-theme="dark"] .cc-about    { background: #0d1f36; }
+[data-theme="dark"] .cc-services { background: #0a1628; }
+
+[data-theme="dark"] .cc-about__heading  { color: #e8edf2; }
+[data-theme="dark"] .cc-about__body     { color: #8ba7c2; }
+[data-theme="dark"] .cc-about__eyebrow  { color: #ff7043; }
+[data-theme="dark"] .cc-about__eyebrow::before { background: #ff7043; }
+
+[data-theme="dark"] .cc-about__stats {
+  border-top-color: rgba(255,255,255,0.08);
+}
+[data-theme="dark"] .cc-stat__label { color: #8ba7c2; }
+
+[data-theme="dark"] .cc-about__btn {
+  background: #1e3a5f;
+  color: #e8edf2;
+}
+[data-theme="dark"] .cc-about__btn:hover {
+  background: #ff7043;
+  color: #fff;
+}
+
+[data-theme="dark"] .cc-services__eyebrow { color: #ff7043; }
+[data-theme="dark"] .cc-services__heading { color: #e8edf2; }
+[data-theme="dark"] .cc-services__intro   { color: #8ba7c2; }
+
+[data-theme="dark"] .cc-card {
+  background: #0d1f36;
+  border-color: rgba(255,255,255,0.07);
+}
+[data-theme="dark"] .cc-card:hover {
+  border-color: rgba(255,112,67,0.3);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+}
+[data-theme="dark"] .cc-card__title { color: #e8edf2; }
+[data-theme="dark"] .cc-card__desc  { color: #8ba7c2; }
+[data-theme="dark"] .cc-card__link  { color: #ff7043; }
+
+[data-theme="dark"] .cc-btn-outline {
+  border-color: rgba(255,255,255,0.25);
+  color: #e8edf2;
+  background: transparent;
+}
+[data-theme="dark"] .cc-btn-outline:hover {
+  background: #e8edf2;
+  color: #0a1628;
+  border-color: #e8edf2;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   ABOUT.HTML SECTIONS
+   Profile, Mission/Vision, Full-Circle, Values, Why Choose Us
+══════════════════════════════════════════════════════════════════ */
+
+[data-theme="dark"] .ab-profile    { background: #0a1628; }
+[data-theme="dark"] .ab-mv         { background: #0d1f36; }
+[data-theme="dark"] .ab-fullcircle { background: #0a1628; }
+[data-theme="dark"] .ab-values     { background: #0d1f36; }
+[data-theme="dark"] .ab-why        { background: #060f1e; }
+
+[data-theme="dark"] .ab-heading       { color: #e8edf2; }
+[data-theme="dark"] .ab-eyebrow       { color: #ff7043; }
+[data-theme="dark"] .ab-eyebrow::before { background: #ff7043; }
+[data-theme="dark"] .ab-values__intro { color: #8ba7c2; }
+
+/* Cards */
+[data-theme="dark"] .ab-card {
+  background: #0d1f36;
+  border-color: rgba(255,255,255,0.08);
+}
+[data-theme="dark"] .ab-card:hover {
+  border-color: rgba(255,112,67,0.3);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+}
+[data-theme="dark"] .ab-mv__card h3    { color: #e8edf2; }
+[data-theme="dark"] .ab-value-card h3  { color: #e8edf2; }
+
+/* Icon badges */
+[data-theme="dark"] .ab-icon-badge {
+  background: rgba(255,112,67,0.15);
+}
+[data-theme="dark"] .ab-icon-badge svg { stroke: #ff7043; }
+
+/* Profile highlight box */
+[data-theme="dark"] .ab-profile__highlight {
+  background: linear-gradient(135deg, #060f1e 0%, #0d1f36 100%);
+  border-left-color: #C9A84C;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+[data-theme="dark"] .ab-profile__highlight p { color: rgba(255,255,255,0.8); }
+
+/* Local authority callout */
+[data-theme="dark"] .ab-profile__local {
+  background: rgba(201,168,76,0.07);
+  border-color: rgba(201,168,76,0.2);
+}
+[data-theme="dark"] .ab-profile__local p { color: #8ba7c2; }
+
+/* Full-Circle service cards */
+[data-theme="dark"] .ab-service-item {
+  background: #0d1f36;
+  border-color: rgba(255,255,255,0.08);
+  color: #dce6f0;
+}
+[data-theme="dark"] .ab-service-item:hover {
+  border-color: rgba(255,112,67,0.3);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+}
+[data-theme="dark"] .ab-service-item__title { color: #e8edf2; }
+[data-theme="dark"] .ab-service-item__desc  { color: #8ba7c2; }
+
+/* Why Choose Us dark banner cards */
+[data-theme="dark"] .ab-why-card {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.07);
+}
+[data-theme="dark"] .ab-why-card:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(201,168,76,0.3);
+}
+[data-theme="dark"] .ab-why-card h3 { color: #e8edf2; }
+
+/* Why eyebrow stays gold (not orange) */
+[data-theme="dark"] .ab-why__eyebrow         { color: #C9A84C; }
+[data-theme="dark"] .ab-why__eyebrow::before { background: #C9A84C; }
+
+/* Inline links */
+[data-theme="dark"] .ab-link       { color: #ff7043; }
+[data-theme="dark"] .ab-link:hover { color: #E8C96A; border-bottom-color: #E8C96A; }
