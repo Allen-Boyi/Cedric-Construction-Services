@@ -10,19 +10,11 @@ import sys
 load_dotenv()
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-
+allowed_origin=os.getenv("ALLOWED_ORIGIN")
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://cedricconstruction.com",
-        "http://localhost:5500",
-        "http://127.0.0.1:5500",
-        "http://localhost:8000",
-        "http://127.0.0.1:8000",
-        "http://192.168.100.100:8000",
-        "http://192.168.100.100:5500"
-    ],
+    allow_origins=[allowed_origin],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
