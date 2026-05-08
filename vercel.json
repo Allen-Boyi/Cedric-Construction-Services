@@ -5,12 +5,9 @@
       "destination": "/api/index.py"
     },
     {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/((?!api/).*)",
-      "destination": "/$1"
+      "source": "/(.*)",
+      "destination": "/$1",
+      "check": true
     }
   ]
 }
