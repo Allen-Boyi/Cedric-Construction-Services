@@ -44,7 +44,7 @@ def ask_tatenda(user_message: str) -> str:
     )
     return response.choices[0].message.content
 
-@app.post("/chat")
+@app.post("/api/chat")
 async def chat_with_tatenda(request: ChatRequest):
     try:
         reply = ask_tatenda(request.message)
