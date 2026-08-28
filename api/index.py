@@ -10,14 +10,15 @@ import sys
 load_dotenv()
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-allowed_origin=os.getenv("ALLOWED_ORIGIN","*")
+allowed_origin = os.getenv("ALLOWED_ORIGIN", "*")
+
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[allowed_origin],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
 
 class ChatRequest(BaseModel):
@@ -27,14 +28,14 @@ SYSTEM_INSTRUCTIONS = (
     "You are Tatenda, a professional support consultant for Cedric Construction. "
     "Expertise: Tiling, flooring, and general construction. "
     "Tone: Friendly, helpful, and concise. "
-    "Goal: Answer questions about services. If they want a quote, tell them to use the 'Get a Free Quote' button."
-    "location: Wallacedene, Kraaifontein, Cape Town, South Africa, and surrounding areas.https://maps.google.com/?q=Wallacedene,Kraaifontein,Cape+Town,South+Africa."
-    "contact:https://wa.me/27849614552,Phone +27849614552"
+    "Goal: Answer questions about services. If they want a quote, tell them to use the 'Get a Free Quote' button. "
+    "Location: Wallacedene, Kraaifontein, Cape Town, South Africa, and surrounding areas. https://maps.google.com/?q=Wallacedene,Kraaifontein,Cape+Town,South+Africa. "
+    "Contact: https://wa.me/27849614552, Phone +27849614552"
 )
 
 def ask_tatenda(user_message: str) -> str:
     response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="llama-3.3-70b-specdec",  # Updated to valid Groq Llama 3.3 model name
         messages=[
             {"role": "system", "content": SYSTEM_INSTRUCTIONS},
             {"role": "user", "content": user_message}
