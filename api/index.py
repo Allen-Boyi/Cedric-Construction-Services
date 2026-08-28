@@ -1,28 +1,42 @@
 import os
-from groq import Groq
+import sys
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from groq import Groq
 from pydantic import BaseModel
-from dotenv import load_dotenv
 import uvicorn
-import sys
 
 load_dotenv()
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-allowed_origin = os.getenv("ALLOWED_ORIGIN", "*")
 
 app = FastAPI()
+
+# Configure dynamic CORS origins to support preview and production domains
+allowed_origin_env = os.getenv("ALLOWED_ORIGIN")
+
+if allowed_origin_env and allowed_origin_env != "*":
+    origins = [origin.strip() for origin in allowed_origin_env.split(",")]
+    allow_credentials = True
+else:
+    # Use wildcard without credentials to satisfy browser security policies
+    origins = ["*"]
+    allow_credentials = False
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[allowed_origin],
-    allow_credentials=True,
+    allow_origins=origins,
+    allow_origin_regex=r"https://cedric-construction-services.*\.vercel\.app",
+    allow_credentials=allow_credentials,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+
 class ChatRequest(BaseModel):
     message: str
+
 
 SYSTEM_INSTRUCTIONS = (
     "You are Tatenda, a professional support consultant for Cedric Construction. "
@@ -33,17 +47,19 @@ SYSTEM_INSTRUCTIONS = (
     "Contact: https://wa.me/27849614552, Phone +27849614552"
 )
 
+
 def ask_tatenda(user_message: str) -> str:
     response = client.chat.completions.create(
-        model="llama-3.3-70b-specdec",  # Updated to valid Groq Llama 3.3 model name
+        model="llama-3.3-70b-versatile",
         messages=[
             {"role": "system", "content": SYSTEM_INSTRUCTIONS},
-            {"role": "user", "content": user_message}
+            {"role": "user", "content": user_message},
         ],
         temperature=0.7,
         max_completion_tokens=1024,
     )
     return response.choices[0].message.content
+
 
 @app.post("/api/chat")
 async def chat_with_tatenda(request: ChatRequest):
@@ -56,19 +72,21 @@ async def chat_with_tatenda(request: ChatRequest):
         print(f"Error: {e}")
         raise HTTPException(status_code=500, detail="Tatenda is offline.")
 
+
 def run_terminal_test():
     print("\n--- Tatenda Terminal Test (Groq) ---")
     while True:
         user_input = input("You: ").strip()
         if not user_input:
             continue
-        if user_input.lower() in ['exit', 'quit']:
+        if user_input.lower() in ["exit", "quit"]:
             break
         try:
             reply = ask_tatenda(user_input)
             print(f"Tatenda: {reply}\n")
         except Exception as e:
             print(f"[Error] {e}\n")
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "test":
